@@ -93,5 +93,4 @@ export default tseslint.config({
 Nếu bạn gặp vấn đề hoặc cần hỗ trợ, hãy mở issue trên GitHub hoặc liên hệ qua email.
 
 Chúc bạn code vui vẻ! 🚀
-
-test
+End
