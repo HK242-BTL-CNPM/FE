@@ -57,7 +57,7 @@ Trước khi bắt đầu, hãy đảm bảo rằng bạn đã cài đặt các 
 
 ## Cấu trúc dự án
 ```
-<project-folder>/
+<FE>/
 ├── src/                 # Mã nguồn chính của ứng dụng
 │   ├── components/      # Các component React
 │   ├── pages/           # Các trang của ứng dụng
