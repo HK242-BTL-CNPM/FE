@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: production-files
-          path: ./dist
+          path: ./build  # Sửa thành build nếu dùng React
 
   deploy:
     name: Deploy
@@ -45,16 +45,18 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false  # Tránh lỗi khi push lên gh-pages
 
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: production-files
-          path: ./dist
+          path: ./build  # Sửa thành build nếu dùng React
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./build  # Sửa thành build nếu dùng React
           enable_jekyll: false  # Vô hiệu hóa Jekyll để tránh lỗi file `_config.yml`
