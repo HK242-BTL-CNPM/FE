@@ -94,3 +94,14 @@ Nếu bạn gặp vấn đề hoặc cần hỗ trợ, hãy mở issue trên Git
 
 Chúc bạn code vui vẻ! 🚀
 End
+
+
+
+## Lệnh chạy tailwind
+npx tailwindcss -i ./src/assets/css/input.css -o ./src/assets/css/output.css --watch
+
+## Các file tailwind liên quan
+- input.css: chứa các component dùng chung cho dự án 
+
+- tailwind.config.js: chứa các mã màu, font chữ dùng chung
+
