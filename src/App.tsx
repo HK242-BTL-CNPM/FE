@@ -3,6 +3,7 @@ import Book from './page/book'
 import History from './page/history'
 import Register from './page/register'
 import Home from './page/home'
+import Login from './page/login'
 import './assets/css/output.css'
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
      <Route path="/book" element={<Book/>} />
      <Route path="/history" element={<History/>} />
      <Route path="/register" element={<Home/>} />
+     <Route path="/login" element={<Login/>} />
     </Routes>
   </>
   )
