@@ -38,14 +38,20 @@ Trước khi bắt đầu, hãy đảm bảo rằng bạn đã cài đặt các 
 ## Chạy Tailwind
 
 4. Chạy server ở chế độ development:
+
+   ```sh
    npm run tw
+   # Hoặc dùng Yarn
    yarn tw
+   ```
 
 ## Build dự án
 
 5. Để build production:
+   ```sh
    npm run build
    yarn build
+   ```
    Output sẽ được tạo trong thư mục `dist/`.
 
 ## Chạy ứng dụng sau khi build
@@ -56,6 +62,8 @@ Trước khi bắt đầu, hãy đảm bảo rằng bạn đã cài đặt các 
    # Hoặc dùng Yarn
    yarn preview
    ```
+
+````
 
 ## Cấu trúc dự án
 
@@ -110,3 +118,4 @@ npx tailwindcss -i ./src/assets/css/input.css -o ./src/assets/css/output.css --w
 - input.css: chứa các component dùng chung cho dự án
 
 - tailwind.config.js: chứa các mã màu, font chữ dùng chung
+````
