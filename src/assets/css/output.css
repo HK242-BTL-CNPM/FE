@@ -748,3 +748,105 @@ video {
   font-size: 16px;
   color: #888;
 }
+
+
+
+
+.header{      background-image: url('/src/assets/images/image\ 5.png'); /* Thay bằng ảnh bìa của bạn */
+  background-size: cover;
+  width: 100%;
+  height: 250px;
+  position: relative;
+}
+
+
+.profile-header {
+  text-align: center;
+}
+.profile-container {
+  background: #ffffff;
+  margin: 0 auto;
+  margin-top: -70px;
+  width: 600px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 70px 30px 30px;
+  position: relative;
+  z-index: 1;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%; /* Bo tròn hình ảnh */
+  overflow: hidden;
+  border: 4px solid white; /* Viền trắng */
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: url('/src/assets/images/ava.png') no-repeat center center; /* Link hình ảnh */
+  background-size: cover; /* Đảm bảo hình ảnh phủ toàn bộ khung */
+}
+
+.name {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+
+
+.info-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.frame {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.sidebar {
+  position: absolute; /* Đặt vị trí tuyệt đối */
+  /* top: 50%; Căn giữa theo chiều dọc */
+  left: 50px; 
+  top: 300px;
+  width: 250px; /* Chiều rộng của sidebar */
+
+  padding: 20px 0 ;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); 
+  border: 1px solid rgb(205, 205, 205);
+}
+
+.sidebar a {
+  display: block;
+  padding: 10px 20px 10px 20px;
+  color: #333;
+  text-decoration: none;
+}
+
+.sidebar a.active {
+  background-color: #2979ff;
+  color: white;
+}
+.sidebar a .icon {
+  margin-right: 10px;
+  font-size: 16px;
+  color: #888;
+}
+.sidebar a.active .icon {
+  color: white; /* Đổi màu icon khi active */
+}
+
+.content {
+  margin-left: 300px;
+  padding: 40px;
+}

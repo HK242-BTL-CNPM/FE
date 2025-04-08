@@ -1,4 +1,4 @@
-function Home() {
+function Register() {
     return (
       <>
       <h1>Register</h1>
@@ -14,4 +14,4 @@ function Home() {
       );
 }
 
-export default Home;
+export default Register;
