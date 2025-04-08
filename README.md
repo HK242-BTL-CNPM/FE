@@ -30,22 +30,22 @@ Trước khi bắt đầu, hãy đảm bảo rằng bạn đã cài đặt các 
    ```
    Mặc định, ứng dụng sẽ chạy trên `http://localhost:5173/`.
 
+## Chạy Tailwind
+4. Chạy server ở chế độ development:
+   ```sh
+   npm run tw
+   # Hoặc dùng Yarn
+   yarn tw
+   ```
+
 ## Build dự án
-4. Để build production:
+5. Để build production:
    ```sh
    npm run build
    # Hoặc dùng Yarn
    yarn build
    ```
    Output sẽ được tạo trong thư mục `dist/`.
-
-## Kiểm tra ESLint
-5. Để kiểm tra và sửa lỗi lint:
-   ```sh
-   npm run lint
-   # Hoặc dùng Yarn
-   yarn lint
-   ```
 
 ## Chạy ứng dụng sau khi build
 6. Để chạy ứng dụng đã build:

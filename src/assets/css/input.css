@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .button1 {
-    @apply h-10 font-Roboto font-medium rounded-lg bg-dark_blue text-white text-xs  py-1 px-12
+    @apply h-16 font-Roboto font-semibold rounded-lg bg-dark_blue text-white text-lg  py-1 px-12
 }
 
 .button2 {
