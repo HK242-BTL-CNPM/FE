@@ -1,8 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
-import StudySpaceLogo from "../../../assets/images/StudySpace_logo.png"; // Đảm bảo đường dẫn đúng
+import StudySpaceLogo from "../../../assets/images/StudySpace_logo.png";
 
 // Đổi tên component thành FooterNav hoặc tên gì đó mô tả hơn (tùy chọn)
-function Header() {
+export function Header() {
   const activeStyle = {
     fontSize: "17px",
     color: "#000000",
@@ -69,7 +69,7 @@ function Header() {
           }}
         >
           <NavLink
-            to="../"
+            to=".."
             className="hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
             style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
           >
@@ -78,9 +78,7 @@ function Header() {
           <NavLink
             to="../book"
             className="hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
-            style={({ isActive }) =>
-              isActive ? activeStyle : { color: "#969DA6" }
-            }
+            style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
           >
             Đặt phòng
           </NavLink>

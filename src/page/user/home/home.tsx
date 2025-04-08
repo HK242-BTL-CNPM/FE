@@ -1,13 +1,15 @@
-import Banner from "./banner"
-import Description from "./description"
-import Header from "../../user/header/header_0"
+import Banner from "./banner";
+import Description from "./description";
+import { Header } from "../component/header";
 
 function Home() {
-  return <>
-  <Header/>
-  <Banner/>
-  <Description/>
-  </>;
+  return (
+    <>
+      <Header />
+      <Banner />
+      <Description />
+    </>
+  );
 }
 
 export default Home;
