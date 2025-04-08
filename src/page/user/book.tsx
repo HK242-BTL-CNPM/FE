@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import StudySpaceLogo from "../assets/images/StudySpace_logo.png"; // Đảm bảo đường dẫn đúng
+import StudySpaceLogo from "../../assets/images/StudySpace_logo.png"; // Đảm bảo đường dẫn đúng
 
 // Đổi tên component thành FooterNav hoặc tên gì đó mô tả hơn (tùy chọn)
 function Book() {
