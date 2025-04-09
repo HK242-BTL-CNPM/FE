@@ -1,10 +1,7 @@
-<<<<<<< HEAD:src/page/user/status.tsx
-import  Header  from "./component/header";
+import Header  from "../component/header";
 import { Link } from "react-router-dom";
 import {rooms,statusColor, roomTypes, roomStatuses } from "./const_status";
-=======
-import  Header  from "../component/header";
->>>>>>> 6db61dfdbef30e574ea942138666365156581f2d:src/page/user/status/status.tsx
+
 
 function Status() {
   return (
