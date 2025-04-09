@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Header from "./component/header";
-import Footer from "../user/component/footer";
-import imageBook from "../../assets/images/image_book.jpg"; // Đảm bảo đường dẫn đúng
+import Header from "../component/header";
+import Footer from "../component/footer";
+import imageBook from "../../../../src/assets/images/image_book.jpg"; // Đảm bảo đường dẫn đúng
 import { FaUsers, FaMapMarkerAlt, FaThLarge, FaRegSmile } from "react-icons/fa";
 
 // Interface và dữ liệu mẫu (Không đổi)
