@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import "./calendar.scss";
 import events from "./event";
-import Header  from "../user/component/header";
-import Footer  from "../user/component/footer";
+import Header  from "../component/header";
+import Footer  from "../component/footer";
 import { useCalendarApp, ScheduleXCalendar } from "@schedule-x/react";
 import {
   createViewDay,
