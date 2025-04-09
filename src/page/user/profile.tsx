@@ -47,7 +47,7 @@ function Profile() {
               style={{
                 width: "140px",height: "140px", borderRadius: "50%",overflow: "hidden",
                 border: "4px solid white",position: "absolute",top: "-150px",left: "50%",
-                transform: "translateX(-50%)",backgroundSize: "cover",
+                transform: "translateX(-50%)",backgroundSize: "contain",
                 background: "url('/src/assets/images/ava.png') no-repeat center center",
               }}
             ></div>
