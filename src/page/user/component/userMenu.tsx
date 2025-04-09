@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import { useAuth } from "../../../AuthContext";
-import { Link } from "react-router-dom";
 import { IoSettingsOutline } from "react-icons/io5";
 import { CiUser } from "react-icons/ci";
 import { CiCircleQuestion } from "react-icons/ci";
@@ -10,7 +9,6 @@ function UserMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  if (!user) return null;
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -20,25 +18,20 @@ function UserMenu() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
+  if (!user) return null;
   return (
     <div className="relative mx-auto" ref={menuRef}>
       <div
         className="cursor-pointer flex items-center space-x-2"
         onClick={() => setIsOpen(!isOpen)}
       >
-         <div className="flex flex-col justify-center items-end">
-                <div className="text-base font-medium">
-                    {user}
-                </div>
-                <div>
-                    User
-                </div>
-         </div>
+        <div className="flex flex-col justify-center items-end">
+          <div className="text-base font-medium">{user}</div>
+          <div>User</div>
+        </div>
         <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-lg">
           {user.charAt(0)}
         </div>
-       
       </div>
 
       {/* Dropdown menu */}
@@ -58,20 +51,20 @@ function UserMenu() {
           <ul className="space-y-3 text-sm">
             <li className="flex items-center justify-between cursor-pointer hover:text-blue-600">
               <div className="flex items-center gap-2">
-              <CiUser />
-              Hồ sơ cá nhân
+                <CiUser />
+                Hồ sơ cá nhân
               </div>
               <span>›</span>
             </li>
             <li className="flex items-center justify-between cursor-pointer hover:text-blue-600">
               <div className="flex items-center gap-2">
-              <IoSettingsOutline /> Cài đặt
+                <IoSettingsOutline /> Cài đặt
               </div>
               <span>›</span>
             </li>
             <li className="flex items-center justify-between cursor-pointer hover:text-blue-600">
               <div className="flex items-center gap-2">
-              <CiCircleQuestion /> Hỗ trợ
+                <CiCircleQuestion /> Hỗ trợ
               </div>
               <span>›</span>
             </li>

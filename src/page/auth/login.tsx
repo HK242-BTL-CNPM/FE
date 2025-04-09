@@ -1,4 +1,3 @@
-import React from "react";
 import "./login.scss"; // Đảm bảo bạn có file này
 
 import { useAuth } from "../../AuthContext";
@@ -48,20 +47,16 @@ function Login() {
               </div>
             </form>
             <div className="flex flex-col gap-5">
-            <button
-              style={{ alignItems: "center", marginTop: 30 }}
-              className="button1"
-            >
-              Đăng nhập
-            </button>
-            <button
-              onClick={handleLogin}
-              className="button1"
-            >
-              Đăng nhập nhanh
-            </button>
+              <button
+                style={{ alignItems: "center", marginTop: 30 }}
+                className="button1"
+              >
+                Đăng nhập
+              </button>
+              <button onClick={handleLogin} className="button1">
+                Đăng nhập nhanh
+              </button>
             </div>
-            
           </div>
         </div>
       </div>
