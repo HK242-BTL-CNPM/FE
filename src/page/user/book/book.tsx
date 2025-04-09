@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Header from "./component/header"; // Đã sửa import
-import Footer from "../user/component/footer"; // Giữ nguyên import Footer
-import imageBook from "../../assets/images/image_book.jpg"; // Đảm bảo đường dẫn đúng
+import Header from "../component/header"; // Đã sửa import
+import Footer from "../component/footer"; // Giữ nguyên import Footer
+import imageBook from "../../../assets/images/image_book.jpg"; // Đảm bảo đường dẫn đúng
 import {
   FaUsers,
   FaMapMarkerAlt,
