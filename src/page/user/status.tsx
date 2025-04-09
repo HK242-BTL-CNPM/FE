@@ -18,14 +18,14 @@ function Status() {
           &gt; Trạng thái phòng
         </h1>
       </Link>
-      <div className="status-wrapper">
+      <div style={{
+          padding: "16px",
+          backgroundColor: "rgb(255, 255, 255)",
+          minHeight: "100vh",
+          fontFamily: "sans-serif"
+      }}>
       <style>{`
-        .status-wrapper {
-          padding: 16px;
-          background-color:rgb(255, 255, 255);
-          min-height: 100vh;
-          font-family: sans-serif;
-        }
+
         .page-title {
           font-size: 1.5em;
           font-weight: bold;
@@ -123,7 +123,9 @@ function Status() {
           }
       `}</style>
 
-      <h1 className="page-title">Trạng thái phòng</h1>
+      <h1 style={{fontSize: "1.5em",fontWeight: "bold",color: "#2563eb",marginBottom: "16px"}}>
+        Trạng thái phòng
+      </h1>
 
       <div className="room-filter">
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
