@@ -1,11 +1,13 @@
 import Header from "../component/header";
 import Footer from "../component/footer";
-import { CiCircleList } from "react-icons/ci";
+import { CiCircleList, CiCalendar } from "react-icons/ci";
 import { FaSort, FaLock } from "react-icons/fa"; // Import icon sắp xếp
 import { rooms, roomTypes, statusColor, roomStatuses } from "./const_status";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarXmark } from "@fortawesome/free-solid-svg-icons";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 // import { Link } from "react-router-dom";
 
 function Status() {
@@ -18,6 +20,7 @@ function Status() {
   const [selectedRoomStatus, setSelectedRoomStatus] = useState("Tất cả");
   const [currentPage, setCurrentPage] = useState(1);
   const [entriesPerPage, setEntriesPerPage] = useState(8);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const handleSort = (key: string) => {
     let direction = "asc";
@@ -68,22 +71,46 @@ function Status() {
           style={{
             display: "flex",
             alignItems: "center",
+            justifyContent: "space-between",
             marginBottom: "30px",
           }}
         >
-          <CiCircleList
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <CiCircleList
+              style={{
+                fontSize: "50px", // Giảm size chút
+                color: "#374151", // Màu xám đậm
+                marginRight: "20px",
+              }}
+            />
+            <h1
+              style={{ fontSize: "32px", fontWeight: "bold", color: "#111827" }}
+            >
+              {" "}
+              Trạng thái phòng
+            </h1>
+          </div>
+
+          {/* Date Picker */}
+          <div
             style={{
-              fontSize: "50px", // Giảm size chút
-              color: "#374151", // Màu xám đậm
-              marginRight: "20px",
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
             }}
-          />
-          <h1
-            style={{ fontSize: "32px", fontWeight: "bold", color: "#111827" }}
           >
-            {" "}
-            Trạng thái phòng
-          </h1>
+            <CiCalendar size={20} style={{ color: "#374151" }} />{" "}
+            {/* Icon lịch */}
+            <DatePicker
+              selected={selectedDate}
+              onChange={(date) => setSelectedDate(date || new Date())}
+              minDate={new Date()} // Chỉ cho phép chọn từ ngày hiện tại trở đi
+              maxDate={new Date(new Date().setMonth(new Date().getMonth() + 1))}
+              dateFormat="MMM, dd yyyy" // Định dạng ngày
+              className="custom-datepicker"
+              placeholderText="Select a date"
+            />
+          </div>
         </div>
 
         {/* --- Container chính cho Filter và Bảng --- */}
