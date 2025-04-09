@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import PreRoomImg from "../../../assets/images/preroompic.png";
 import MeetRoomImg from "../../../assets/images/meetingroompic.png";
 import MentorRoomImg from "../../../assets/images/mentorroompic.png";
@@ -49,38 +48,38 @@ function Description() {
             </div>
           </div>
         </div>
-     
 
-      <h1 className="text-3xl font-bold pt-16 text-[#2563EB]">
-        Phòng tự học
-      </h1>
+        <h1 className="text-3xl font-bold pt-16 text-[#2563EB]">
+          Phòng tự học
+        </h1>
 
-      <div className="flex flex-col lg:flex-row mx-auto  py-8 gap-6">
-        <div className="lg:basis-3/5 w-full flex items-center">
-          <div className="border rounded-xl p-6 text-[#1e1e1e] leading-7 shadow-sm ">
-            <p className="mx-auto text-2xl leading-10">
-              " Không gian học tập hiện đại, linh hoạt, hỗ trợ học cá nhân, học
-              nhóm và mentoring 1-1. Tích hợp công nghệ IoT, quản lý đặt chỗ
-              thông minh qua web-app và mobile app. Sinh viên có thể đặt chỗ,
-              check-in bằng QR, và sử dụng các tiện ích như màn hình trình
-              chiếu, bảng trắng, điều hòa, đèn thông minh. Hệ thống tự động cập
-              nhật trạng thái phòng, tối ưu hóa trải nghiệm học tập tại HCMUT."
-            </p>
+        <div className="flex flex-col lg:flex-row mx-auto  py-8 gap-6">
+          <div className="lg:basis-3/5 w-full flex items-center">
+            <div className="border rounded-xl p-6 text-[#1e1e1e] leading-7 shadow-sm ">
+              <p className="mx-auto text-2xl leading-10">
+                " Không gian học tập hiện đại, linh hoạt, hỗ trợ học cá nhân,
+                học nhóm và mentoring 1-1. Tích hợp công nghệ IoT, quản lý đặt
+                chỗ thông minh qua web-app và mobile app. Sinh viên có thể đặt
+                chỗ, check-in bằng QR, và sử dụng các tiện ích như màn hình
+                trình chiếu, bảng trắng, điều hòa, đèn thông minh. Hệ thống tự
+                động cập nhật trạng thái phòng, tối ưu hóa trải nghiệm học tập
+                tại HCMUT."
+              </p>
+            </div>
+          </div>
+
+          <div className="lg:basis-2/5 w-full flex hover:scale-105 transition duration-300">
+            <img
+              src={TuhocImg}
+              alt="khong-gian-hoc-tap"
+              className="w-4/5 h-full rounded-2xl shadow-md lg:ml-auto mx-auto"
+            />
           </div>
         </div>
 
-        <div className="lg:basis-2/5 w-full flex hover:scale-105 transition duration-300">
-          <img
-            src={TuhocImg}
-            alt="khong-gian-hoc-tap"
-            className="w-4/5 h-full rounded-2xl shadow-md lg:ml-auto mx-auto"
-          />
-        </div>
-      </div>
+        <h1 className="text-3xl font-bold pt-16  text-[#2563EB]">Vị trí</h1>
 
-      <h1 className="text-3xl font-bold pt-16  text-[#2563EB]">Vị trí</h1>
-
-      <div className="flex flex-row border rounded-[2rem] pt-16 pb-16 mt-8 items-center justify-center">
+        <div className="flex flex-row border rounded-[2rem] pt-16 pb-16 mt-8 items-center justify-center">
           <div className="pr-20">
             <h3 className="text-center font-semibold mb-2 text-xl">Cơ sở 1</h3>
             <iframe
@@ -111,7 +110,7 @@ function Description() {
             <p className="mt-2 text-center font-semibold">
               Địa chỉ:{" "}
               <span className="font-normal">
-                VRJ4+65C, Đông Hoà, Dĩ An, <br/>
+                VRJ4+65C, Đông Hoà, Dĩ An, <br />
                 Bình Dương, Việt Nam
               </span>
             </p>

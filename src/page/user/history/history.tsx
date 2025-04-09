@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import "./calendar.scss";
 import events from "./event";
-import Header  from "../component/header";
-import Footer  from "../component/footer";
+import Header from "../component/header";
+import Footer from "../component/footer";
 import { useCalendarApp, ScheduleXCalendar } from "@schedule-x/react";
 import {
   createViewDay,
@@ -14,8 +14,6 @@ import { createEventsServicePlugin } from "@schedule-x/events-service";
 
 import "@schedule-x/theme-default/dist/index.css";
 import { createEventModalPlugin } from "@schedule-x/event-modal";
-//import { createDragAndDropPlugin } from "@schedule-x/drag-and-drop";
-import { Link } from "react-router-dom";
 
 function History() {
   const eventsService = useState(() => createEventsServicePlugin())[0];
@@ -38,7 +36,7 @@ function History() {
   useEffect(() => {
     // get all events
     eventsService.getAll();
-  }, []);
+  }, [eventsService]);
   return (
     <>
       <Header />
@@ -48,7 +46,7 @@ function History() {
       <div className="sx-react-calendar-wrapper mx-auto pt-2 px-2">
         <ScheduleXCalendar calendarApp={calendar} />
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }

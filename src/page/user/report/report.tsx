@@ -29,7 +29,7 @@ function Report_Issue() {
         {/* Breadcrumb */}
         <div style={{ marginBottom: "20px" }}>
           <a
-            href="/home"
+            href="../"
             style={{
               fontSize: "24px",
               fontWeight: "bold",
