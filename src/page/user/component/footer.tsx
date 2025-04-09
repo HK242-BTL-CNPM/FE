@@ -5,7 +5,7 @@ import {
   AiOutlinePhone,
   AiOutlineMail,
   AiOutlineFacebook,
-  AiOutlineInstagram
+  AiOutlineInstagram,
 } from "react-icons/ai";
 
 function Footer() {
@@ -56,11 +56,21 @@ function Footer() {
           <div className="flex-1 min-w-[200px]">
             <h2 className="font-semibold text-base mb-2">Về chúng tôi</h2>
             <div className="flex flex-col space-y-1">
-              <Link className="text-[#666B72] font-medium pl-1" to="../">Trang chủ</Link>
-              <Link className="text-[#666B72] font-medium pl-1" to="../book">Đặt phòng</Link>
-              <Link className="text-[#666B72] font-medium pl-1" to="../history">Lịch sử đặt phòng</Link>
-              <Link className="text-[#666B72] font-medium pl-1" to="../status">Trạng thái phòng</Link>
-              <Link className="text-[#666B72] font-medium pl-1" to="../report">Báo cáo sự cố</Link>
+              <Link className="text-[#666B72] font-medium pl-1" to="../">
+                Trang chủ
+              </Link>
+              <Link className="text-[#666B72] font-medium pl-1" to="../book">
+                Đặt phòng
+              </Link>
+              <Link className="text-[#666B72] font-medium pl-1" to="../history">
+                Lịch sử đặt phòng
+              </Link>
+              <Link className="text-[#666B72] font-medium pl-1" to="../status">
+                Trạng thái phòng
+              </Link>
+              <Link className="text-[#666B72] font-medium pl-1" to="../report">
+                Báo cáo sự cố
+              </Link>
             </div>
           </div>
 
@@ -68,8 +78,12 @@ function Footer() {
           <div className="flex-1 min-w-[200px]">
             <h2 className="font-semibold text-base mb-2">Hỗ trợ</h2>
             <div className="flex flex-col space-y-1">
-              <Link className="text-[#666B72] font-medium pl-1" to="">FAQs</Link>
-              <Link className="text-[#666B72] font-medium pl-1" to="">Chính sách</Link>
+              <Link className="text-[#666B72] font-medium pl-1" to="">
+                FAQs
+              </Link>
+              <Link className="text-[#666B72] font-medium pl-1" to="">
+                Chính sách
+              </Link>
             </div>
           </div>
 

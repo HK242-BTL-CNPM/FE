@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import StudySpaceLogo from "../../../assets/images/StudySpace_logo.png";
 import { useAuth } from "../../../AuthContext";
 import UserMenu from "./userMenu";
-import 'animate.css';
-import { Menu, X } from 'lucide-react';
+import "animate.css";
+import { Menu, X } from "lucide-react";
 
 function Header() {
   const { user } = useAuth();
@@ -28,14 +28,16 @@ function Header() {
   }, [lastScroll]);
 
   const activeStyle = {
-    fontSize: "17px",
+    fontSize: "20px",
     color: "#000000",
     fontWeight: "bold",
+    marginRight: "60px",
   };
   const unactiveStyle = {
-    fontSize: "17px",
+    fontSize: "20px",
     color: "#969DA6",
     fontWeight: "bold",
+    marginRight: "60px",
   };
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
@@ -44,25 +46,37 @@ function Header() {
   return (
     <nav
       className={`z-50 bg-white transition-all duration-300 ease-in-out ${
-        isSticky ? "sticky top-0 animate__animated animate__fadeInDown animate__fast" : ""
+        isSticky
+          ? "sticky top-0 animate__animated animate__fadeInDown animate__fast"
+          : ""
       } border-b border-gray-300`}
     >
       <div className="flex items-center justify-between px-4 py-3 lg:px-8">
         {/* Logo + Title */}
         <div className="flex items-center">
           <Link to="../" className="flex-shrink-0 mr-3">
-            <img src={StudySpaceLogo} alt="StudySpace Logo" className="h-[60px] w-[60px]" />
+            <img
+              src={StudySpaceLogo}
+              alt="StudySpace Logo"
+              className="h-[60px] w-[60px]"
+            />
           </Link>
           <div>
             <div className="text-gray-800 font-bold text-base">STUDYSPACE</div>
-            <div className="text-gray-500 italic text-xs font-medium leading-none">“Học tập hoàn hảo”</div>
+            <div className="text-gray-500 italic text-xs font-medium leading-none">
+              “Học tập hoàn hảo”
+            </div>
           </div>
         </div>
 
         {/* Hamburger icon */}
         <div className="lg:hidden">
           <button onClick={toggleMenu}>
-            {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {menuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </button>
         </div>
 
@@ -71,7 +85,10 @@ function Header() {
           {[
             { to: "..", label: "Trang chủ" },
             { to: user ? "../book" : "../login", label: "Đặt phòng" },
-            { to: user ? "../history" : "../login", label: "Lịch sử đặt phòng" },
+            {
+              to: user ? "../history" : "../login",
+              label: "Lịch sử đặt phòng",
+            },
             { to: user ? "../status" : "../login", label: "Trạng thái phòng" },
             { to: user ? "../report" : "../login", label: "Báo cáo sự cố" },
           ].map(({ to, label }) => (
@@ -105,7 +122,10 @@ function Header() {
           {[
             { to: "..", label: "Trang chủ" },
             { to: user ? "../book" : "../login", label: "Đặt phòng" },
-            { to: user ? "../history" : "../login", label: "Lịch sử đặt phòng" },
+            {
+              to: user ? "../history" : "../login",
+              label: "Lịch sử đặt phòng",
+            },
             { to: user ? "../status" : "../login", label: "Trạng thái phòng" },
             { to: user ? "../report" : "../login", label: "Báo cáo sự cố" },
           ].map(({ to, label }) => (
