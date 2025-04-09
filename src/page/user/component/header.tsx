@@ -2,7 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import StudySpaceLogo from "../../../assets/images/StudySpace_logo.png";
 
 // Đổi tên component thành FooterNav hoặc tên gì đó mô tả hơn (tùy chọn)
-export function Header() {
+function Header() {
   const activeStyle = {
     fontSize: "17px",
     color: "#000000",
