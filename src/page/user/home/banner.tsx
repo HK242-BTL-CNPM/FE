@@ -5,8 +5,11 @@ function Banner() {
   return (
     <>
       <div className="relative h-full w-full">
-        <img src={BannerImg} className="object-cover" />
-
+        <img
+          src={BannerImg}
+          className="object-cover w-full h-full" // Đảm bảo ảnh bao phủ toàn bộ container
+          alt="Banner"
+        />
         <div className="absolute left-0 top-[73%] w-full px-4">
           <div className="max-w-7xl w-full mx-auto flex flex-col md:flex-row gap-4">
             <div className="md:basis-1/2 w-full">
