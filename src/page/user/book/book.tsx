@@ -324,12 +324,12 @@ function Book() {
         >
           <IoIosAddCircleOutline
             style={{
-              fontSize: "50px",
+              fontSize: "55px",
               color: "#000",
               marginRight: "20px",
             }}
           />
-          <h1 style={{ fontSize: "36px", fontWeight: "bold" }}>Đặt phòng</h1>
+          <h1 style={{ fontSize: "32px", fontWeight: "bold" }}>Đặt phòng</h1>
         </div>
         {/* Khung bộ lọc (Giữ nguyên JSX từ code của bạn) */}
         <div

@@ -96,20 +96,24 @@ function Status() {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "10px",
+            
+              
             }}
           >
-            <CiCalendar size={20} style={{ color: "#374151" }} />{" "}
-            {/* Icon lịch */}
+            <CiCalendar size={25} style={{ color: "#374151" }} />{" "}
+            <div className="pl-2">
             <DatePicker
               selected={selectedDate}
               onChange={(date) => setSelectedDate(date || new Date())}
               minDate={new Date()} // Chỉ cho phép chọn từ ngày hiện tại trở đi
               maxDate={new Date(new Date().setMonth(new Date().getMonth() + 1))}
               dateFormat="MMM, dd yyyy" // Định dạng ngày
-              className="custom-datepicker"
+              className="custom-datepicker rounded-xl px-2 py-1 border border-gray-300"
               placeholderText="Select a date"
             />
+            </div>
+            {/* Icon lịch */}
+            
           </div>
         </div>
 
