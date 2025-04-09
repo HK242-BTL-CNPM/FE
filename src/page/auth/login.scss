@@ -1,0 +1,81 @@
+.input-group input {
+    width: 100%;
+    padding: 8px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 17px;
+    font-size: 16px;
+    color: black;
+    padding-left :25px;
+  }
+  
+  .input-group .icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #000000;
+  }
+  
+  .bglogin {
+    height: 100vh;
+    /* background: url('/src/assets/images/bg.jpg') no-repeat right center fixed; */
+    background: url('/src/assets/images/27257016.jpg') no-repeat right center fixed ;
+  
+    background-size: cover;
+    display: flex;
+    justify-content: flex-end; /* Đẩy khối .right sang bên phải */
+    align-items: center; /* Căn giữa theo chiều dọc */
+  }
+  
+  
+  .right {
+    width:10px; /* Chiều rộng cố định */
+    height:100vh; /* Chiều cao cố định */
+    background: white;
+    display: flex;
+    /* padding: 40px; */
+    justify-content: center; /* Đẩy khối .right sang bên phải */
+    align-items: center; 
+    /* border-radius: 30px; */
+    /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); */
+    width: 90%;
+    max-width: 500px;
+    /* margin-left: 600px; */
+  }
+  
+  .login-form {
+    /* margin-left: 200px; */
+   width: 400px;
+    /* align-items: center;  */
+    font-family: 'Libre Franklin', sans-serif;
+    /* text-align: center; */
+    /* margin-bottom: 30px; */
+    text-align: center;
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* justify-content: center;  */
+  }
+  
+  .input-wrapper {
+    position: relative;
+  }
+  
+  .input-wrapper input {
+    width: 100%;
+    padding: 10px 10px 10px 45px; /* Thêm khoảng trống bên trái cho icon */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  
+  .input-wrapper i {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #888;
+  }
+  

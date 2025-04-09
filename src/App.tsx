@@ -5,6 +5,8 @@ import Home from "./page/home/home";
 import Login from "./page/auth/login";
 import StatusRoom from "./page/user/status";
 import ReportIssue from "./page/user/report";
+import Profile from "./page/user/profile";
+
 import "./assets/css/output.css";
 function App() {
   return (
@@ -16,6 +18,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/status" element={<StatusRoom />} />
         <Route path="/report" element={<ReportIssue />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </>
   );

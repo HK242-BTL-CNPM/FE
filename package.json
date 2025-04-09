@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.7.2",
     "@schedule-x/drag-and-drop": "^2.27.2",
     "@schedule-x/event-modal": "^2.27.2",
     "@schedule-x/events-service": "^2.27.2",
@@ -27,6 +28,7 @@
     "@types/react": "^19.0.10",
     "@types/react-big-calendar": "^1.16.1",
     "@types/react-dom": "^19.0.4",
+    "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.21.0",
