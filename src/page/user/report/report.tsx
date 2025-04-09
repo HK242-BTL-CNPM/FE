@@ -1,4 +1,4 @@
-import  Header  from "./component/header";
+import  Header  from "../component/header";
 
 function Report_Issue() {
   return (
