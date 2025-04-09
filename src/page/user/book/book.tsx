@@ -2,13 +2,7 @@ import { useState } from "react";
 import Header from "../component/header"; // Đã sửa import
 import Footer from "../component/footer"; // Giữ nguyên import Footer
 import imageBook from "../../../assets/images/image_book.jpg"; // Đảm bảo đường dẫn đúng
-import {
-  FaUsers,
-  FaMapMarkerAlt,
-  FaThLarge,
-  FaRegSmile,
-  FaRegFrown,
-} from "react-icons/fa";
+import { FaUsers, FaMapMarkerAlt, FaThLarge, FaSearch } from "react-icons/fa";
 
 // Interface và dữ liệu mẫu (Không đổi)
 interface Room {
@@ -191,11 +185,10 @@ const cardDetailsStyle: React.CSSProperties = {
 };
 
 const detailItemStyle: React.CSSProperties = {
-  // Giữ nguyên từ code bạn cung cấp, có thể tăng fontSize nếu muốn
   display: "flex",
   alignItems: "center",
   margin: 0,
-  fontSize: "17px", // Tăng nhẹ font size
+  fontSize: "20px", // Tăng nhẹ font size
   color: "#555",
   whiteSpace: "nowrap",
   textOverflow: "ellipsis",
@@ -203,14 +196,13 @@ const detailItemStyle: React.CSSProperties = {
 };
 
 const iconStyle: React.CSSProperties = {
-  // Tăng marginRight
-  marginRight: "15px",
+  marginRight: "20px",
   color: "#6c757d",
   flexShrink: 0,
 };
 
 const cardActionsStyle: React.CSSProperties = {
-  marginTop: "auto", // Đẩy nút xuống dưới nếu content co giãn
+  marginTop: "auto",
   display: "flex",
   gap: "2cm",
   alignItems: "center",
@@ -219,7 +211,7 @@ const cardActionsStyle: React.CSSProperties = {
 
 // -- Button Styles (Cập nhật nút Còn phòng) ---
 const baseButtonStyle: React.CSSProperties = {
-  padding: "10px 20px",
+  padding: "10px 40px",
   borderRadius: "8px",
   border: "none",
   cursor: "pointer",
@@ -232,24 +224,16 @@ const baseButtonStyle: React.CSSProperties = {
     "background-color 0.2s ease, opacity 0.2s ease, transform 0.1s ease",
 };
 
-const availableButtonStyle: React.CSSProperties = {
-  // Style nút "Còn phòng" mới giống mẫu
+const detailsButtonStyle: React.CSSProperties = {
   ...baseButtonStyle,
-  backgroundColor: "#E0F8E6", // Nền xanh lá nhạt
-  color: "#1A8A3C", // Chữ xanh lá đậm
-  border: "1px solid #A7D9B6", // Viền xanh lá nhạt
+  marginLeft: "0.6cm",
+  backgroundColor: "#EEF4FE",
+  color: "#2563EB",
 };
 
-const unavailableButtonStyle: React.CSSProperties = {
-  ...baseButtonStyle,
-  backgroundColor: "#f8d7da",
-  color: "#721c24",
-  border: "1px solid #f1b0b7",
-  cursor: "not-allowed",
-  opacity: 0.7,
-};
 const bookButtonStyle: React.CSSProperties = {
   ...baseButtonStyle,
+  marginRight: "20px",
   backgroundColor: "#0d6efd",
   color: "#fff",
 };
@@ -299,6 +283,25 @@ function Book() {
     (currentPage - 1) * ROOMS_PER_PAGE,
     currentPage * ROOMS_PER_PAGE
   );
+
+  const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
+
+  const handleShowDetails = (room: Room) => {
+    setSelectedRoom(room);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedRoom(null);
+  };
+
+  const handleBookRoom = (roomId: number) => {
+    // Loại bỏ phòng đã đặt khỏi danh sách
+    setFilteredRooms((prevRooms) =>
+      prevRooms.filter((room) => room.id !== roomId)
+    );
+    alert("Phòng đã được đặt thành công!");
+    setSelectedRoom(null);
+  };
 
   return (
     <>
@@ -408,9 +411,8 @@ function Book() {
                 aria-label="Tìm kiếm"
                 style={{ fontSize: "20px" }}
               >
-                {" "}
-                🔍{" "}
-              </span>{" "}
+                <FaSearch size={25} />
+              </span>
             </button>
           </div>
         </div>
@@ -459,20 +461,17 @@ function Book() {
                   </div>
                 </div>
                 <div style={cardActionsStyle}>
-                  {room.available ? (
-                    <button style={availableButtonStyle}>
-                      <FaRegSmile size={18} style={{ marginRight: "5px" }} />
-                      Còn phòng
-                    </button>
-                  ) : (
-                    <button style={unavailableButtonStyle} disabled>
-                      <FaRegFrown size={18} style={{ marginRight: "5px" }} />
-                      Hết phòng
-                    </button>
-                  )}
+                  <button
+                    style={detailsButtonStyle}
+                    onClick={() => handleShowDetails(room)}
+                    // style={{ marginTop: "10px" }}
+                  >
+                    Chi tiết
+                  </button>
+
                   <button
                     style={bookButtonStyle}
-                    onClick={() => alert(`Đặt phòng: ${room.name}`)}
+                    onClick={() => handleBookRoom(room.id)}
                   >
                     Đặt phòng
                   </button>
@@ -553,6 +552,190 @@ function Book() {
           </button>
         </div>
       </div>
+      {selectedRoom && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1000,
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "#fff",
+              borderRadius: "10px",
+              padding: "30px",
+              width: "771px",
+              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+              // textAlign: "center",
+            }}
+          >
+            {/* Header */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                borderBottom: "1px solid #F1F5F9",
+                paddingBottom: "10px",
+                marginBottom: "20px",
+              }}
+            >
+              <h2 style={{ fontSize: "26px", fontWeight: "bold" }}>
+                {selectedRoom.name}
+              </h2>
+              <button
+                style={{
+                  background: "#F8FAFC",
+                  border: "5px",
+                  fontSize: "10px",
+                  cursor: "pointer",
+                  color: "#64748B",
+                }}
+                onClick={handleCloseModal}
+              >
+                ✖
+              </button>
+            </div>
+            {/* Hộp chứa thông tin */}
+            <div
+              style={{
+                border: "1px solid #F1F5F9",
+                borderRadius: "12px",
+                padding: "20px",
+                marginBottom: "20px",
+              }}
+            >
+              <div
+                style={{
+                  borderBottom: "1px solid #F1F5F9",
+                  paddingBottom: "10px",
+                  marginBottom: "20px",
+                }}
+              >
+                <h2 style={{ fontSize: "20px", fontWeight: "bold" }}>
+                  Details
+                </h2>
+              </div>
+              {/* Details */}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(5, 1fr)",
+                  gap: "10px",
+                  alignItems: "center",
+                  marginBottom: "20px",
+                }}
+              >
+                <div style={{ fontSize: "14px", textAlign: "left" }}>
+                  LOẠI PHÒNG
+                </div>
+                <div style={{ fontSize: "14px", textAlign: "left" }}>
+                  Số lượng
+                </div>
+                <div style={{ fontSize: "14px", textAlign: "left" }}>Phòng</div>
+                <div style={{ fontSize: "14px", textAlign: "left" }}>
+                  Trạng thái
+                </div>
+                <div style={{ fontSize: "14px", textAlign: "left" }}>
+                  Thời gian đặt phòng
+                </div>
+
+                <div style={{ textAlign: "left" }}>{selectedRoom.type}</div>
+                <div style={{ textAlign: "left" }}>
+                  {selectedRoom.capacity} người
+                </div>
+                <div style={{ textAlign: "left" }}>{selectedRoom.details}</div>
+                <div
+                  style={{
+                    textAlign: "left",
+                    color: selectedRoom.available ? "green" : "red",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {selectedRoom.available ? "Trống" : "Đã đặt"}
+                </div>
+                <div style={{ textAlign: "left" }}>
+                  <input
+                    type="time"
+                    style={filterControlBaseStyle}
+                    value={startTime}
+                    onChange={(e) => setStartTime(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div style={{ fontSize: "14px", marginBottom: "10px" }}>
+                Danh sách Thiết bị:
+              </div>
+              <ul
+                style={{
+                  fontSize: "14px",
+                  listStyleType: "disc",
+                  paddingLeft: "20px",
+                  marginBottom: "1px",
+                  display: "flex",
+                  gap: "2cm",
+                }}
+              >
+                <li>2x Máy Lạnh</li>
+                <li>4x Đèn</li>
+                <li>1x Máy Chiếu</li>
+                <li>8x Ổ cắm</li>
+                <li>1x Màn hình</li>
+              </ul>
+            </div>
+            {/* Footer */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <button
+                onClick={handleCloseModal}
+                style={{
+                  backgroundColor: "#EEF4FE",
+                  color: "#2563EB",
+                  border: "none",
+                  borderRadius: "8px",
+                  padding: "15px 2cm",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                  marginLeft: "60px",
+                  fontSize: "18px",
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                style={{
+                  backgroundColor: "#2563EB",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "8px",
+                  padding: "15px 2cm",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                  marginRight: "60px",
+                  fontSize: "18px",
+                }}
+                onClick={() => handleBookRoom(selectedRoom?.id)}
+              >
+                Đặt phòng
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <Footer />
     </>
   );

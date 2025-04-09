@@ -5,7 +5,7 @@ import {
   AiOutlinePhone,
   AiOutlineMail,
   AiOutlineFacebook,
-  AiOutlineInstagram
+  AiOutlineInstagram,
 } from "react-icons/ai";
 
 function Footer() {
@@ -70,29 +70,30 @@ function Footer() {
             </div>
           </div>
           <div className="basis-1/5">
-          <div className="flex flex-col space-y-1">
+            <div className="flex flex-col space-y-1">
               <h2 className="font-semibold text-base">Hỗ trợ</h2>
               <Link className="text-[#666B72] font-medium pl-1" to="">
-              FAQs
+                FAQs
               </Link>
               <Link className="text-[#666B72] font-medium pl-1" to="">
-              Chính sách
+                Chính sách
               </Link>
-              </div>
+            </div>
           </div>
           <div className="basis-1/5">
-          <div className="flex flex-col space-y-1">
-              <h2 className="font-semibold text-base">Theo dõi chúng tôi qua</h2>
+            <div className="flex flex-col space-y-1">
+              <h2 className="font-semibold text-base">
+                Theo dõi chúng tôi qua
+              </h2>
               <div className="flex">
-              <Link className="" to="../">
-              <AiOutlineFacebook size={60}/>
-              </Link>
-              <Link className="" to="../book">
-              <AiOutlineInstagram size={60}/>
-              </Link>
+                <Link className="" to="../">
+                  <AiOutlineFacebook size={60} />
+                </Link>
+                <Link className="" to="../book">
+                  <AiOutlineInstagram size={60} />
+                </Link>
               </div>
-              
-              </div>
+            </div>
           </div>
         </div>
       </div>
