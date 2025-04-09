@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Header } from "./component/header"; // Đảm bảo đường dẫn đúng
+import Header from "./component/header";
+import Footer from "../user/component/footer";
 import imageBook from "../../assets/images/image_book.jpg"; // Đảm bảo đường dẫn đúng
 import { FaUsers, FaMapMarkerAlt, FaThLarge, FaRegSmile } from "react-icons/fa";
 
@@ -441,6 +442,7 @@ function Book() {
           )}
         </div>
       </div>
+      <Footer />
     </>
   );
 }
