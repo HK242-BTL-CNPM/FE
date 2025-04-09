@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../../../AuthContext";
 
 const sidebarLinkStyle = {
   display: "block",
@@ -8,6 +9,7 @@ const sidebarLinkStyle = {
 };
 
 function Profile() {
+  const { user } = useAuth();
   return (
     <div>
       <div
@@ -52,7 +54,7 @@ function Profile() {
               }}
             ></div>
             <div style={{ fontSize: "24px", fontWeight: "bold",marginBottom: "10px" }}>
-              Trịnh Thị Mỹ Lệ
+              {user.name}
             </div>
             <button className="button2">Tải ảnh mới</button>
 
@@ -65,7 +67,7 @@ function Profile() {
             <div
               id="studentId"
               style={{width: "100%",padding: "10px", borderRadius: "8px", border: "1px solid #ccc", }}>
-              22xxxxx
+              {user.mssv}
             </div>
           </div>
 
@@ -76,7 +78,7 @@ function Profile() {
             <div
               id="email"
               style={{ width: "100%", padding: "10px", borderRadius: "8px",  border: "1px solid #ccc", }}>
-              cobengokngek@hcmut.edu.vn
+              {user.email}
             </div>
           </div>
         </div>

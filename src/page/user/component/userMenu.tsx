@@ -3,7 +3,7 @@ import { useAuth } from "../../../AuthContext";
 import { IoSettingsOutline } from "react-icons/io5";
 import { CiUser } from "react-icons/ci";
 import { CiCircleQuestion } from "react-icons/ci";
-
+import { Link } from "react-router-dom";
 function UserMenu() {
   const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
@@ -26,11 +26,11 @@ function UserMenu() {
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex flex-col justify-center items-end">
-          <div className="text-base font-medium">{user}</div>
+          <div className="text-base font-medium">{user.name}</div>
           <div>User</div>
         </div>
         <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-lg">
-          {user.charAt(0)}
+        {user?.name?.charAt(0).toUpperCase()}
         </div>
       </div>
 
@@ -40,9 +40,9 @@ function UserMenu() {
           {/* Avatar + name */}
           <div className="flex items-center mb-4">
             <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-lg">
-              {user.charAt(0)}
+            {user?.name?.charAt(0).toUpperCase()}
             </div>
-            <div className="ml-3 text-lg font-semibold">{user}</div>
+            <div className="ml-3 text-lg font-semibold">{user.name}</div>
           </div>
 
           <hr className="mb-3" />
@@ -50,23 +50,22 @@ function UserMenu() {
           {/* Menu Items */}
           <ul className="space-y-3 text-sm">
             <li className="flex items-center justify-between cursor-pointer hover:text-blue-600">
-              <div className="flex items-center gap-2">
-                <CiUser />
-                Hồ sơ cá nhân
-              </div>
-              <span>›</span>
+              <Link to="../profile">
+                <div className="flex items-center gap-2">
+                  <CiUser />
+                  Hồ sơ cá nhân
+                </div>
+              </Link>
             </li>
             <li className="flex items-center justify-between cursor-pointer hover:text-blue-600">
               <div className="flex items-center gap-2">
                 <IoSettingsOutline /> Cài đặt
               </div>
-              <span>›</span>
             </li>
             <li className="flex items-center justify-between cursor-pointer hover:text-blue-600">
               <div className="flex items-center gap-2">
                 <CiCircleQuestion /> Hỗ trợ
               </div>
-              <span>›</span>
             </li>
           </ul>
 
