@@ -56,12 +56,12 @@ function History() {
         >
           <BsClockHistory
             style={{
-              fontSize: "50px",
+              fontSize: "45px",
               color: "#000",
               marginRight: "20px",
             }}
           />
-          <h1 style={{ fontSize: "36px", fontWeight: "bold" }}>
+          <h1 style={{ fontSize: "32px", fontWeight: "bold" }}>
             Lịch sử đặt phòng
           </h1>
         </div>
