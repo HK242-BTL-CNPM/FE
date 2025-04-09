@@ -3,6 +3,8 @@ import Header from "../component/header"; // Đã sửa import
 import Footer from "../component/footer"; // Giữ nguyên import Footer
 import imageBook from "../../../assets/images/image_book.jpg"; // Đảm bảo đường dẫn đúng
 import { FaUsers, FaMapMarkerAlt, FaThLarge, FaSearch } from "react-icons/fa";
+// import { RiAddCircleLine } from "react-icons/ri";
+import { IoIosAddCircleOutline } from "react-icons/io";
 
 // Interface và dữ liệu mẫu (Không đổi)
 interface Room {
@@ -313,17 +315,22 @@ function Book() {
         }}
       >
         {/* Tiêu đề */}
-        <h1
+        <div
           style={{
-            fontSize: "24px",
-            fontWeight: "bold",
-            marginBottom: "35px",
-            textShadow: "0px 4px 4px rgba(0, 0, 0, 0.15)",
-            color: "#333",
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "30px",
           }}
         >
-          Đặt phòng
-        </h1>
+          <IoIosAddCircleOutline
+            style={{
+              fontSize: "50px",
+              color: "#000",
+              marginRight: "20px",
+            }}
+          />
+          <h1 style={{ fontSize: "36px", fontWeight: "bold" }}>Đặt phòng</h1>
+        </div>
         {/* Khung bộ lọc (Giữ nguyên JSX từ code của bạn) */}
         <div
           style={{

@@ -26,7 +26,7 @@ function Report_Issue() {
           fontFamily: "Arial, sans-serif",
         }}
       >
-        {/* Breadcrumb */}
+        {/* Breadcrumb
         <div style={{ marginBottom: "20px" }}>
           <a
             href="../"
@@ -60,28 +60,26 @@ function Report_Issue() {
           >
             Báo cáo sự cố
           </a>
-        </div>
-
+        </div> */}
         {/* Title */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            marginBottom: "20px",
+            marginBottom: "30px",
           }}
         >
           <AiOutlineExclamationCircle
             style={{
               fontSize: "50px",
               color: "#000",
-              marginRight: "10px",
+              marginRight: "20px",
             }}
           />
           <h1 style={{ fontSize: "36px", fontWeight: "bold" }}>
             Báo cáo sự cố
           </h1>
         </div>
-
         {/* Main Content */}
         <div
           style={{
@@ -343,7 +341,6 @@ function Report_Issue() {
             </div>
           </div>
         </div>
-
         {/* Footer Buttons */}
         <div
           style={{
