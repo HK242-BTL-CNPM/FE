@@ -28,13 +28,13 @@ function Header() {
   }, [lastScroll]);
 
   const activeStyle = {
-    fontSize: "20px",
+    fontSize: "19px",
     color: "#000000",
     fontWeight: "bold",
     marginRight: "60px",
   };
   const unactiveStyle = {
-    fontSize: "20px",
+    fontSize: "19px",
     color: "#969DA6",
     fontWeight: "bold",
     marginRight: "60px",

@@ -91,12 +91,12 @@ function Footer() {
           <div className="flex-1 min-w-[200px]">
             <h2 className="font-semibold text-base mb-2">Theo dõi chúng tôi</h2>
             <div className="flex gap-4 mt-2">
-              <Link to="../">
-                <AiOutlineFacebook size={32} />
-              </Link>
-              <Link to="../book">
-                <AiOutlineInstagram size={32} />
-              </Link>
+              {/* <Link to="../"> */}
+              <AiOutlineFacebook size={32} />
+              {/* </Link> */}
+              {/* <Link to="../book"> */}
+              <AiOutlineInstagram size={32} />
+              {/* </Link> */}
             </div>
           </div>
         </div>
