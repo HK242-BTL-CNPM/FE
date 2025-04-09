@@ -1,4 +1,4 @@
-import BannerImg from "../../../../src/assets/images/Banner_Home.png";
+import BannerImg from "../../../assets/images/Banner_Home.png";
 import { IoIosSearch } from "react-icons/io";
 
 function Banner() {
