@@ -5,6 +5,7 @@ import Home from "./page/user/home/home";
 import Login from "./page/auth/login";
 import StatusRoom from "./page/user/status/status";
 import ReportIssue from "./page/user/report/report";
+import Profile from "./page/user/profile/profile";
 import "./assets/css/output.css";
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/status" element={<StatusRoom />} />
         <Route path="/report" element={<ReportIssue />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </>
   );
