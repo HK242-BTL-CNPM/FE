@@ -1,12 +1,11 @@
 import { Routes, Route } from "react-router-dom";
 import Book from "./page/user/book";
-import History from "./page/user/history";
-import Home from "./page/user/home/home";
+import History from "./page/history/history";
+import Home from "./page/home/home";
 import Login from "./page/auth/login";
 import StatusRoom from "./page/user/status";
 import ReportIssue from "./page/user/report";
 import "./assets/css/output.css";
-
 function App() {
   return (
     <>

@@ -1,9 +1,9 @@
-import { Link, NavLink } from "react-router-dom";
-import PreRoomImg from "../../../assets/images/preroompic.png";
-import MeetRoomImg from "../../../assets/images/meetingroompic.png";
-import MentorRoomImg from "../../../assets/images/mentorroompic.png";
-import IndiRoomImg from "../../../assets/images/indiroompic.png";
-import TuhocImg from "../../../assets/images/tuhoc.png";
+import { Link } from "react-router-dom";
+import PreRoomImg from "../../assets/images/preroompic.png";
+import MeetRoomImg from "../../assets/images/meetingroompic.png";
+import MentorRoomImg from "../../assets/images/mentorroompic.png";
+import IndiRoomImg from "../../assets/images/indiroompic.png";
+import TuhocImg from "../../assets/images/tuhoc.png";
 function Description() {
   return (
     <>
@@ -74,18 +74,18 @@ function Description() {
           </div>
         </div>
 
-        <div className="lg:basis-2/5 w-full flex">
+        <div className="lg:basis-2/5 w-full flex hover:scale-105 transition duration-300">
           <img
             src={TuhocImg}
             alt="khong-gian-hoc-tap"
-            className="w-4/5 h-full rounded-2xl shadow-md ml-auto"
+            className="w-4/5 h-full rounded-2xl shadow-md lg:ml-auto mx-auto"
           />
         </div>
       </div>
 
       <h1 className="text-3xl font-bold pl-20 pt-16  text-[#2563EB]">Vị trí</h1>
 
-      <div className="flex flex-col lg:flex-row border rounded-xl pt-16  mt-8 max-w-[1200px] mx-auto">
+      <div className="flex flex-col lg:flex-row border rounded-[2rem] pt-16 pb-16 mt-8 max-w-[1200px] mx-auto">
         <div className="lg:basis-1/4 flex flex-col justify-center pl-16">
           <h2 className="text-3xl font-bold mb-2">Phòng tự học</h2>
           <p className="text-lg">
@@ -96,7 +96,7 @@ function Description() {
 
         <div className="lg:basis-3/4 flex flex-col gap-6">
           <div>
-            <h3 className="text-center font-semibold mb-2">Cơ sở 1</h3>
+            <h3 className="text-center font-semibold mb-2 text-xl">Cơ sở 1</h3>
               <iframe className="mx-auto"
                 width="300px"
                 height="300px"
@@ -104,7 +104,7 @@ function Description() {
               >
               </iframe>
 
-            <p className="mt-2 text-center font-semibold">
+            <p className="mt-2 text-center font-semibold ">
               Địa chỉ:{" "}
               <span className="font-normal">
                 268 Đ. Lý Thường Kiệt, Phường 14, Quận 10, Hồ Chí Minh, Việt Nam
@@ -113,7 +113,7 @@ function Description() {
           </div>
 
           <div>
-            <h3 className="text-center font-semibold mb-2">Cơ sở 2</h3>
+            <h3 className="text-center font-semibold mb-2 text-xl ">Cơ sở 2</h3>
             <iframe
               className="mx-auto"
               width="300px"

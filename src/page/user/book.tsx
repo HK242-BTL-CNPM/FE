@@ -1,4 +1,4 @@
-import { Header } from "./component/header";
+import Header  from "./component/header";
 
 // Đổi tên component thành FooterNav hoặc tên gì đó mô tả hơn (tùy chọn)
 function Book() {

@@ -1,10 +1,10 @@
-import BannerImg from "../../../assets/images/Banner_Home.png";
+import BannerImg from "../../assets/images/Banner_Home.png";
 import { IoIosSearch } from "react-icons/io";
 
 function Banner() {
   return (
     <>
-      <div className="relative aspect-[1563/580] w-full">
+      <div className="relative h-full w-full">
         <img src={BannerImg} className="object-cover" />
 
         <div className="absolute left-0 top-[73%] w-full px-4">
