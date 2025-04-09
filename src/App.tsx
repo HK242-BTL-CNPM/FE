@@ -8,16 +8,47 @@ import ReportIssue from "./page/user/report/report";
 // import Profile from "./page/user/profile/profile";
 // import Dashboard from "./page/admin/Dashboard";
 import "./assets/css/output.css";
+import PrivateRoute from "./page/auth/PrivateRoute";
+
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/book" element={<Book />} />
-        <Route path="/history" element={<History />} />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/status" element={<StatusRoom />} />
-        <Route path="/report" element={<ReportIssue />} />
+        {/* Các route cần bảo vệ */}
+        <Route
+          path="/book"
+          element={
+            <PrivateRoute>
+              <Book />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/history"
+          element={
+            <PrivateRoute>
+              <History />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/status"
+          element={
+            <PrivateRoute>
+              <StatusRoom />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/report"
+          element={
+            <PrivateRoute>
+              <ReportIssue />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </>
   );
