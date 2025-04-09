@@ -2,16 +2,6 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    container: {
-      center: true, // Canh giữa
-      screens: {
-        sm: "640px",
-        md: "768px",
-        lg: "1024px",
-        xl: "1280px",
-        "2xl": "1536x", // Tuỳ chỉnh max width 2xl
-      },
-    },
     extend: {
       fontFamily: {
         Roboto: ["Roboto", "sans-serif"],
@@ -27,6 +17,13 @@ export default {
         black_admin:"#23272C",
   
       },
+    },
+    screens: {
+      sm: '640px',
+      md: '900px',   
+      lg: '1080px',
+      xl: '1280px',
+      '2xl': '1536px',
     },
   },
   plugins: [],

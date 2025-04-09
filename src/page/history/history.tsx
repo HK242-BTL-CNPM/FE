@@ -42,19 +42,10 @@ function History() {
   return (
     <>
       <Header />
-      <Link to="../">
-        <h1 className="text-lg font-semibold pl-20 pt-2 text-[#5D6675] inline-block ">
-          {" "}
-          &gt; Trang chủ
-        </h1>
-      </Link>
-      <Link to="../history">
-        <h1 className="text-lg font-semibold pl-1 pt-2 text-[#5D6675] inline-block ">
-          {" "}
-          &gt; Lịch sử đặt phòng
-        </h1>
-      </Link>
-      <div className="sx-react-calendar-wrapper mx-auto pt-2">
+      <div className="pt-8 pl-8 text-2xl pb-4 font-semibold">
+        Lịch sử đặt phòng
+      </div>
+      <div className="sx-react-calendar-wrapper mx-auto pt-2 px-2">
         <ScheduleXCalendar calendarApp={calendar} />
       </div>
       <Footer/>
