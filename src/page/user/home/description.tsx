@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import PreRoomImg from "../../assets/images/preroompic.png";
-import MeetRoomImg from "../../assets/images/meetingroompic.png";
-import MentorRoomImg from "../../assets/images/mentorroompic.png";
-import IndiRoomImg from "../../assets/images/indiroompic.png";
-import TuhocImg from "../../assets/images/tuhoc.png";
+import PreRoomImg from "../../../assets/images/preroompic.png";
+import MeetRoomImg from "../../../assets/images/meetingroompic.png";
+import MentorRoomImg from "../../../assets/images/mentorroompic.png";
+import IndiRoomImg from "../../../assets/images/indiroompic.png";
+import TuhocImg from "../../../assets/images/tuhoc.png";
 function Description() {
   return (
     <>
