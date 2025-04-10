@@ -26,7 +26,7 @@ function UserMenu() {
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex flex-col justify-center items-end">
-          <div className="text-base font-medium">{user.name}</div>
+          <div className=" text-xs sm:text-sm md:text-sm lg:text-sm xl:text-base font-medium">{user.name}</div>
           <div>User</div>
         </div>
         <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-lg">
