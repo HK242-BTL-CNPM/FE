@@ -108,9 +108,9 @@ function Report_Issue() {
               padding: "20px",
               borderRadius: "10px",
               border: "1px solid #D1D5DB",
-              width: "500px",
+              width: "460px",
               height: "370px",
-              marginLeft: "3.5cm",
+              marginLeft: "1.8cm",
             }}
           >
             <h2
@@ -224,15 +224,15 @@ function Report_Issue() {
               padding: "20px",
               borderRadius: "10px",
               border: "1px solid #D1D5DB",
-              width: "638px",
-              height: "480px",
+              width: "640px",
+              height: "470px",
             }}
           >
             <h2
               style={{
                 fontSize: "20px",
                 fontWeight: "bold",
-                marginBottom: "15px",
+                marginBottom: "10px",
               }}
             >
               Báo cáo sự cố
@@ -242,7 +242,7 @@ function Report_Issue() {
                 fontSize: "18px",
                 display: "flex",
                 flexDirection: "column",
-                gap: "8px",
+                gap: "7px",
               }}
             >
               <label>
@@ -314,7 +314,7 @@ function Report_Issue() {
             justifyContent: "flex-end",
             gap: "10px",
             position: "relative",
-            bottom: "-20px",
+            bottom: "-10px",
           }}
         >
           <button style={cancelButtonStyle} onClick={handleReset}>
@@ -368,7 +368,7 @@ const submitButtonStyle: React.CSSProperties = {
   fontWeight: "bold",
   cursor: "pointer",
   marginTop: "20px",
-  marginRight: "4cm",
+  marginRight: "2.5cm",
 };
 
 export default Report_Issue;
