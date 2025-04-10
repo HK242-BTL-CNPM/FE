@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import "./calendar.scss";
 import events from "./event";
-import Header  from "../component/header";
-import Footer  from "../component/footer";
+import Header from "../component/header";
+import Footer from "../component/footer";
 import { useCalendarApp, ScheduleXCalendar } from "@schedule-x/react";
 import {
   createViewDay,
@@ -14,8 +14,7 @@ import { createEventsServicePlugin } from "@schedule-x/events-service";
 
 import "@schedule-x/theme-default/dist/index.css";
 import { createEventModalPlugin } from "@schedule-x/event-modal";
-//import { createDragAndDropPlugin } from "@schedule-x/drag-and-drop";
-import { Link } from "react-router-dom";
+import { BsClockHistory } from "react-icons/bs";
 
 function History() {
   const eventsService = useState(() => createEventsServicePlugin())[0];
@@ -38,26 +37,39 @@ function History() {
   useEffect(() => {
     // get all events
     eventsService.getAll();
-  }, []);
+  }, [eventsService]);
   return (
     <>
       <Header />
-      <Link to="../">
-        <h1 className="text-lg font-semibold pl-20 pt-2 text-[#5D6675] inline-block ">
-          {" "}
-          &gt; Trang chủ
-        </h1>
-      </Link>
-      <Link to="../history">
-        <h1 className="text-lg font-semibold pl-1 pt-2 text-[#5D6675] inline-block ">
-          {" "}
-          &gt; Lịch sử đặt phòng
-        </h1>
-      </Link>
-      <div className="sx-react-calendar-wrapper mx-auto pt-2">
-        <ScheduleXCalendar calendarApp={calendar} />
+      <div
+        style={{
+          padding: "1.5cm 4cm 2cm 4cm",
+          fontFamily: "Arial, sans-serif",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "30px",
+          }}
+        >
+          <BsClockHistory
+            style={{
+              fontSize: "45px",
+              color: "#000",
+              marginRight: "20px",
+            }}
+          />
+          <h1 style={{ fontSize: "32px", fontWeight: "bold" }}>
+            Lịch sử đặt phòng
+          </h1>
+        </div>
+        <div className="sx-react-calendar-wrapper mx-auto pt-2 px-2">
+          <ScheduleXCalendar calendarApp={calendar} />
+        </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }
