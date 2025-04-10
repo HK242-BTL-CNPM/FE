@@ -2,19 +2,50 @@ import { AiOutlineExclamationCircle } from "react-icons/ai";
 import Header from "../component/header";
 import Footer from "../component/footer";
 import React, { useState } from "react";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function Report_Issue() {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedHour, setSelectedHour] = useState<string | null>(null);
-  const [selectedMinute, setSelectedMinute] = useState<string | null>(null);
+  const [selectedFacility, setSelectedFacility] = useState("Tất cả");
+  const [buildingOptions, setBuildingOptions] = useState<string[]>([]);
+  const [selectedRoomType, setSelectedRoomType] = useState("Tất cả");
+  const [roomNameOptions, setRoomNameOptions] = useState<string[]>([]);
+
+  const handleFacilityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const facility = e.target.value;
+    setSelectedFacility(facility);
+
+    // Cập nhật danh sách tòa dựa trên cơ sở đã chọn
+    if (facility === "Cơ sở 1") {
+      setBuildingOptions(["B1", "B4", "B9", "B10"]);
+    } else if (facility === "Cơ sở 2") {
+      setBuildingOptions(["H1", "H2", "H3", "H6"]);
+    } else {
+      setBuildingOptions([]);
+    }
+  };
+
+  const handleRoomTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const roomType = e.target.value;
+    setSelectedRoomType(roomType);
+
+    // Cập nhật danh sách tên phòng dựa trên loại phòng
+    if (roomType === "Phòng thuyết trình") {
+      setRoomNameOptions(["PTT-01", "PTT-02", "PTT-03", "PTT-04"]);
+    } else if (roomType === "Phòng tự học") {
+      setRoomNameOptions(["PTH-01", "PTH-02", "PTH-03", "PTH-04"]);
+    } else if (roomType === "Phòng họp nhóm") {
+      setRoomNameOptions(["PHN-01", "PHN-02", "PHN-03", "PHN-04"]);
+    } else if (roomType === "Phòng mentor 1-1") {
+      setRoomNameOptions(["PM1-01", "PM1-02", "PM1-03", "PM1-04"]);
+    } else {
+      setRoomNameOptions([]);
+    }
+  };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       console.log("Tệp đã chọn:", file);
-      // Bạn có thể xử lý tệp ở đây, ví dụ: tải lên server hoặc hiển thị xem trước
     }
   };
   return (
@@ -26,41 +57,6 @@ function Report_Issue() {
           fontFamily: "Arial, sans-serif",
         }}
       >
-        {/* Breadcrumb
-        <div style={{ marginBottom: "20px" }}>
-          <a
-            href="../"
-            style={{
-              fontSize: "24px",
-              fontWeight: "bold",
-              color: "#5D6675",
-              borderBottom: "1px solid #5D6675",
-            }}
-          >
-            Trang chủ
-          </a>
-          <span style={{ marginRight: "10px" }}></span>
-          <span
-            style={{
-              fontSize: "24px", // Kích thước chữ 24px
-              color: "#5D6675", // Màu chữ #5D6675
-            }}
-          >
-            &gt;
-          </span>
-          <span style={{ marginRight: "10px" }}></span>
-          <a
-            href="/report"
-            style={{
-              fontSize: "24px",
-              fontWeight: "bold",
-              color: "#5D6675",
-              borderBottom: "1px solid #5D6675",
-            }}
-          >
-            Báo cáo sự cố
-          </a>
-        </div> */}
         {/* Title */}
         <div
           style={{
@@ -96,7 +92,7 @@ function Report_Issue() {
               borderRadius: "10px",
               border: "1px solid #D1D5DB",
               width: "500px",
-              height: "480px",
+              height: "370px",
               marginLeft: "3.5cm",
             }}
           >
@@ -115,6 +111,7 @@ function Report_Issue() {
                 display: "flex",
                 flexDirection: "column",
                 gap: "30px",
+                marginTop: "30px",
               }}
             >
               {/* Cơ sở */}
@@ -127,12 +124,37 @@ function Report_Issue() {
                 }}
               >
                 <label style={{ flex: "1" }}>Cơ sở</label>
-                <select style={{ ...dropdownStyle, flex: "2" }}>
-                  <option>Tất cả</option>
-                  <option>Cơ sở 1</option>
-                  <option>Cơ sở 2</option>
+                <select
+                  style={{ ...dropdownStyle, flex: "2" }}
+                  value={selectedFacility}
+                  onChange={handleFacilityChange}
+                >
+                  <option value="Tất cả">Tất cả</option>
+                  <option value="Cơ sở 1">Cơ sở 1</option>
+                  <option value="Cơ sở 2">Cơ sở 2</option>
                 </select>
               </div>
+
+              {/* Tòa */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  gap: "10px",
+                }}
+              >
+                <label style={{ flex: "1" }}>Tòa</label>
+                <select style={{ ...dropdownStyle, flex: "2" }}>
+                  <option value="">Tất cả</option>
+                  {buildingOptions.map((building) => (
+                    <option key={building} value={building}>
+                      {building}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               {/* Loại phòng */}
               <div
                 style={{
@@ -143,30 +165,16 @@ function Report_Issue() {
                 }}
               >
                 <label style={{ flex: "1" }}>Loại phòng</label>
-                <select style={{ ...dropdownStyle, flex: "2" }}>
-                  <option>Tất cả</option>
-                  <option>Phòng tự học</option>
-                  <option>Phòng thuyết trình</option>
-                  <option>Phòng họp nhóm</option>
-                  <option>Phòng mentor 1-1</option>
-                </select>
-              </div>
-
-              {/* Số người */}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  gap: "10px",
-                }}
-              >
-                <label style={{ flex: "1" }}>Số người</label>
-                <select style={{ ...dropdownStyle, flex: "2" }}>
-                  <option>Tất cả</option>
-                  <option>1-2 người</option>
-                  <option>3-5 người</option>
-                  <option>6-10 người</option>
+                <select
+                  style={{ ...dropdownStyle, flex: "2" }}
+                  value={selectedRoomType}
+                  onChange={handleRoomTypeChange}
+                >
+                  <option value="Tất cả">Tất cả</option>
+                  <option value="Phòng tự học">Phòng tự học</option>
+                  <option value="Phòng thuyết trình">Phòng thuyết trình</option>
+                  <option value="Phòng họp nhóm">Phòng họp nhóm</option>
+                  <option value="Phòng mentor 1-1">Phòng mentor 1-1</option>
                 </select>
               </div>
 
@@ -180,77 +188,14 @@ function Report_Issue() {
                 }}
               >
                 <label style={{ flex: "1" }}>Tên phòng</label>
-                <input
-                  type="text"
-                  placeholder="Nhập tên phòng"
-                  style={{ ...inputStyle, flex: "2" }}
-                />
-              </div>
-
-              {/* Thời gian */}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  gap: "10px",
-                }}
-              >
-                <label style={{ flex: "1" }}>Thời gian</label>
-                <div style={{ flex: "2", display: "flex", gap: "10px" }}>
-                  {/* Dropdown chọn giờ */}
-                  <select
-                    style={{ ...dropdownStyle, flex: "1" }}
-                    onChange={(e) => setSelectedHour(e.target.value)}
-                    value={selectedHour || ""} // Đảm bảo giá trị không phải null
-                  >
-                    <option value="">Giờ</option>
-                    {Array.from({ length: 24 }, (_, i) => (
-                      <option key={i} value={i.toString()}>
-                        {i.toString().padStart(2, "0")}
-                      </option>
-                    ))}
-                  </select>
-
-                  {/* Dropdown chọn phút */}
-                  <select
-                    style={{ ...dropdownStyle, flex: "1" }}
-                    onChange={(e) => setSelectedMinute(e.target.value)}
-                    value={selectedMinute || ""} // Đảm bảo giá trị không phải null
-                  >
-                    <option value="">Phút</option>
-                    {Array.from({ length: 60 }, (_, i) => (
-                      <option key={i} value={i.toString()}>
-                        {i.toString().padStart(2, "0")}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              {/* Ngày */}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  gap: "10px",
-                }}
-              >
-                <label style={{ flex: "1" }}>Ngày</label>
-                <DatePicker
-                  selected={selectedDate}
-                  onChange={(date) => setSelectedDate(date)}
-                  dateFormat="dd/MM/yyyy"
-                  placeholderText="Chọn ngày"
-                  className="custom-datepicker"
-                  maxDate={new Date()} // Ngày tối đa là hôm nay
-                  minDate={
-                    new Date(
-                      new Date().setFullYear(new Date().getFullYear() - 1)
-                    )
-                  } // Ngày tối thiểu là 1 năm trước
-                />
+                <select style={{ ...dropdownStyle, flex: "2" }}>
+                  <option value="">Tất cả</option>
+                  {roomNameOptions.map((roomName) => (
+                    <option key={roomName} value={roomName}>
+                      {roomName}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
           </div>
