@@ -81,7 +81,7 @@ function Header() {
         </div>
 
         {/* Nav menu - Desktop */}
-        <div className="hidden lg:flex flex-wrap items-center justify-center lg:gap-x-10 gap-x-2 gap-y-2 w-[80%] mx-auto">
+        <div className="hidden lg:flex flex-wrap items-center justify-center lg:gap-x-10 gap-x-2 gap-y-2 w-[70%] mx-auto">
           {[
             { to: "..", label: "Trang chủ" },
             { to: user ? "../book" : "../login", label: "Đặt phòng" },
