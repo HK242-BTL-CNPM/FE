@@ -53,7 +53,7 @@ function Header() {
     >
       <div className="flex items-center justify-between px-4 py-3 lg:px-8">
         {/* Logo + Title */}
-        <div className="flex items-center">
+        <div className="flex items-center ">
           <Link to="../" className="flex-shrink-0 mr-3">
             <img
               src={StudySpaceLogo}
@@ -81,7 +81,7 @@ function Header() {
         </div>
 
         {/* Nav menu - Desktop */}
-        <div className="hidden lg:flex items-center gap-10">
+        <div className="hidden lg:flex flex-wrap items-center justify-center lg:gap-x-10 gap-x-2 gap-y-2 w-[80%] mx-auto">
           {[
             { to: "..", label: "Trang chủ" },
             { to: user ? "../book" : "../login", label: "Đặt phòng" },
@@ -96,8 +96,11 @@ function Header() {
               key={label}
               to={to}
               onClick={closeMenu}
-              className="hover:text-blue-600 text-sm font-medium"
-              style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+              className={({ isActive }) =>
+                `hover:text-blue-600 font-bold transition-colors duration-200 ${
+                  isActive ? "text-black" : "text-gray-400"
+                } text-sm md:text-sm lg:text-base xl:text-xl`
+              }
             >
               {label}
             </NavLink>
@@ -105,12 +108,14 @@ function Header() {
         </div>
 
         {/* User button - Desktop */}
-        <div className="hidden lg:block">
+        <div className="hidden lg:block ">
           {user ? (
             <UserMenu />
           ) : (
             <Link to="/login">
-              <button className="button4">Đăng Nhập</button>
+              <button className="button4 text-xs sm:text-sm md:text-sm lg:text-sm xl:text-base">
+                Đăng Nhập
+              </button>
             </Link>
           )}
         </div>
