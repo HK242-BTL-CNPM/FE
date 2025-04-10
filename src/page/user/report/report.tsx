@@ -9,6 +9,8 @@ function Report_Issue() {
   const [buildingOptions, setBuildingOptions] = useState<string[]>([]);
   const [selectedRoomType, setSelectedRoomType] = useState("Tất cả");
   const [roomNameOptions, setRoomNameOptions] = useState<string[]>([]);
+  const [deviceName, setDeviceName] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleFacilityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const facility = e.target.value;
@@ -48,6 +50,21 @@ function Report_Issue() {
       console.log("Tệp đã chọn:", file);
     }
   };
+
+  const handleSubmit = () => {
+    alert("Đã gửi thông báo lên admin!\nCảm ơn bạn đã báo cáo sự cố!😊");
+    handleReset();
+  };
+
+  const handleReset = () => {
+    setSelectedFacility("Tất cả");
+    setBuildingOptions([]);
+    setSelectedRoomType("Tất cả");
+    setRoomNameOptions([]);
+    setDeviceName("");
+    setDescription("");
+  };
+
   return (
     <>
       <Header />
@@ -234,6 +251,8 @@ function Report_Issue() {
                   type="text"
                   placeholder="Nhập tên thiết bị"
                   style={inputStyle}
+                  value={deviceName}
+                  onChange={(e) => setDeviceName(e.target.value)}
                 />
               </label>
               <label>
@@ -241,6 +260,8 @@ function Report_Issue() {
                 <textarea
                   placeholder="Nhập mô tả"
                   style={{ ...inputStyle, height: "80px", resize: "none" }}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                 />
               </label>
               <label>
@@ -296,8 +317,12 @@ function Report_Issue() {
             bottom: "-20px",
           }}
         >
-          <button style={cancelButtonStyle}>Hủy</button>
-          <button style={submitButtonStyle}>Gửi</button>
+          <button style={cancelButtonStyle} onClick={handleReset}>
+            Hủy
+          </button>
+          <button style={submitButtonStyle} onClick={handleSubmit}>
+            Gửi
+          </button>
         </div>
       </div>
       <Footer />
