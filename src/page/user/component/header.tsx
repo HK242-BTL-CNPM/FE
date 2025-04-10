@@ -1,112 +1,155 @@
 import { Link, NavLink } from "react-router-dom";
+import { useState, useEffect } from "react";
 import StudySpaceLogo from "../../../assets/images/StudySpace_logo.png";
+import { useAuth } from "../../../AuthContext";
+import UserMenu from "./userMenu";
+import "animate.css";
+import { Menu, X } from "lucide-react";
 
-// Đổi tên component thành FooterNav hoặc tên gì đó mô tả hơn (tùy chọn)
 function Header() {
+  const { user } = useAuth();
+  const [isSticky, setIsSticky] = useState(false);
+  const [lastScroll, setLastScroll] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScroll = window.scrollY;
+      if (currentScroll > lastScroll) {
+        setIsSticky(false);
+      } else {
+        setIsSticky(true);
+      }
+      setLastScroll(currentScroll);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScroll]);
+
   const activeStyle = {
-    fontSize: "17px",
+    fontSize: "19px",
     color: "#000000",
     fontWeight: "bold",
+    marginRight: "60px",
   };
   const unactiveStyle = {
-    fontSize: "17px",
+    fontSize: "19px",
     color: "#969DA6",
     fontWeight: "bold",
+    marginRight: "60px",
   };
+
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+  const closeMenu = () => setMenuOpen(false);
+
   return (
-    <nav style={{ borderBottom: "1px solid #969DA6" }}>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          flexWrap: "nowrap",
-        }}
-      >
-        <div
-          style={{
-            flexShrink: 0,
-            marginRight: "15px",
-          }}
-        >
-          <Link to="../home" className="flex-shrink-0">
+    <nav
+      className={`z-50 bg-white transition-all duration-300 ease-in-out ${
+        isSticky
+          ? "sticky top-0 animate__animated animate__fadeInDown animate__fast"
+          : ""
+      } border-b border-gray-300`}
+    >
+      <div className="flex items-center justify-between px-4 py-3 lg:px-8">
+        {/* Logo + Title */}
+        <div className="flex items-center">
+          <Link to="../" className="flex-shrink-0 mr-3">
             <img
               src={StudySpaceLogo}
               alt="StudySpace Logo"
-              style={{ height: "60px", width: "60px" }}
+              className="h-[60px] w-[60px]"
             />
           </Link>
-        </div>
-        <div
-          style={{
-            marginBottom: "11px",
-            marginLeft: "-15px",
-            marginRight: "60px",
-          }}
-        >
-          <div
-            className="text-gray-800" // Bỏ tạm leading và text size class
-            style={{ fontSize: "16px", lineHeight: "1.5", fontWeight: "bold" }} // Ví dụ text-sm, leading-none
-          >
-            STUDYSPACE
-          </div>
-          <div
-            className="text-gray-500" // Bỏ tạm leading và text size class
-            style={{
-              fontSize: "10px",
-              lineHeight: "1",
-              fontStyle: "italic",
-              fontWeight: "500",
-            }} // Ví dụ text-xs, leading-none
-          >
-            “Học tập hoàn hảo”
+          <div>
+            <div className="text-gray-800 font-bold text-base">STUDYSPACE</div>
+            <div className="text-gray-500 italic text-xs font-medium leading-none">
+              “Học tập hoàn hảo”
+            </div>
           </div>
         </div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "7rem",
-          }}
-        >
-          <NavLink
-            to=".."
-            className="hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
-            style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
-          >
-            Trang chủ
-          </NavLink>
-          <NavLink
-            to="../book"
-            className="hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
-            style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
-          >
-            Đặt phòng
-          </NavLink>
-          <NavLink
-            to="../history"
-            className="hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
-            style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
-          >
-            Lịch sử đặt phòng
-          </NavLink>
 
-          <NavLink
-            to="../status"
-            className="hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
-            style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
-          >
-            Trạng thái phòng
-          </NavLink>
+        {/* Hamburger icon */}
+        <div className="lg:hidden">
+          <button onClick={toggleMenu}>
+            {menuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
+          </button>
+        </div>
 
-          <NavLink
-            to="../report"
-            className="hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
-            style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
-          >
-            Báo cáo sự cố
-          </NavLink>
+        {/* Nav menu - Desktop */}
+        <div className="hidden lg:flex items-center gap-10">
+          {[
+            { to: "..", label: "Trang chủ" },
+            { to: user ? "../book" : "../login", label: "Đặt phòng" },
+            {
+              to: user ? "../history" : "../login",
+              label: "Lịch sử đặt phòng",
+            },
+            { to: user ? "../status" : "../login", label: "Trạng thái phòng" },
+            { to: user ? "../report" : "../login", label: "Báo cáo sự cố" },
+          ].map(({ to, label }) => (
+            <NavLink
+              key={label}
+              to={to}
+              onClick={closeMenu}
+              className="hover:text-blue-600 text-sm font-medium"
+              style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+            >
+              {label}
+            </NavLink>
+          ))}
+        </div>
+
+        {/* User button - Desktop */}
+        <div className="hidden lg:block">
+          {user ? (
+            <UserMenu />
+          ) : (
+            <Link to="/login">
+              <button className="button4">Đăng Nhập</button>
+            </Link>
+          )}
         </div>
       </div>
+
+      {/* Nav menu - Mobile */}
+      {menuOpen && (
+        <div className="lg:hidden px-4 pb-4 flex flex-col gap-3 items-center">
+          {[
+            { to: "..", label: "Trang chủ" },
+            { to: user ? "../book" : "../login", label: "Đặt phòng" },
+            {
+              to: user ? "../history" : "../login",
+              label: "Lịch sử đặt phòng",
+            },
+            { to: user ? "../status" : "../login", label: "Trạng thái phòng" },
+            { to: user ? "../report" : "../login", label: "Báo cáo sự cố" },
+          ].map(({ to, label }) => (
+            <NavLink
+              key={label}
+              to={to}
+              onClick={closeMenu}
+              className="hover:text-blue-600 text-sm font-medium"
+              style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+            >
+              {label}
+            </NavLink>
+          ))}
+          <div className="mt-2">
+            {user ? (
+              <UserMenu />
+            ) : (
+              <Link to="/login" onClick={closeMenu}>
+                <button className="button4 ">Đăng Nhập</button>
+              </Link>
+            )}
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
