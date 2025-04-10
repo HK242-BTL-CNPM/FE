@@ -52,7 +52,7 @@ function Profile() {
               }}
             ></div>
             <div style={{ fontSize: "24px", fontWeight: "bold",marginBottom: "10px" }}>
-              Trịnh Thị Mỹ Lệ
+              Nguyễn Văn A
             </div>
             <button className="button2">Tải ảnh mới</button>
 
