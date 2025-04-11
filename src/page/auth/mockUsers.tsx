@@ -5,16 +5,16 @@ const mockUsers = [
       email: "hieu@gmail.com",
       password: "123456", 
       mssv: "2210978",
-      role: "Admin",
+      role: "User",
      
     },
     {
       id: 2,
-      name: "Nguyễn Văn A",
-      email: "a@example.com",
-      password: "abcdef",
+      name: "Nguyễn Văn Admin",
+      email: "admin@gmail.com",
+      password: "123",
       mssv: "987654321",
-      role: "User",
+      role: "Admin",
       
     },
   ];
