@@ -18,9 +18,12 @@ function Login() {
       (user) => user.email === email && user.password === password
     );
   
-    if (foundUser) {
+    if (foundUser?.role === "Admin") {
       login(foundUser);
-      navigate("/");
+      navigate("/dashboard");
+    } else if (foundUser) {
+      login(foundUser);
+      navigate("/"); 
     } else {
       alert("Sai email hoặc mật khẩu!");
     }
