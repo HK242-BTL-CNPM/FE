@@ -40,30 +40,11 @@ function History() {
   }, [eventsService]);
   return (
     <>
-      <Header />
-      <div
-        style={{
-          padding: "1.5cm 4cm 2cm 4cm",
-          fontFamily: "Arial, sans-serif",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            marginBottom: "30px",
-          }}
-        >
-          <BsClockHistory
-            style={{
-              fontSize: "45px",
-              color: "#000",
-              marginRight: "20px",
-            }}
-          />
-          <h1 style={{ fontSize: "32px", fontWeight: "bold" }}>
-            Lịch sử đặt phòng
-          </h1>
+     <Header />
+      <div className="px-4 md:px-16 lg:px-24 py-6 font-sans">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center mb-8 gap-4">
+          <BsClockHistory className="text-4xl text-black" />
+          <h1 className="text-2xl sm:text-3xl font-bold">Lịch sử đặt phòng</h1>
         </div>
         <div className="sx-react-calendar-wrapper mx-auto pt-2 px-2">
           <ScheduleXCalendar calendarApp={calendar} />
