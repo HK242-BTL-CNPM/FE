@@ -19,6 +19,12 @@ import "@schedule-x/theme-default/dist/index.css";
 import { csOptions, toaOptionsByCs, phongOptionsByCs } from "./locationOptions";
 
 function Booking() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Quản lý trạng thái mở/đóng Sidebar
+
+  const handleToggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev); // Đảo trạng thái Sidebar
+  };
+
   const customStyles = {
     placeholder: (provided: any) => ({
       ...provided,
@@ -49,9 +55,12 @@ function Booking() {
   const filterEvents = () => {
     let filtered = events;
 
-    if (selectedCs) filtered = filtered.filter((e) => e.title.includes(selectedCs));
-    if (selectedToa) filtered = filtered.filter((e) => e.title.includes(selectedToa));
-    if (selectedPhong) filtered = filtered.filter((e) => e.title.includes(selectedPhong));
+    if (selectedCs)
+      filtered = filtered.filter((e) => e.title.includes(selectedCs));
+    if (selectedToa)
+      filtered = filtered.filter((e) => e.title.includes(selectedToa));
+    if (selectedPhong)
+      filtered = filtered.filter((e) => e.title.includes(selectedPhong));
 
     setFilteredEvents(filtered);
   };
@@ -63,26 +72,30 @@ function Booking() {
   const eventsService = useState(() => createEventsServicePlugin())[0];
 
   const calendar = useCalendarApp({
-    views: [createViewDay(), createViewWeek(), createViewMonthGrid(), createViewMonthAgenda()],
+    views: [
+      createViewDay(),
+      createViewWeek(),
+      createViewMonthGrid(),
+      createViewMonthAgenda(),
+    ],
     events: filteredEvents,
     calendars: {
       leisure: {
-        colorName: 'leisure',
+        colorName: "leisure",
         lightColors: {
-          main: '#4CAF50',  // Màu xanh lá cho chế độ sáng
-          container: '#d2e7ff',
-          onContainer: '#002859',
-        }
+          main: "#4CAF50", // Màu xanh lá cho chế độ sáng
+          container: "#d2e7ff",
+          onContainer: "#002859",
+        },
       },
       hieu: {
-        colorName: 'hieu',
+        colorName: "hieu",
         lightColors: {
-          main: '#FF5733',  
-          container: '#FF5733',
-          onContainer: '#002859',
-        }
+          main: "#FF5733",
+          container: "#FF5733",
+          onContainer: "#002859",
+        },
       },
-    
     },
     plugins: [eventsService, createEventModalPlugin()],
   });
@@ -98,53 +111,67 @@ function Booking() {
   }, [eventsService]);
 
   return (
-    <div className="flex bg-bg_admin">
-      <Sidebar />
-      <div className="flex-1">
-        <Header_admin />
-        <div className="flex flex-row flex-wrap gap-3 justify-end px-16 pt-4">
-          <Select
-            className="w-36"
-            styles={customStyles}
-            placeholder="Cơ sở"
-            options={csOptions}
-            value={csOptions.find((c) => c.value === selectedCs) || null}
-            onChange={(option) => {
-              setSelectedCs(option?.value || null);
-              setSelectedToa(null);
-              setSelectedPhong(null);
-            }}
-          />
-          <Select
-            className="w-36"
-            styles={customStyles}
-            placeholder="Toà"
-            options={toaOptions}
-            value={toaOptions.find((t) => t.value === selectedToa) || null}
-            isDisabled={!selectedCs}
-            onChange={(option) => {
-              setSelectedToa(option?.value || null);
-              setSelectedPhong(null);
-            }}
-          />
-          <Select
-            className="w-36"
-            styles={customStyles}
-            placeholder="Phòng"
-            options={phongOptions}
-            value={phongOptions.find((t: any) => t.value === selectedPhong) || null}
-            isDisabled={!selectedToa}
-            onChange={(option) => {
-              setSelectedPhong(option?.value || null);
-            }}
-          />
+    <>
+      <div className="flex min-h-screen">
+        {/* Sidebar */}
+        <div
+          className={`bg-black_admin text-white_admin transition-all duration-300 ${
+            isSidebarOpen ? "w-64" : "w-0"
+          } overflow-hidden`}
+        >
+          <Sidebar />
         </div>
 
-        <div className="sx-react-calendar-wrapper relative mx-auto pt-2 px-2">
-          <ScheduleXCalendar calendarApp={calendar} />
+        {/* Main Content */}
+        <div className="flex-1 flex flex-col min-h-screen">
+          <Header_admin onToggleSidebar={handleToggleSidebar} />
+
+          <div className="flex flex-row flex-wrap gap-3 justify-end px-16 pt-4">
+            <Select
+              className="w-36"
+              styles={customStyles}
+              placeholder="Cơ sở"
+              options={csOptions}
+              value={csOptions.find((c) => c.value === selectedCs) || null}
+              onChange={(option) => {
+                setSelectedCs(option?.value || null);
+                setSelectedToa(null);
+                setSelectedPhong(null);
+              }}
+            />
+            <Select
+              className="w-36"
+              styles={customStyles}
+              placeholder="Toà"
+              options={toaOptions}
+              value={toaOptions.find((t) => t.value === selectedToa) || null}
+              isDisabled={!selectedCs}
+              onChange={(option) => {
+                setSelectedToa(option?.value || null);
+                setSelectedPhong(null);
+              }}
+            />
+            <Select
+              className="w-36"
+              styles={customStyles}
+              placeholder="Phòng"
+              options={phongOptions}
+              value={
+                phongOptions.find((t: any) => t.value === selectedPhong) || null
+              }
+              isDisabled={!selectedToa}
+              onChange={(option) => {
+                setSelectedPhong(option?.value || null);
+              }}
+            />
+          </div>
+
+          <div className="sx-react-calendar-wrapper relative mx-auto pt-2 px-2">
+            <ScheduleXCalendar calendarApp={calendar} />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
