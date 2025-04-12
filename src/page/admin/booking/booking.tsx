@@ -1,15 +1,31 @@
+import { useState } from "react";
 import Sidebar from "../components/sidebar";
 import Header_admin from "../components/header_admin";
 
-function   Booking() {
+function Booking() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Quản lý trạng thái mở/đóng Sidebar
+
+  const handleToggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev); // Đảo trạng thái Sidebar
+  };
+
   return (
     <>
-    <div className="flex bg-bg_admin">
-        <div><Sidebar /></div>
-        <div className="flex-1">
-          <div>
-            <Header_admin />
-            <h1>booking page</h1>
+<div className="flex min-h-screen">
+        {/* Sidebar */}
+        <div
+          className={`bg-black_admin text-white_admin transition-all duration-300 ${isSidebarOpen ? "w-64" : "w-0"
+            } overflow-hidden`}
+        >
+          <Sidebar />
+        </div>
+
+
+        {/* Main Content */}
+        <div className="flex-1 flex flex-col min-h-screen">
+          <Header_admin onToggleSidebar={handleToggleSidebar} />
+          <div className="p-8">
+            <h1 className="text-2xl font-bold">Booking Page</h1>
           </div>
         </div>
       </div>
