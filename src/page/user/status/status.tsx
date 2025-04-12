@@ -1,7 +1,7 @@
 import Header from "../component/header";
 import Footer from "../component/footer";
 import { CiCircleList, CiCalendar } from "react-icons/ci";
-import { FaSort, FaLock,FaCalendarCheck,FaCircle } from "react-icons/fa"; // Import icon sắp xếp
+import { FaSort, FaLock, FaCircle } from "react-icons/fa"; // Import icon sắp xếp
 import { rooms, roomTypes, statusColor, roomStatuses } from "./const_status";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -96,24 +96,24 @@ function Status() {
             style={{
               display: "flex",
               alignItems: "center",
-            
-              
+
+
             }}
           >
             <CiCalendar size={25} style={{ color: "#374151" }} />{" "}
             <div className="pl-2">
-            <DatePicker
-              selected={selectedDate}
-              onChange={(date) => setSelectedDate(date || new Date())}
-              minDate={new Date()} // Chỉ cho phép chọn từ ngày hiện tại trở đi
-              maxDate={new Date(new Date().setMonth(new Date().getMonth() + 1))}
-              dateFormat="MMM, dd yyyy" // Định dạng ngày
-              className="custom-datepicker rounded-xl px-2 py-1 border border-gray-300"
-              placeholderText="Select a date"
-            />
+              <DatePicker
+                selected={selectedDate}
+                onChange={(date) => setSelectedDate(date || new Date())}
+                minDate={new Date()} // Chỉ cho phép chọn từ ngày hiện tại trở đi
+                maxDate={new Date(new Date().setMonth(new Date().getMonth() + 1))}
+                dateFormat="MMM, dd yyyy" // Định dạng ngày
+                className="custom-datepicker rounded-xl px-2 py-1 border border-gray-300"
+                placeholderText="Select a date"
+              />
             </div>
             {/* Icon lịch */}
-            
+
           </div>
         </div>
 
@@ -123,9 +123,9 @@ function Status() {
           {/* --- Filter Column --- */}
           <div className="md:w-1/3 p-5 border border-gray-300 rounded-lg bg-white shadow-md flex-shrink-0">
 
-          <div className="flex justify-between items-center mb-5">
+            <div className="flex justify-between items-center mb-5">
 
-            <div className="bg-blue-500 text-white font-bold text-[1.1em] px-4 py-2 rounded-md">
+              <div className="bg-blue-500 text-white font-bold text-[1.1em] px-4 py-2 rounded-md">
 
                 Room Filter</div>
               <button
@@ -147,9 +147,8 @@ function Status() {
               {roomTypes.map((type, index) => (
                 <div
                   key={index}
-                  className={`bg-gray-100 text-gray-700 border border-gray-300 rounded-[16px] px-4 py-2 text-sm cursor-pointer  ${
-                    selectedRoomType === type ? "bg-blue-500 text-white border-blue-500" : ""
-                  }`}
+                  className={`bg-gray-100 text-gray-700 border border-gray-300 rounded-[16px] px-4 py-2 text-sm cursor-pointer  ${selectedRoomType === type ? "bg-blue-500 text-white border-blue-500" : ""
+                    }`}
                   onClick={() => setSelectedRoomType(type)}
                 >
                   {type}
@@ -164,9 +163,8 @@ function Status() {
               {roomStatuses.map((status, index) => (
                 <div
                   key={index}
-                  className={`bg-gray-100 text-gray-700 border border-gray-300 rounded-[16px] px-4 py-2 text-sm cursor-pointer  ${
-                    selectedRoomStatus === status ? "bg-blue-500 text-white border-blue-500" : ""
-                  }`}
+                  className={`bg-gray-100 text-gray-700 border border-gray-300 rounded-[16px] px-4 py-2 text-sm cursor-pointer  ${selectedRoomStatus === status ? "bg-blue-500 text-white border-blue-500" : ""
+                    }`}
                   onClick={() => setSelectedRoomStatus(status)}
                 >
                   {status}
@@ -178,7 +176,7 @@ function Status() {
           {/* --- Table Column --- */}
           <div className="flex-grow flex flex-col">
 
-          <div className="grid grid-cols-4 gap-4 p-4 h-16 text-sm font-semibold bg-gray-100 rounded-t-lg border border-gray-300 text-gray-600 items-center">
+            <div className="grid grid-cols-4 gap-4 p-4 h-16 text-sm font-semibold bg-gray-100 rounded-t-lg border border-gray-300 text-gray-600 items-center">
               <div>Tên phòng</div>
               <div
                 onClick={() => handleSort("type")}
@@ -205,10 +203,9 @@ function Status() {
                   <div>{room.type}</div>
                   <div>
                     <span
-                      className={`px-2 py-1 rounded-md text-sm font-medium min-w-[90px] text-center ${
-                        statusColor[room.status as keyof typeof statusColor] ||
+                      className={`px-2 py-1 rounded-md text-sm font-medium min-w-[90px] text-center ${statusColor[room.status as keyof typeof statusColor] ||
                         "status-default"
-                      }`}
+                        }`}
                     >
                       {room.status}
                     </span>
@@ -218,21 +215,21 @@ function Status() {
                     {room.time}
                     <div className="flex pl-2 items-center justify-between">
 
-                    {/* Thêm icon bên phải */}
-                    {room.status === "Đã đặt" && (
-                      <FontAwesomeIcon
-                        icon={faCalendarXmark}
-                        className="text-gray-500 text-lg mr-12"
-                      />
-                    )}
-                    {room.status === "Khóa" && (
-                      <FaLock className="text-gray-500 text-lg mr-12" />
-                    )}
+                      {/* Thêm icon bên phải */}
+                      {room.status === "Đã đặt" && (
+                        <FontAwesomeIcon
+                          icon={faCalendarXmark}
+                          className="text-gray-500 text-lg mr-12"
+                        />
+                      )}
+                      {room.status === "Khóa" && (
+                        <FaLock className="text-gray-500 text-lg mr-12" />
+                      )}
 
-                    {room.status === "Trống" && (
-                      <FaCircle className="text-green-500 text-lg mr-12" />
-                    )}
-                  </div>
+                      {room.status === "Trống" && (
+                        <FaCircle className="text-green-500 text-lg mr-12" />
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
