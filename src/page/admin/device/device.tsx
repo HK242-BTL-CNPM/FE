@@ -126,10 +126,10 @@ function Device() {
           </div>
 
 
-          <div className="flex pl-8  pr-8 justify-center items-start font-sans">
+          <div className="flex flex-grow pl-8 pr-8 justify-center  items-start font-sans">
 
             {/* --- Container chính cho Filter và Bảng --- */}
-            <div className="flex flex-col md:flex-row gap-8 items-start font-sans">
+            <div className="flex flex-col md:flex-row gap-8 items-start font-sans w-full max-w-[1100px] ">
               {/* --- Table Column --- */}
               <div className="flex-grow flex flex-col  ">
                 {/* Header của bảng */}
