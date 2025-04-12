@@ -1,12 +1,17 @@
 import Sidebar from "../components/sidebar";
 import Header_admin from "../components/header_admin";
 import { useState } from "react";
-import { devices , statusColor, actColor,  } from "./const_device";
-import { CiCircleList,  } from "react-icons/ci";
+import { devices, statusColor, actColor, } from "./const_device";
 import { FaSort, FaCaretDown } from "react-icons/fa"; // Import icon sắp xếp
 
 import "react-datepicker/dist/react-datepicker.css";
 function Device() {
+  // sidebar
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const handleToggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev);
+  };
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: string } | null>(null);
 
   const [devicesList, setDevicesList] = useState(devices);
@@ -50,36 +55,44 @@ function Device() {
 
   return (
     <>
-      <div className="flex">
+      <div className="flex min-h-screen">
         {/* Sidebar */}
-        <div className="max-w-[280px] flex-shrink-0">
+        <div
+          className={`bg-black_admin text-white_admin transition-all duration-300 ${isSidebarOpen ? "w-64" : "w-0"
+            } overflow-hidden`}
+        >
           <Sidebar />
         </div>
 
         {/* Main Content */}
-        <div className="flex-1">
-          <Header_admin />
-          <div className="flex-grow p-8 font-sans bg-gray-100 min-h-[80vh]">
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center">
-                <CiCircleList className="text-5xl text-gray-700 mr-5" />
-                <h1 className="text-2xl font-bold text-gray-900">Danh sách thiết bị</h1>
+        <div className={`flex-1 flex flex-col min-h-screen overflow-auto transition-all duration-300 `}>
+
+          <Header_admin onToggleSidebar={handleToggleSidebar} />
+          <div className="pb-4 pl-8 pr-8 font-sans  ">
+            <div className="flex items-center justify-between  bg-gray-50 p-4 rounded-lg ">
+              <div className="flex items-center ">
+                <h1 className="text-2xl font-bold ">Danh sách thiết bị</h1>
               </div>
 
-              <div className="flex items-center gap-4">
-                <div className="text-gray-500">Nguồn điện</div>
+              <div className="flex flex-wrap items-center gap-4 justify-end">
+                
+
+                <div className="relative inline-block">
                 <div
                   onClick={handleToggle}
-                  className={`relative w-16 h-8 rounded-full transition duration-200 ease-linear cursor-pointer ${
-                    isToggled ? "bg-green-400" : "bg-gray-400"
-                  }`}
+                  className={`relative w-16 h-8 rounded-full transition duration-200 ease-linear cursor-pointer ${isToggled ? "bg-green-400" : "bg-gray-400"
+                    }`}
                 >
                   <div
-                    className={`absolute top-0 left-0 w-8 h-8 bg-white border-2 rounded-full transition-all duration-200 ease-linear ${
-                      isToggled ? "translate-x-full border-green-400" : "translate-x-0 border-gray-400"
-                    }`}
+                    className={`absolute top-0 left-0 w-8 h-8 bg-white border-2 rounded-full transition-all duration-200 ease-linear ${isToggled ? "translate-x-full border-green-400" : "translate-x-0 border-gray-400"
+                      }`}
                   ></div>
+                </div>                  
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 text-sm text-gray-600 whitespace-nowrap">
+                    Nguồn điện
+                  </div>
                 </div>
+
 
                 <button className="buttondrop">
                   Phòng <FaCaretDown style={{ marginLeft: "5px" }} />
@@ -110,22 +123,23 @@ function Device() {
 
 
             </div>
+          </div>
+
+
+          <div className="flex flex-grow pl-8 pr-8 justify-center  items-start font-sans">
 
             {/* --- Container chính cho Filter và Bảng --- */}
-            <div className="flex flex-col md:flex-row gap-8 items-start font-sans">
-
-
-
+            <div className="flex flex-col md:flex-row gap-8 items-start font-sans w-full max-w-[1100px] ">
               {/* --- Table Column --- */}
-              <div className="flex-grow flex flex-col">
+              <div className="flex-grow flex flex-col  ">
                 {/* Header của bảng */}
-                <div className="grid grid-cols-6 gap-4 p-4 h-16 text-sm font-semibold bg-gray-100 rounded-t-lg border border-gray-300 text-gray-600 items-center">
+                <div className="grid grid-cols-6  gap-4 p-4 h-16 text-sm font-semibold bg-[#F8FAFC] rounded-t-lg border border-gray-300 text-gray-600 items-center">
                   <div className="text-center">Tên ID</div>
                   <div
                     onClick={() => handleSort("devices")}
                     className="cursor-pointer flex items-center justify-center"
                   >
-                    Thiết bị <FaSort className="ml-2"/>
+                    Thiết bị <FaSort className="ml-2" />
                   </div>
                   <div
                     onClick={() => handleSort("quantity")}
@@ -136,7 +150,7 @@ function Device() {
 
                   <div
                     onClick={() => handleSort("status")}
-                    className="cursor-pointer flex items-center justify-center"
+                    className="cursor-pointer flex items-center justify-center "
                   >
                     Trạng thái <FaSort className="ml-2" />
                   </div>
@@ -152,8 +166,7 @@ function Device() {
                     Thao tác
                   </div>
                 </div>
-
-
+               
                 {/* Nội dung của bảng */}
                 <div className="pl-4 pr-4 bg-white rounded-b-lg shadow-md border border-gray-300 border-t-0">
                   {paginatedDevices.map((device) => (
@@ -167,9 +180,8 @@ function Device() {
 
                       <div className="text-center">
                         <button
-                          className={`px-2 py-1 rounded-md text-sm font-medium ${
-                            statusColor[device.status as keyof typeof statusColor] || "bg-gray-300 text-black"
-                          }`}
+                          className={`px-2 py-1 rounded-md text-sm font-medium  ${statusColor[device.status as keyof typeof statusColor] || "bg-gray-300 text-black"
+                            }`}
                           disabled
                         >
                           {device.status}
@@ -177,15 +189,14 @@ function Device() {
                       </div>
                       <div className="text-center">
                         <button
-                          className={`px-2 py-1 rounded-md text-sm font-medium ${
-                            actColor[device.activity as keyof typeof actColor] || "bg-gray-300 text-black"
-                          }`}
+                          className={`px-2 py-1 rounded-md text-sm font-medium ${actColor[device.activity as keyof typeof actColor] || "bg-gray-300 text-black"
+                            }`}
                           disabled
                         >
                           {device.activity}
                         </button>
                       </div>
-                      
+
                       <div className="flex justify-center items-center gap-2">
                         <button
                           onClick={() => handleDeleteDevice(device.id)}
@@ -221,9 +232,8 @@ function Device() {
                     <button
                       onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                       disabled={currentPage === 1}
-                      className={`px-3 py-1 border rounded-md ${
-                        currentPage === 1 ? "bg-gray-200 cursor-not-allowed" : "bg-white"
-                      }`}
+                      className={`px-3 py-1 border rounded-md ${currentPage === 1 ? "bg-gray-200 cursor-not-allowed" : "bg-white"
+                        }`}
                     >
                       &lt;
                     </button>
@@ -231,9 +241,8 @@ function Device() {
                       <button
                         key={index}
                         onClick={() => setCurrentPage(index + 1)}
-                        className={`px-3 py-1 border rounded-md ${
-                          currentPage === index + 1 ? "bg-blue-500 text-white" : "bg-white"
-                        }`}
+                        className={`px-3 py-1 border rounded-md ${currentPage === index + 1 ? "bg-blue-500 text-white" : "bg-white"
+                          }`}
                       >
                         {index + 1}
                       </button>
@@ -241,9 +250,8 @@ function Device() {
                     <button
                       onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                       disabled={currentPage === totalPages}
-                      className={`px-3 py-1 border rounded-md ${
-                        currentPage === totalPages ? "bg-gray-200 cursor-not-allowed" : "bg-white"
-                      }`}
+                      className={`px-3 py-1 border rounded-md ${currentPage === totalPages ? "bg-gray-200 cursor-not-allowed" : "bg-white"
+                        }`}
                     >
                       &gt;
                     </button>
