@@ -13,72 +13,80 @@ function Profile() {
   return (
     <div>
       <div
-        style={{
-          backgroundImage: "url('/src/assets/images/image5.png')",backgroundSize: "cover",
-          width: "100%",height: "250px",position: "relative",
-        }}
+        className="w-full top-0 h-[250px] bg-cover bg-no-repeat bg-center relative"
+        style={{ backgroundImage: "url('/src/assets/images/image5.png')" }}
       ></div>
 
-      <div style={{position: "absolute",top: "300px",left: "50px",width: "250px",padding: "20px 0",
-          boxShadow: "0 6px 20px rgba(0, 0, 0, 0.1)",border: "1px solid rgb(205, 205, 205)"}}>
+<div
+  className={`
+    p-5 shadow-lg border border-gray-300 bg-white w-[250px] z-50
+    absolute top-[670px] left-5 transform-none
+    md:absolute md:top-[300px] md:left-8 md:transform-none md:bottom-auto
+  `}
+>
+  <Link
+    to="../"
+    className="text-[#666B72] font-medium pl-1 flex items-center gap-2"
+    style={sidebarLinkStyle}
+  >
+    <i className="fa-solid fa-house icon"></i> Trang chủ
+  </Link>
 
-          <a href="#" style={sidebarLinkStyle}>
-            <Link className="text-[#666B72] font-medium pl-1" to="../">
-          <i className="fa-solid fa-house icon"></i> Trang chủ
-          </Link>
-        </a>
-  <Link    to="#"  className="active" style={{...sidebarLinkStyle,backgroundColor: "#2979ff",color: "white"}}  >
+  <Link
+    to="#"
+    className="active flex items-center gap-2"
+    style={{ ...sidebarLinkStyle, backgroundColor: "#2979ff", color: "white" }}
+  >
     <i className="fa-solid fa-user icon"></i> Chi tiết người dùng
   </Link>
-        <a href="#" style={sidebarLinkStyle}>
-        <Link className="text-[#666B72] font-medium pl-1" to="../login">
-          <i className="fa-solid fa-right-from-bracket icon"></i> Đăng xuất
-          </Link></a>
-      </div>
 
-      <div style={{ marginLeft: "300px", padding: "40px" }}>
-        <div
-          style={{
-            background: "#ffffff",margin: "0 auto",marginTop: "-100px",width: "600px",
-            borderRadius: "16px",boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-            padding: "70px 30px 30px",position: "relative",zIndex: "1",
-          }}
-        >
-          <div style={{textAlign: "center",position: "relative",}}>
-            <div
-              style={{
-                width: "140px",height: "140px", borderRadius: "50%",overflow: "hidden",
-                border: "4px solid white",position: "absolute",top: "-150px",left: "50%",
-                transform: "translateX(-50%)",backgroundSize: "contain",
-                background: "url('/src/assets/images/ava.png') no-repeat center center",
-              }}
-            ></div>
-            <div style={{ fontSize: "24px", fontWeight: "bold",marginBottom: "10px" }}>
-            {user.name}
+  <Link
+    to="../login"
+    className="text-[#666B72] font-medium pl-1 flex items-center gap-2"
+    style={sidebarLinkStyle}
+  >
+    <i className="fa-solid fa-right-from-bracket icon"></i> Đăng xuất
+  </Link>
+</div>
+
+
+      <div className="md:ml-[300px] p-5 md:p-10">
+        <div className="bg-white mx-auto mt-[-100px] max-w-[600px] rounded-[16px] shadow-lg p-5 md:p-10 relative z-10">
+          <div className="text-center relative">
+          <div
+  className="w-[130px] h-[130px] rounded-full bg-blue-500 flex items-center justify-center text-white font-bold  text-5xl mx-auto"
+>
+  {user?.name?.charAt(0).toUpperCase()}
+</div>
+            <div className="mt-4 text-xl font-bold">
+              {user ? user.name : "Guest"}
             </div>
-            <button className="button2">Tải ảnh mới</button>
-
+            <button className="button2">
+              Tải ảnh mới
+            </button>
           </div>
 
-          <div style={{ marginTop: "20px" }}>
-            <label htmlFor="studentId" style={{ fontWeight: "bold", display: "block", marginBottom: "4px" }}>
+          <div className="mt-5">
+            <label htmlFor="studentId" className="font-bold block mb-1">
               Mã số sinh viên
             </label>
             <div
               id="studentId"
-              style={{width: "100%",padding: "10px", borderRadius: "8px", border: "1px solid #ccc", }}>
-              {user.mssv}
+              className="w-full p-3 rounded-md border border-gray-300"
+            >
+              {user ? user.mssv : "N/A"}
             </div>
           </div>
 
-          <div style={{ marginTop: "20px" }}>
-            <label htmlFor="email" style={{ fontWeight: "bold", display: "block", marginBottom: "4px" }}>
+          <div className="mt-5">
+            <label htmlFor="email" className="font-bold block mb-1">
               Địa chỉ thư điện tử
             </label>
             <div
               id="email"
-              style={{ width: "100%", padding: "10px", borderRadius: "8px",  border: "1px solid #ccc", }}>
-              {user.email}
+              className="w-full p-3 rounded-md border border-gray-300"
+            >
+              {user ? user.email : "N/A"}
             </div>
           </div>
         </div>
@@ -86,6 +94,4 @@ function Profile() {
     </div>
   );
 }
-
-
 export default Profile;

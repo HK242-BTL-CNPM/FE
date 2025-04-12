@@ -1,6 +1,6 @@
 export const rooms = [
   { id: "A01", type: "Phòng cá nhân", status: "Đã đặt", time: "11:00 - 12:00" },
-  { id: "B01", type: "Phòng mentor 1 - 1", status: "Trống", time: "-- : --" },
+  { id: "B01", type: "Phòng mentor 1-1", status: "Trống", time: "-- : --" },
   { id: "C01", type: "Phòng học nhóm", status: "Trống", time: "-- : --" },
   { id: "D01", type: "Phòng thuyết trình", status: "Khóa", time: "-- : --" },
   {
@@ -17,7 +17,7 @@ export const rooms = [
   },
   {
     id: "B02",
-    type: "Phòng mentor 1 - 1",
+    type: "Phòng mentor 1-1",
     status: "Đang sử dụng",
     time: "7:00 - 9:00",
   },
@@ -31,10 +31,10 @@ export const roomStatuses = [
   "Đang sử dụng",
 ];
 export const statusColor = {
-  Trống: "status-green",
-  Khóa: "status-purple",
-  "Đã đặt": "status-yellow",
-  "Đang sử dụng": "status-sky",
+  "Trống": "bg-green-100 text-green-800", 
+  "Khóa": "bg-gray-200 text-gray-600", 
+  "Đã đặt": "bg-orange-100 text-orange-800", 
+  "Đang sử dụng": "bg-blue-100 text-blue-800", 
 };
 
 export const roomTypes = [

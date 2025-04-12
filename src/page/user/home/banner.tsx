@@ -22,7 +22,7 @@ function Banner() {
             </div>
 
             <div className="flex flex-row md:basis-1/2 w-full">
-              <div className="flex items-center w-full relative">
+              {/* <div className="flex items-center w-full relative">
                 <input
                   type="text"
                   placeholder="Tìm kiếm phòng học..."
@@ -36,7 +36,7 @@ function Banner() {
                     <IoIosSearch size={20} />
                   </button>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

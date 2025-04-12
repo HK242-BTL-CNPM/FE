@@ -6,7 +6,12 @@ import Login from "./page/auth/login";
 import StatusRoom from "./page/user/status/status";
 import ReportIssue from "./page/user/report/report";
 import Profile from "./page/user/profile/profile";
-import Dashboard from "./page/admin/Dashboard";
+import Dashboard from "./page/admin/dashboard/Dashboard";
+import Booking from "./page/admin/booking/booking";
+import User from "./page/admin/user/user";
+import Room from "./page/admin/room/room";
+import Device from "./page/admin/device/device";
+import Notification from "./page/admin/notification/notification";
 import "./assets/css/output.css";
 import PrivateRoute from "./page/auth/PrivateRoute";
 
@@ -17,6 +22,11 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/booking" element={<Booking />} />
+        <Route path="/user" element={<User />} />
+        <Route path="/room" element={<Room />} />
+        <Route path="/device" element={<Device />} />
+        <Route path="/notification" element={<Notification />} />
 
         {/* Các route không cần bảo vệ */}
         {/* Các route cần bảo vệ */}
