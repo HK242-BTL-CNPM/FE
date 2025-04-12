@@ -68,12 +68,26 @@ function Login() {
               >
                 Đăng nhập
               </button>
-              <button onClick={() => {
-                  login(mockUsers[0]); // Đăng nhập nhanh
-                  navigate("/");
-                }} className="button3 mx-auto px-4 hover:scale-105 transition-transform duration-200">
-                Đăng nhập nhanh (USER)
-              </button>
+
+              <div className="flex justify-center gap-5">
+                <button
+                  onClick={() => {
+                    login(mockUsers[0]); 
+                    navigate("/");
+                  }}
+                  className="button3 px-4 hover:scale-105 transition-transform duration-200"
+                >
+                  Đăng nhập nhanh (USER)
+                </button>
+                <button
+                  onClick={() => {
+                    navigate("/dashboard");
+                  }}
+                  className="button3 px-4 hover:scale-105 transition-transform duration-200"
+                >
+                  Đăng nhập nhanh (ADMIN)
+                </button>
+              </div>
             </div>
           </form>
         </div>
