@@ -60,8 +60,7 @@ function Login() {
               />
               <i className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-base fa-solid fa-lock"></i>
             </div>
-            
-          </form><div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-5">
             <button
                 className="button1 w-2/3 mx-auto" type="submit"
               >
@@ -74,6 +73,7 @@ function Login() {
                 Đăng nhập nhanh (USER)
               </button>
             </div>
+          </form>
         </div>
       </div>
     </div>
