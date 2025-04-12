@@ -2,7 +2,6 @@ import Sidebar from "../components/sidebar";
 import Header_admin from "../components/header_admin";
 import { useState } from "react";
 import { devices, statusColor, actColor, } from "./const_device";
-import { CiCircleList, } from "react-icons/ci";
 import { FaSort, FaCaretDown } from "react-icons/fa"; // Import icon sắp xếp
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -69,11 +68,10 @@ function Device() {
         <div className={`flex-1 flex flex-col min-h-screen overflow-auto transition-all duration-300 `}>
 
           <Header_admin onToggleSidebar={handleToggleSidebar} />
-          <div className="flex-grow pl-8 pr-8 b-8 font-sans  min-h-[80vh]">
-            <div className="flex items-center justify-between mb-4 bg-gray-50 p-4 rounded-lg ">
+          <div className="pb-4 pl-8 pr-8 font-sans  ">
+            <div className="flex items-center justify-between  bg-gray-50 p-4 rounded-lg ">
               <div className="flex items-center ">
-                <CiCircleList className="text-5xl text-gray-700 mr-5" />
-                <h1 className="text-2xl font-bold text-gray-900">Danh sách thiết bị</h1>
+                <h1 className="text-2xl font-bold ">Danh sách thiết bị</h1>
               </div>
 
               <div className="flex flex-wrap items-center gap-4 justify-end">
@@ -125,16 +123,17 @@ function Device() {
 
 
             </div>
+          </div>
+
+
+          <div className="flex pl-8  pr-8 justify-center items-start font-sans">
 
             {/* --- Container chính cho Filter và Bảng --- */}
             <div className="flex flex-col md:flex-row gap-8 items-start font-sans">
-
-
-
               {/* --- Table Column --- */}
-              <div className="flex-grow flex flex-col ">
+              <div className="flex-grow flex flex-col  ">
                 {/* Header của bảng */}
-                <div className="grid grid-cols-6 gap-4 p-4 h-16 text-sm font-semibold bg-[#F8FAFC] rounded-t-lg border border-gray-300 text-gray-600 items-center">
+                <div className="grid grid-cols-6  gap-4 p-4 h-16 text-sm font-semibold bg-[#F8FAFC] rounded-t-lg border border-gray-300 text-gray-600 items-center">
                   <div className="text-center">Tên ID</div>
                   <div
                     onClick={() => handleSort("devices")}
@@ -151,7 +150,7 @@ function Device() {
 
                   <div
                     onClick={() => handleSort("status")}
-                    className="cursor-pointer flex items-center justify-center"
+                    className="cursor-pointer flex items-center justify-center "
                   >
                     Trạng thái <FaSort className="ml-2" />
                   </div>
@@ -167,8 +166,7 @@ function Device() {
                     Thao tác
                   </div>
                 </div>
-
-
+               
                 {/* Nội dung của bảng */}
                 <div className="pl-4 pr-4 bg-white rounded-b-lg shadow-md border border-gray-300 border-t-0">
                   {paginatedDevices.map((device) => (
@@ -182,7 +180,7 @@ function Device() {
 
                       <div className="text-center">
                         <button
-                          className={`px-2 py-1 rounded-md text-sm font-medium ${statusColor[device.status as keyof typeof statusColor] || "bg-gray-300 text-black"
+                          className={`px-2 py-1 rounded-md text-sm font-medium  ${statusColor[device.status as keyof typeof statusColor] || "bg-gray-300 text-black"
                             }`}
                           disabled
                         >
