@@ -1,89 +1,82 @@
-import "./login.scss"; // Đảm bảo bạn có file này
-
 import { useAuth } from "../../AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import mockUsers from "./mockUsers";
+
 function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
-  const handleLogin = (e:any) => {
+
+  const handleLogin = (e: any) => {
     e.preventDefault();
-  
+
     const foundUser = mockUsers.find(
       (user) => user.email === email && user.password === password
     );
-  
+
     if (foundUser?.role === "Admin") {
       login(foundUser);
       navigate("/dashboard");
     } else if (foundUser) {
       login(foundUser);
-      navigate("/"); 
+      navigate("/");
     } else {
       alert("Sai email hoặc mật khẩu!");
     }
   };
 
   return (
-    <>
-      {/* <h1>Login</h1> */}
-      <div className="bglogin">
-        <div style={{ display: "flex", height: "100vh" }}> </div>
-        <div className="right">
-          <div className="login-form">
-            <h2
-              style={{
-                fontWeight: "bold",
-                marginBottom: 20,
-                fontSize: 32,
-                color: "#2563eb",
-              }}
-            >
-              Đăng nhập tài khoản
-            </h2>
-            <form onSubmit={handleLogin}>
-              <div style={{ textAlign: "left" }}>Email:</div>
-
-              <div className="input-group">
-                <div className="input-wrapper">
-                  <input type="email" placeholder="Email" required value={email}
-                  onChange={(e) => setEmail(e.target.value)}/>
-                  <i className="fa-solid fa-envelope"></i>
-                </div>
-              </div>
-              <div style={{ textAlign: "left" }}>Mật khẩu:</div>
-              <div className="input-group">
-                <div className="input-wrapper">
-                  <input type="password" placeholder="Password" required value={password}
-                  onChange={(e) => setPassword(e.target.value)}/>
-                  <i className="fa-solid fa-lock"></i>
-                </div>
-              </div>
-              <div className="flex flex-col gap-5">
-              <button
-                style={{ alignItems: "center", marginTop: 30 }}
-                className="button1" type="submit"
+    <div className="bg-[url('/src/assets/images/27257016.jpg')] bg-no-repeat bg-left bg-cover h-screen flex justify-end items-center">
+      <div className="bg-white w-full max-w-[500px] h-screen flex justify-center items-center">
+        <div className="w-[400px] text-center font-sans">
+          <h2 className="font-bold mb-5 text-2xl text-blue-600">
+            Đăng nhập tài khoản
+          </h2>
+          <form onSubmit={handleLogin}>
+            <div className="text-left mb-2">Email:</div>
+            <div className="relative mb-4">
+              <input
+                type="email"
+                placeholder="Email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full  pl-12 pt-3 pb-3 border border-gray-300 rounded-lg text-black text-base"
+              />
+              <i className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-base fa-solid fa-envelope"></i>
+            </div>
+            <div className="text-left mb-2">Mật khẩu:</div>
+            <div className="relative mb-4">
+              <input
+                type="password"
+                placeholder="Password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full pt-3 pb-3 pl-12 border border-gray-300 rounded-lg text-black text-base"
+              />
+              <i className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-base fa-solid fa-lock"></i>
+            </div>
+            
+          </form><div className="flex flex-col gap-5">
+            <button
+                className="button1 w-2/3 mx-auto" type="submit"
               >
                 Đăng nhập
               </button>
               <button onClick={() => {
                   login(mockUsers[0]); // Đăng nhập nhanh
                   navigate("/");
-                }} className="button1">
-                Đăng nhập nhanh
+                }} className="button3 mx-auto px-4 hover:bg">
+                Đăng nhập nhanh (USER)
               </button>
             </div>
-            </form >
-            
-          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
