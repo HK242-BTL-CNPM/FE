@@ -9,6 +9,8 @@ function Report_Issue() {
   const [buildingOptions, setBuildingOptions] = useState<string[]>([]);
   const [selectedRoomType, setSelectedRoomType] = useState("Tất cả");
   const [roomNameOptions, setRoomNameOptions] = useState<string[]>([]);
+  const [deviceName, setDeviceName] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleFacilityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const facility = e.target.value;
@@ -48,6 +50,21 @@ function Report_Issue() {
       console.log("Tệp đã chọn:", file);
     }
   };
+
+  const handleSubmit = () => {
+    alert("Đã gửi thông báo lên admin!\nCảm ơn bạn đã báo cáo sự cố!😊");
+    handleReset();
+  };
+
+  const handleReset = () => {
+    setSelectedFacility("Tất cả");
+    setBuildingOptions([]);
+    setSelectedRoomType("Tất cả");
+    setRoomNameOptions([]);
+    setDeviceName("");
+    setDescription("");
+  };
+
   return (
     <>
       <Header />
@@ -91,9 +108,9 @@ function Report_Issue() {
               padding: "20px",
               borderRadius: "10px",
               border: "1px solid #D1D5DB",
-              width: "500px",
+              width: "460px",
               height: "370px",
-              marginLeft: "3.5cm",
+              marginLeft: "1.8cm",
             }}
           >
             <h2
@@ -207,15 +224,15 @@ function Report_Issue() {
               padding: "20px",
               borderRadius: "10px",
               border: "1px solid #D1D5DB",
-              width: "638px",
-              height: "480px",
+              width: "640px",
+              height: "470px",
             }}
           >
             <h2
               style={{
                 fontSize: "20px",
                 fontWeight: "bold",
-                marginBottom: "15px",
+                marginBottom: "10px",
               }}
             >
               Báo cáo sự cố
@@ -225,7 +242,7 @@ function Report_Issue() {
                 fontSize: "18px",
                 display: "flex",
                 flexDirection: "column",
-                gap: "8px",
+                gap: "7px",
               }}
             >
               <label>
@@ -234,6 +251,8 @@ function Report_Issue() {
                   type="text"
                   placeholder="Nhập tên thiết bị"
                   style={inputStyle}
+                  value={deviceName}
+                  onChange={(e) => setDeviceName(e.target.value)}
                 />
               </label>
               <label>
@@ -241,6 +260,8 @@ function Report_Issue() {
                 <textarea
                   placeholder="Nhập mô tả"
                   style={{ ...inputStyle, height: "80px", resize: "none" }}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                 />
               </label>
               <label>
@@ -293,11 +314,15 @@ function Report_Issue() {
             justifyContent: "flex-end",
             gap: "10px",
             position: "relative",
-            bottom: "-20px",
+            bottom: "-10px",
           }}
         >
-          <button style={cancelButtonStyle}>Hủy</button>
-          <button style={submitButtonStyle}>Gửi</button>
+          <button style={cancelButtonStyle} onClick={handleReset}>
+            Hủy
+          </button>
+          <button style={submitButtonStyle} onClick={handleSubmit}>
+            Gửi
+          </button>
         </div>
       </div>
       <Footer />
@@ -343,7 +368,7 @@ const submitButtonStyle: React.CSSProperties = {
   fontWeight: "bold",
   cursor: "pointer",
   marginTop: "20px",
-  marginRight: "4cm",
+  marginRight: "2.5cm",
 };
 
 export default Report_Issue;

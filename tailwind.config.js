@@ -15,7 +15,8 @@ export default {
         light_green: "#E9FAEF",
         light_red: "rgba(237, 79, 82, 0.851)",
         black_admin:"#23272C",
-        white_admin: "#F4F5F7"
+        white_admin: "#F4F5F7",
+        bg_admin: "#F8FAFC"
   
       },
     },

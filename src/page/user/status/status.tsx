@@ -1,7 +1,7 @@
 import Header from "../component/header";
 import Footer from "../component/footer";
 import { CiCircleList, CiCalendar } from "react-icons/ci";
-import { FaSort, FaLock } from "react-icons/fa"; // Import icon sắp xếp
+import { FaSort, FaLock,FaCalendarCheck,FaCircle } from "react-icons/fa"; // Import icon sắp xếp
 import { rooms, roomTypes, statusColor, roomStatuses } from "./const_status";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -118,137 +118,18 @@ function Status() {
         </div>
 
         {/* --- Container chính cho Filter và Bảng --- */}
-        <div
-          style={{
-            fontFamily: "sans-serif",
-            display: "flex",
-            gap: "30px",
-            alignItems: "flex-start",
-          }}
-        >
-          {/* --- CSS Styles (Giữ nguyên và sửa margin) --- */}
-          <style>{`
-            .page-title { font-size: 1.5em; font-weight: bold; color: #2563eb; margin-bottom: 16px; }
-
-            .table-section { /* Class mới cho div bọc bảng */
-                flex-grow: 1; /* Cho phép bảng chiếm không gian còn lại */
-                display: flex;
-                flex-direction: column; /* Header và container xếp dọc */
-            }
-            .room-container {
-              background-color: white;
-              border-radius: 0 0 8px 8px; /* Chỉ bo góc dưới */
-              box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-              padding: 0 16px 16px 16px; /* Bỏ padding-top vì header đã có, bỏ padding-left lớn */
-              /* margin-left: 500px; */ /* <<-- BỎ MARGIN */
-              /* margin-right: 50px; */ /* <<-- BỎ MARGIN */
-              height: auto;
-              border: 1px solid #E5E7EB; /* Thêm viền nhẹ */
-              border-top: none; /* Bỏ viền trên */
-            }
-            .room-header, .room-row {
-              display: grid;
-              /* Có thể điều chỉnh lại grid columns nếu cần 5 cột */
-              /* grid-template-columns: 1.5fr 1.5fr 1fr 1fr 50px; */
-              grid-template-columns: 1.5fr 1.5fr 1fr 1fr; /* Giữ nguyên 4 cột như code gốc */
-              gap: 15px; /* Khoảng cách cột */
-            }
-            .room-header {
-              padding: 12px 16px; /* Điều chỉnh padding */
-              height: 60px; 
-              font-size: 0.9em; /* Nhỏ hơn chút */
-              font-weight: 600;
-              border-radius: 8px 8px 0 0; /* Chỉ bo góc trên */
-              background-color: #F9FAFB;
-              align-items: center;
-              border: 1px solid #E5E7EB; /* Thêm viền nhẹ */
-              color: #6B7280; /* Màu chữ header */
-            }
-            .room-row {
-              align-items: center;
-              padding: 15px 0; /* Giữ padding dọc */
-              border-bottom: 1px solid #eee;
-            }
-             .room-row:last-child {
-                 border-bottom: none; /* Bỏ viền dòng cuối */
-            }
-            .room-name { display: flex; align-items: center; gap: 8px; font-weight: 500;} /* Thêm font-weight */
-
-            /* Status Label Styles */
-            .status-label { padding: 5px 10px; border-radius: 6px; font-size: 0.85em; display: inline-block; font-weight: 500; min-width: 90px; text-align: center;}
-            /* Cần định nghĩa các màu này dựa trên hình mẫu */
-            .status-green { background-color: #D1FAE5; color: #065F46; } /* TRỐNG */
-            .status-purple { background-color: #E5E7EB; color: #4B5563; } /* KHÓA - dùng màu xám như mẫu */
-            .status-yellow { background-color: #FFEDD5; color: #9A3412; } /* ĐÃ ĐẶT - dùng màu cam như mẫu */
-            .status-sky { background-color: #DBEAFE; color: #1E40AF; } /* ĐANG SỬ DỤNG */
-
-            /* Filter Styles */
-            .room-filter {
-                width: 340px; /* Giảm width chút */
-                padding: 20px;
-                border: 1px solid #E5E7EB;
-                border-radius: 12px;
-                background-color: white;
-                box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-                flex-shrink: 0; /* Ngăn filter co lại */
-              }
-            .filter-header-internal { /* Đổi tên class để tránh trùng */
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 20px;
-            }
-            .filter-main-title { /* Đổi tên class */
-                 background-color: #3B82F6; /* Nền xanh */
-                 color: white;
-                 font-weight: bold;
-                 font-size: 1.1em;
-                 padding: 8px 15px;
-                 border-radius: 6px;
-            }
-            .clear-all-button {
-                 border-bottom: 1px solid #343942;
-                 color: #23272C;
-                 cursor: pointer;
-                 font-size: 13px;
-                 font-weight: 500;
-            }
-            .filter-title {
-                font-size: 16px; /* Chỉnh size */
-                font-weight: 600;
-                color: #374151; /* Màu chữ */
-                margin-bottom: 12px;
-                margin-top: 20px;
-              }
-            .filter-items-container { /* Thêm container cho nút */  
-                display: flex; 
-                flex-wrap: wrap; 
-                gap: 15px;
-            }
-            .filter-item {
-                background-color: #F3F4F6;
-                color: #374151;
-                border: 1px solid #E5E7EB;
-                border-radius: 16px;
-                padding: 6px 14px;
-                font-size: 14px;
-                cursor: pointer;
-              }
-              /* Thêm style cho nút được chọn (ví dụ) */
-             .filter-item.selected {
-                 background-color: #3B82F6; color: white; border-color: #3B82F6;
-             }
-             .filter-item:hover {
-                 background-color: #E5E7EB;
-             }
-          `}</style>
+        <div className="flex flex-col md:flex-row gap-8 items-start font-sans">
 
           {/* --- Filter Column --- */}
-          <div className="room-filter">
-            <div className="filter-header-internal">
-              <div className="filter-main-title">Room Filter</div>
+          <div className="md:w-1/3 p-5 border border-gray-300 rounded-lg bg-white shadow-md flex-shrink-0">
+
+          <div className="flex justify-between items-center mb-5">
+
+            <div className="bg-blue-500 text-white font-bold text-[1.1em] px-4 py-2 rounded-md">
+
+                Room Filter</div>
               <button
-                className="clear-all-button"
+                className="border-b border-gray-800 text-gray-700 cursor-pointer text-sm font-medium"
                 onClick={() => {
                   setSelectedRoomType("Tất cả phòng");
                   setSelectedRoomStatus("Tất cả");
@@ -258,13 +139,16 @@ function Status() {
               </button>
             </div>
 
-            <div className="filter-title">Loại Phòng</div>
-            <div className="filter-items-container">
+            <div className="text-base font-semibold text-gray-700 mb-3 mt-5">
+              Loại Phòng
+            </div>
+            <div className="flex flex-wrap gap-4">
+
               {roomTypes.map((type, index) => (
                 <div
                   key={index}
-                  className={`filter-item ${
-                    selectedRoomType === type ? "selected" : ""
+                  className={`bg-gray-100 text-gray-700 border border-gray-300 rounded-[16px] px-4 py-2 text-sm cursor-pointer  ${
+                    selectedRoomType === type ? "bg-blue-500 text-white border-blue-500" : ""
                   }`}
                   onClick={() => setSelectedRoomType(type)}
                 >
@@ -273,13 +157,15 @@ function Status() {
               ))}
             </div>
 
-            <div className="filter-title">Trạng Thái Phòng</div>
-            <div className="filter-items-container">
+            <div className="text-base font-semibold text-gray-700 mb-3 mt-5">
+              Trạng Thái Phòng
+            </div>
+            <div className="flex flex-wrap gap-4">
               {roomStatuses.map((status, index) => (
                 <div
                   key={index}
-                  className={`filter-item ${
-                    selectedRoomStatus === status ? "selected" : ""
+                  className={`bg-gray-100 text-gray-700 border border-gray-300 rounded-[16px] px-4 py-2 text-sm cursor-pointer  ${
+                    selectedRoomStatus === status ? "bg-blue-500 text-white border-blue-500" : ""
                   }`}
                   onClick={() => setSelectedRoomStatus(status)}
                 >
@@ -290,49 +176,36 @@ function Status() {
           </div>
 
           {/* --- Table Column --- */}
-          <div className="table-section">
-            <div className="room-header">
+          <div className="flex-grow flex flex-col">
+
+          <div className="grid grid-cols-4 gap-4 p-4 h-16 text-sm font-semibold bg-gray-100 rounded-t-lg border border-gray-300 text-gray-600 items-center">
               <div>Tên phòng</div>
               <div
                 onClick={() => handleSort("type")}
-                style={{
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
+                className="cursor-pointer flex items-center">
                 Loại phòng <FaSort style={{ marginLeft: "5px" }} />
               </div>
               <div
                 onClick={() => handleSort("status")}
-                style={{
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
+                className="cursor-pointer flex items-center">
                 Trạng thái <FaSort style={{ marginLeft: "5px" }} />
               </div>
               <div
                 onClick={() => handleSort("time")}
-                style={{
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
+                className="cursor-pointer flex items-center">
                 Thời gian <FaSort style={{ marginLeft: "5px" }} />
               </div>
             </div>
 
-            <div className="room-container">
+            <div className="bg-white rounded-b-lg shadow-md pl-4 border border-gray-300 border-t-0">
               {paginatedRooms.map((room) => (
-                <div key={room.id} className="room-row">
-                  <div className="room-name">Phòng {room.id}</div>
+                <div key={room.id} className="grid grid-cols-4 gap-4 py-4 border-b last:border-b-0 items-center">
+                  <div className="flex items-center gap-2 font-medium">
+                    Phòng {room.id}</div>
                   <div>{room.type}</div>
                   <div>
                     <span
-                      className={`status-label ${
+                      className={`px-2 py-1 rounded-md text-sm font-medium min-w-[90px] text-center ${
                         statusColor[room.status as keyof typeof statusColor] ||
                         "status-default"
                       }`}
@@ -341,45 +214,32 @@ function Status() {
                     </span>
                   </div>
                   <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                    }}
-                  >
+                    className="flex items-center justify-between">
                     {room.time}
+                    <div className="flex pl-2 items-center justify-between">
+
                     {/* Thêm icon bên phải */}
                     {room.status === "Đã đặt" && (
                       <FontAwesomeIcon
                         icon={faCalendarXmark}
-                        style={{
-                          color: "#6B7280",
-                          fontSize: "20px",
-                          marginRight: "50px",
-                        }}
+                        className="text-gray-500 text-lg mr-12"
                       />
                     )}
                     {room.status === "Khóa" && (
-                      <FaLock
-                        style={{ color: "#6B7280", marginRight: "50px" }}
-                      />
+                      <FaLock className="text-gray-500 text-lg mr-12" />
                     )}
+
+                    {room.status === "Trống" && (
+                      <FaCircle className="text-green-500 text-lg mr-12" />
+                    )}
+                  </div>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginTop: "20px",
-                padding: "0 10px",
-                fontSize: "0.9em",
-                color: "#6b7280",
-              }}
-            >
+            <div className="flex justify-between items-center mt-5 px-2 text-sm text-gray-600">
+
               {/* Hiển thị số lượng entries */}
               <div>
                 Show{" "}
@@ -452,13 +312,7 @@ function Status() {
                     setEntriesPerPage(Number(e.target.value));
                     setCurrentPage(1); // Reset to first page
                   }}
-                  style={{
-                    padding: "2px 5px",
-                    marginLeft: "5px",
-                    marginRight: "5px",
-                    border: "1px solid #ccc",
-                    borderRadius: "4px",
-                  }}
+                  className="px-1 py-0.5 mx-1 border border-gray-300 rounded-md"
                 >
                   <option value={5}>5</option>
                   <option value={8}>8</option>
