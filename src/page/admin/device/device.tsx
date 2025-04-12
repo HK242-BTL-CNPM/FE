@@ -1,8 +1,8 @@
 import Sidebar from "../components/sidebar";
 import Header_admin from "../components/header_admin";
 import { useState } from "react";
-import { devices, deviceTypes, statusColor, actColor, deviceStatuses } from "./const_device";
-import { CiCircleList, CiCalendar } from "react-icons/ci";
+import { devices , statusColor, actColor,  } from "./const_device";
+import { CiCircleList,  } from "react-icons/ci";
 import { FaSort, FaCaretDown } from "react-icons/fa"; // Import icon sắp xếp
 
 import "react-datepicker/dist/react-datepicker.css";
