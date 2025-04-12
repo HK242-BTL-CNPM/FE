@@ -29,10 +29,12 @@ function Login() {
   };
 
   return (
-    <div className="bg-[url('/src/assets/images/27257016.jpg')] bg-no-repeat bg-left bg-cover h-screen flex justify-end items-center">
+    <div className="bg-[url('/src/assets/images/27257016.jpg')] bg-no-repeat bg-center bg-cover h-screen flex justify-end items-center">
+            <div className="hidden md:block md:w-2/3"></div>
+
       <div className="bg-white w-full max-w-[500px] h-screen flex justify-center items-center">
-        <div className="w-[400px] text-center font-sans">
-          <h2 className="font-bold mb-5 text-2xl text-blue-600">
+        <div className="w-[450px] text-center font-sans">
+          <h2 className="font-bold mb-5 mt-5 text-2xl text-blue-600">
             Đăng nhập tài khoản
           </h2>
           <form onSubmit={handleLogin}>
