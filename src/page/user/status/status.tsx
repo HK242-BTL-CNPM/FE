@@ -147,7 +147,7 @@ function Status() {
               {roomTypes.map((type, index) => (
                 <div
                   key={index}
-                  className={`bg-gray-100 text-gray-700 border border-gray-300 rounded-[16px] px-4 py-2 text-sm cursor-pointer  ${selectedRoomType === type ? "bg-blue-500 text-white border-blue-500" : ""
+                  className={`border border-gray-300 rounded-[16px] px-4 py-2 text-sm cursor-pointer  ${selectedRoomType === type ? "bg-blue-500 text-white border-blue-500" : "bg-gray-100 text-gray-700 "
                     }`}
                   onClick={() => setSelectedRoomType(type)}
                 >
@@ -163,7 +163,7 @@ function Status() {
               {roomStatuses.map((status, index) => (
                 <div
                   key={index}
-                  className={`bg-gray-100 text-gray-700 border border-gray-300 rounded-[16px] px-4 py-2 text-sm cursor-pointer  ${selectedRoomStatus === status ? "bg-blue-500 text-white border-blue-500" : ""
+                  className={`border border-gray-300 rounded-[16px] px-4 py-2 text-sm cursor-pointer  ${selectedRoomStatus === status ? "bg-blue-500 text-white border-blue-500" : "bg-gray-100 text-gray-700 "
                     }`}
                   onClick={() => setSelectedRoomStatus(status)}
                 >

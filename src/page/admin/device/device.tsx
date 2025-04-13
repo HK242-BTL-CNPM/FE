@@ -95,7 +95,7 @@ function Device() {
 
 
                 <button className="buttondrop">
-                  Phòng <FaCaretDown style={{ marginLeft: "5px" }} />
+                  Cơ sở <FaCaretDown style={{ marginLeft: "5px" }} />
                 </button>
 
                 <button className="buttondrop">
@@ -103,7 +103,7 @@ function Device() {
                 </button>
 
                 <button className="buttondrop">
-                  Cơ sở <FaCaretDown style={{ marginLeft: "5px" }} />
+                  Phòng <FaCaretDown style={{ marginLeft: "5px" }} />
                 </button>
 
                 <button
