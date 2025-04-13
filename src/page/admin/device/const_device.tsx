@@ -45,8 +45,8 @@ export const devices = [
     id: 7,
     quantity: 4,
     devices: "Máy chiếu",
-    status: "Bình thường",
-    activity: "Bật",
+    status: "Lỗi",
+    activity: "Tắt",
   },
   {
     id: 8,
@@ -77,6 +77,7 @@ export const activityOptions = [
 export const statusColor = {
   "Bình thường": "state3",
   "Đang sửa chữa": "state2",
+  "Lỗi": "state1",
   "status-default": "",
 };
 
