@@ -656,6 +656,10 @@ video {
   z-index: 50;
 }
 
+.col-span-2 {
+  grid-column: span 2 / span 2;
+}
+
 .mx-1 {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
@@ -705,6 +709,10 @@ video {
 
 .ml-3 {
   margin-left: 0.75rem;
+}
+
+.ml-4 {
+  margin-left: 1rem;
 }
 
 .mr-12 {
@@ -815,6 +823,10 @@ video {
   height: 100vh;
 }
 
+.h-12 {
+  height: 3rem;
+}
+
 .min-h-screen {
   min-height: 100vh;
 }
@@ -871,6 +883,10 @@ video {
   width: 250px;
 }
 
+.w-\[330px\] {
+  width: 330px;
+}
+
 .w-\[450px\] {
   width: 450px;
 }
@@ -913,6 +929,10 @@ video {
 
 .max-w-\[1100px\] {
   max-width: 1100px;
+}
+
+.max-w-\[1200px\] {
+  max-width: 1200px;
 }
 
 .max-w-\[1280px\] {
@@ -985,6 +1005,10 @@ video {
 
 .grid-cols-6 {
   grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.grid-cols-8 {
+  grid-template-columns: repeat(8, minmax(0, 1fr));
 }
 
 .flex-row {
@@ -1812,25 +1836,7 @@ video {
   --tw-scale-y: 1.05;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-.buttondrop {
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 16px;
-  border: 2px solid #2979ff; /* Màu viền xanh dương */
-  border-radius: 12px;
-  color: #2979ff;
-  font-size: 14px;
-  font-weight: 500;
-  background-color: white;
-  cursor: pointer;
-  user-select: none;
-  transition: background-color 0.3s;
-  white-space: nowrap;
-}
 
-.buttondrop:hover {
-  background-color: #e3f2fd;
-}
 .state1 {
   height: 2rem;
   border-radius: 0.5rem;
@@ -1882,7 +1888,7 @@ video {
   color: rgb(36 209 100 / var(--tw-text-opacity, 1));
 }
 
-.button4 {
+.buttondrop {
   height: 2rem;
   border-radius: 0.5rem;
   --tw-bg-opacity: 1;
@@ -1904,7 +1910,7 @@ video {
   transition-duration: 300ms;
 }
 
-.button4:hover {
+.buttondrop:hover {
   --tw-scale-x: 1.05;
   --tw-scale-y: 1.05;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
