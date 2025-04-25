@@ -1,6 +1,6 @@
 import Header from "../component/header";
 import Footer from "../component/footer";
-import { CiCircleList, CiCalendar } from "react-icons/ci";
+import { CiCalendar } from "react-icons/ci";
 import { FaSort, FaLock, FaCircle } from "react-icons/fa"; // Import icon sắp xếp
 import { rooms, roomTypes, statusColor, roomStatuses } from "./const_status";
 import { useState } from "react";
@@ -71,33 +71,15 @@ function Status() {
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
+            justifyContent: "flex-end",
             marginBottom: "30px",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <CiCircleList
-              style={{
-                fontSize: "50px", // Giảm size chút
-                color: "#374151", // Màu xám đậm
-                marginRight: "20px",
-              }}
-            />
-            <h1
-              style={{ fontSize: "32px", fontWeight: "bold", color: "#111827" }}
-            >
-              {" "}
-              Trạng thái phòng
-            </h1>
-          </div>
-
           {/* Date Picker */}
           <div
             style={{
               display: "flex",
               alignItems: "center",
-
-
             }}
           >
             <CiCalendar size={25} style={{ color: "#374151" }} />{" "}
@@ -106,28 +88,26 @@ function Status() {
                 selected={selectedDate}
                 onChange={(date) => setSelectedDate(date || new Date())}
                 minDate={new Date()} // Chỉ cho phép chọn từ ngày hiện tại trở đi
-                maxDate={new Date(new Date().setMonth(new Date().getMonth() + 1))}
+                maxDate={
+                  new Date(new Date().setMonth(new Date().getMonth() + 1))
+                }
                 dateFormat="MMM, dd yyyy" // Định dạng ngày
                 className="custom-datepicker rounded-xl px-2 py-1 border border-gray-300"
                 placeholderText="Select a date"
               />
             </div>
             {/* Icon lịch */}
-
           </div>
         </div>
 
         {/* --- Container chính cho Filter và Bảng --- */}
         <div className="flex flex-col md:flex-row gap-8 items-start font-sans">
-
           {/* --- Filter Column --- */}
           <div className="md:w-1/3 p-5 border border-gray-300 rounded-lg bg-white shadow-md flex-shrink-0">
-
             <div className="flex justify-between items-center mb-5">
-
               <div className="bg-blue-500 text-white font-bold text-[1.1em] px-4 py-2 rounded-md">
-
-                Room Filter</div>
+                Room Filter
+              </div>
               <button
                 className="border-b border-gray-800 text-gray-700 cursor-pointer text-sm font-medium"
                 onClick={() => {
@@ -143,12 +123,14 @@ function Status() {
               Loại Phòng
             </div>
             <div className="flex flex-wrap gap-4">
-
               {roomTypes.map((type, index) => (
                 <div
                   key={index}
-                  className={`border border-gray-300 rounded-[16px] px-4 py-2 text-sm cursor-pointer  ${selectedRoomType === type ? "bg-blue-500 text-white border-blue-500" : "bg-gray-100 text-gray-700 "
-                    }`}
+                  className={`border border-gray-300 rounded-[16px] px-4 py-2 text-sm cursor-pointer  ${
+                    selectedRoomType === type
+                      ? "bg-blue-500 text-white border-blue-500"
+                      : "bg-gray-100 text-gray-700 "
+                  }`}
                   onClick={() => setSelectedRoomType(type)}
                 >
                   {type}
@@ -163,8 +145,11 @@ function Status() {
               {roomStatuses.map((status, index) => (
                 <div
                   key={index}
-                  className={`border border-gray-300 rounded-[16px] px-4 py-2 text-sm cursor-pointer  ${selectedRoomStatus === status ? "bg-blue-500 text-white border-blue-500" : "bg-gray-100 text-gray-700 "
-                    }`}
+                  className={`border border-gray-300 rounded-[16px] px-4 py-2 text-sm cursor-pointer  ${
+                    selectedRoomStatus === status
+                      ? "bg-blue-500 text-white border-blue-500"
+                      : "bg-gray-100 text-gray-700 "
+                  }`}
                   onClick={() => setSelectedRoomStatus(status)}
                 >
                   {status}
@@ -175,46 +160,51 @@ function Status() {
 
           {/* --- Table Column --- */}
           <div className="flex-grow flex flex-col">
-
             <div className="grid grid-cols-4 gap-4 p-4 h-16 text-sm font-semibold bg-gray-100 rounded-t-lg border border-gray-300 text-gray-600 items-center">
               <div>Tên phòng</div>
               <div
                 onClick={() => handleSort("type")}
-                className="cursor-pointer flex items-center">
+                className="cursor-pointer flex items-center"
+              >
                 Loại phòng <FaSort style={{ marginLeft: "5px" }} />
               </div>
               <div
                 onClick={() => handleSort("status")}
-                className="cursor-pointer flex items-center">
+                className="cursor-pointer flex items-center"
+              >
                 Trạng thái <FaSort style={{ marginLeft: "5px" }} />
               </div>
               <div
                 onClick={() => handleSort("time")}
-                className="cursor-pointer flex items-center">
+                className="cursor-pointer flex items-center"
+              >
                 Thời gian <FaSort style={{ marginLeft: "5px" }} />
               </div>
             </div>
 
             <div className="bg-white rounded-b-lg shadow-md pl-4 border border-gray-300 border-t-0">
               {paginatedRooms.map((room) => (
-                <div key={room.id} className="grid grid-cols-4 gap-4 py-4 border-b last:border-b-0 items-center">
+                <div
+                  key={room.id}
+                  className="grid grid-cols-4 gap-4 py-4 border-b last:border-b-0 items-center"
+                >
                   <div className="flex items-center gap-2 font-medium">
-                    Phòng {room.id}</div>
+                    Phòng {room.id}
+                  </div>
                   <div>{room.type}</div>
                   <div>
                     <span
-                      className={`px-2 py-1 rounded-md text-sm font-medium min-w-[90px] text-center ${statusColor[room.status as keyof typeof statusColor] ||
+                      className={`px-2 py-1 rounded-md text-sm font-medium min-w-[90px] text-center ${
+                        statusColor[room.status as keyof typeof statusColor] ||
                         "status-default"
-                        }`}
+                      }`}
                     >
                       {room.status}
                     </span>
                   </div>
-                  <div
-                    className="flex items-center justify-between">
+                  <div className="flex items-center justify-between">
                     {room.time}
                     <div className="flex pl-2 items-center justify-between">
-
                       {/* Thêm icon bên phải */}
                       {room.status === "Đã đặt" && (
                         <FontAwesomeIcon
@@ -236,7 +226,6 @@ function Status() {
             </div>
 
             <div className="flex justify-between items-center mt-5 px-2 text-sm text-gray-600">
-
               {/* Hiển thị số lượng entries */}
               <div>
                 Show{" "}
