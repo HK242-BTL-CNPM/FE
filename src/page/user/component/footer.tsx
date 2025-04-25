@@ -12,7 +12,7 @@ function Footer() {
   return (
     <>
       <hr className="border-t border-gray-300 opacity-50 mt-12 mb-6" />
-      <div className="w-full px-6 md:px-12 lg:px-20 pb-16">
+      <div className="w-full px-6 md:px-12 lg:px-20 pb-0">
         {/* Logo + title */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-6">
           <Link to="../home">
@@ -54,7 +54,7 @@ function Footer() {
 
           {/* Menu */}
           <div className="flex-1 min-w-[200px]">
-            <h2 className="font-semibold text-base mb-2">Về chúng tôi</h2>
+            <h2 className="font-bold text-base mb-2">Về chúng tôi</h2>
             <div className="flex flex-col space-y-1">
               <Link className="text-[#666B72] font-medium pl-1" to="../">
                 Trang chủ
@@ -76,7 +76,7 @@ function Footer() {
 
           {/* Support */}
           <div className="flex-1 min-w-[200px]">
-            <h2 className="font-semibold text-base mb-2">Hỗ trợ</h2>
+            <h2 className="font-bold text-base mb-2">Hỗ trợ</h2>
             <div className="flex flex-col space-y-1">
               <Link className="text-[#666B72] font-medium pl-1" to="">
                 FAQs
@@ -89,7 +89,7 @@ function Footer() {
 
           {/* Social */}
           <div className="flex-1 min-w-[200px]">
-            <h2 className="font-semibold text-base mb-2">Theo dõi chúng tôi</h2>
+            <h2 className="font-bold text-base mb-2">Theo dõi chúng tôi</h2>
             <div className="flex gap-4 mt-2">
               {/* <Link to="../"> */}
               <AiOutlineFacebook size={32} />
@@ -101,6 +101,16 @@ function Footer() {
           </div>
         </div>
       </div>
+
+      {/* Bottom blue bar */}
+      <div
+        className="w-full mt-10"
+        style={{
+          backgroundColor: "#1e40af",
+          height: "20px",
+          marginTop: "25px",
+        }}
+      ></div>
     </>
   );
 }
