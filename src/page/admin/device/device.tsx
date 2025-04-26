@@ -3,6 +3,11 @@ import Header_admin from "../components/header_admin";
 import { useState } from "react";
 import { devices, statusColor, actColor, } from "./const_device";
 import { FaSort, FaCaretDown } from "react-icons/fa"; // Import icon sắp xếp
+import Select from "react-select"; // Import Select component
+// import { csOptions, toaOptionsByCs, phongOptionsByCs } from "./Options";
+// import { toaOptionsByCs, deviceOptionsByToa } from "./Options";
+import { csOptions, toaOptionsByCs, phongOptionsByToa,deviceOptionsByToa } from "./Options";
+// import { devices } from "./const_device";
 
 import "react-datepicker/dist/react-datepicker.css";
 function Device() {
@@ -34,25 +39,65 @@ function Device() {
     }
   };
 
+
+  const [selectedCs, setSelectedCs] = useState<string | null>(null);
+  const [selectedToa, setSelectedToa] = useState<string | null>(null);
+  const [selectedPhong, setSelectedPhong] = useState<string | null>(null);
+
   const handleToggle = () => {
     setIsToggled((prev) => !prev);
   };
+  const filterDevices = () => {
+    let filteredDevices = devicesList; // <- dùng devicesList thay vì devices
+  
+    if (selectedCs) {
+      filteredDevices = filteredDevices.filter((device) => device.cs === selectedCs);
+    }
+    if (selectedToa) {
+      filteredDevices = filteredDevices.filter((device) => device.toa === selectedToa);
+    }
+    if (selectedPhong) {
+      filteredDevices = filteredDevices.filter((device) => device.roomNumber === selectedPhong);
+    }
+    return filteredDevices;
+  };
+  
 
-  const sortedDevices = [...devicesList].sort((a, b) => {
-    if (!sortConfig) return 0;
-    const { key, direction } = sortConfig;
-    const order = direction === "asc" ? 1 : -1;
-    const valA = a[key as keyof typeof a];
-    const valB = b[key as keyof typeof b];
-    return (valA < valB ? -1 : valA > valB ? 1 : 0) * order;
-  });
+const filteredDevices = filterDevices();
+const sortedDevices = [...filteredDevices].sort((a, b) => {
+  if (!sortConfig) return 0;
+  const { key, direction } = sortConfig;
+  const order = direction === "asc" ? 1 : -1;
+  const valA = a[key as keyof typeof a];
+  const valB = b[key as keyof typeof b];
+  return (valA < valB ? -1 : valA > valB ? 1 : 0) * order;
+});
+
 
   const totalPages = Math.ceil(sortedDevices.length / entriesPerPage);
   const paginatedDevices = sortedDevices.slice(
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
   );
-
+  const customStyles = {
+    placeholder: (provided: any) => ({
+      ...provided,
+      color: "#1D4ED8",
+      fontWeight: 500,
+    }),
+    menu: (provided: any) => ({
+      ...provided,
+      zIndex: 9999,
+    }),
+    control: (provided: any) => ({
+      ...provided,
+      borderRadius: 8,
+      padding: "2px 4px",
+    }),
+  };
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [newDeviceName, setNewDeviceName] = useState("");
+    // const toaOptions = selectedCs ? toaOptionsByCs[selectedCs] : [];
   return (
     <>
       <div className="flex min-h-screen">
@@ -77,34 +122,55 @@ function Device() {
               <div className="flex flex-wrap items-center gap-4 justify-end">
                 
 
-                <div className="relative inline-block">
-                <div
-                  onClick={handleToggle}
-                  className={`relative w-16 h-8 rounded-full transition duration-200 ease-linear cursor-pointer ${isToggled ? "bg-green-400" : "bg-gray-400"
-                    }`}
-                >
-                  <div
-                    className={`absolute top-0 left-0 w-8 h-8 bg-white border-2 rounded-full transition-all duration-200 ease-linear ${isToggled ? "translate-x-full border-green-400" : "translate-x-0 border-gray-400"
-                      }`}
-                  ></div>
-                </div>                  
-                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 text-sm text-gray-600 whitespace-nowrap">
-                    Nguồn điện
-                  </div>
-                </div>
+              <div className="flex flex-row flex-wrap gap-3 justify-end px-16 pt-4">
+  {/* Cơ sở */}
+  <Select
+    className="w-36"
+    styles={customStyles}
+    placeholder="Cơ sở"
+    options={csOptions}
+    value={selectedCs ? { value: selectedCs, label: selectedCs } : null}
+    onChange={(option) => {
+      setSelectedCs(option?.value || null);
+      setSelectedToa(null);
+      setSelectedPhong(null);
+    }}
+    getOptionLabel={(e) => e.label}
+    getOptionValue={(e) => e.value}
+  />
 
+  {/* Toà */}
+  <Select
+    className="w-36"
+    styles={customStyles}
+    placeholder="Tòa"
+    options={selectedCs ? toaOptionsByCs[selectedCs] || [] : []}
+    value={selectedToa ? { value: selectedToa, label: selectedToa } : null}
+    isDisabled={!selectedCs}
+    onChange={(option) => {
+      setSelectedToa(option?.value || null);
+      setSelectedPhong(null); // Reset Phòng khi chọn lại Tòa
+    }}
+    getOptionLabel={(e) => e.label}
+    getOptionValue={(e) => e.value}
+  />
 
-                <button className="buttondrop">
-                  Cơ sở <FaCaretDown style={{ marginLeft: "5px" }} />
-                </button>
+  {/* Phòng */}
+  <Select
+    className="w-36"
+    styles={customStyles}
+    placeholder="Phòng"
+    options={selectedToa ? phongOptionsByToa[selectedToa] || [] : []}
+    value={selectedPhong ? { value: selectedPhong, label: selectedPhong } : null}
+    isDisabled={!selectedToa}
+    onChange={(option) => {
+      setSelectedPhong(option?.value || null);
+    }}
+    getOptionLabel={(e) => e.label}
+    getOptionValue={(e) => e.value}
+  />
+</div>
 
-                <button className="buttondrop">
-                  Tòa <FaCaretDown style={{ marginLeft: "5px" }} />
-                </button>
-
-                <button className="buttondrop">
-                  Phòng <FaCaretDown style={{ marginLeft: "5px" }} />
-                </button>
 
                 <button
                   className="button1"
@@ -115,6 +181,15 @@ function Device() {
                     fontSize: "14px", // Kích thước chữ nhỏ hơn
                     height: "40px", // Chiều cao cố định
                     maxWidth: "120px", // Chiều rộng tự động theo nội dung
+                  }}
+                  onClick={() => {
+                    if (selectedPhong) {
+                      console.log(`Thêm thiết bị vào phòng: ${selectedPhong}`);
+                      setIsPopupOpen(true);
+                      // Thực hiện các hành động khác nếu cần
+                    } else {
+                      console.log("Vui lòng chọn phòng trước khi thêm thiết bị.");
+                    }
                   }}
                 >
                   Thêm thiết bị
@@ -133,14 +208,21 @@ function Device() {
               {/* --- Table Column --- */}
               <div className="flex-grow flex flex-col  ">
                 {/* Header của bảng */}
-                <div className="grid grid-cols-6  gap-4 p-4 h-16 text-sm font-semibold bg-[#F8FAFC] rounded-t-lg border border-gray-300 text-gray-600 items-center">
+                <div className="grid grid-cols-7  gap-4 p-4 h-16 text-sm font-semibold bg-[#F8FAFC] rounded-t-lg border border-gray-300 text-gray-600 items-center">
                   <div className="text-center">Tên ID</div>
+                  <div
+                    onClick={() => handleSort("roomNumber")}
+                    className="cursor-pointer flex items-center justify-center"
+                  >
+                    Số phòng <FaSort className="ml-2" />
+                  </div>
                   <div
                     onClick={() => handleSort("devices")}
                     className="cursor-pointer flex items-center justify-center"
                   >
                     Thiết bị <FaSort className="ml-2" />
                   </div>
+                  
                   <div
                     onClick={() => handleSort("quantity")}
                     className="cursor-pointer flex items-center justify-center"
@@ -172,9 +254,10 @@ function Device() {
                   {paginatedDevices.map((device) => (
                     <div
                       key={device.id}
-                      className="grid grid-cols-6 gap-4 py-4 border-b last:border-b-0 items-center"
+                      className="grid grid-cols-7 gap-4 py-4 border-b last:border-b-0 items-center"
                     >
                       <div className="text-center font-medium">ID {device.id}</div>
+                      <div className="text-center">{device.roomNumber}</div>
                       <div className="text-center">{device.devices}</div>
                       <div className="text-center">{device.quantity}</div>
 
@@ -263,6 +346,57 @@ function Device() {
           </div>
         </div>
       </div >
+      {isPopupOpen && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+      <h2 className="text-xl font-bold mb-4">Thêm thiết bị</h2>
+      <input
+        type="text"
+        placeholder="Nhập tên thiết bị"
+        value={newDeviceName}
+        onChange={(e) => setNewDeviceName(e.target.value)}
+        className="w-full border border-gray-300 rounded-md px-3 py-2 mb-4"
+      />
+      <div className="flex justify-end gap-4">
+        <button
+          className="px-4 py-2 bg-gray-300 text-black rounded-md"
+          onClick={() => setIsPopupOpen(false)} // Đóng popup
+        >
+          Hủy
+        </button>
+        <button
+  className="px-4 py-2 bg-blue-500 text-white rounded-md"
+  onClick={() => {
+    if (newDeviceName.trim()) {
+      // Tạo thiết bị mới
+      const newDevice = {
+        id: devicesList.length + 1, // Tạo ID mới
+        devices: newDeviceName,
+        quantity: 1, // Số lượng mặc định là 1
+        status: "Bình thường", // Trạng thái mặc định
+        activity: "Tắt", // Hoạt động mặc định
+        cs: selectedCs || "", // Đảm bảo `cs` không phải null
+        toa: selectedToa || "", // Đảm bảo `toa` không phải null
+        roomNumber: selectedPhong || "", // Đảm bảo `roomNumber` không phải null
+      };
+
+      // Cập nhật danh sách thiết bị
+      setDevicesList((prevDevices) => [...prevDevices, newDevice]);
+
+      console.log(`Thêm thiết bị: ${newDeviceName} vào phòng ${selectedPhong}`);
+      setNewDeviceName(""); // Reset tên thiết bị
+      setIsPopupOpen(false); // Đóng popup
+    } else {
+      console.log("Vui lòng nhập tên thiết bị.");
+    }
+  }}
+>
+  Add
+</button>
+      </div>
+    </div>
+  </div>
+)}
     </>
   );
 }
