@@ -2,6 +2,7 @@ import { useAuth } from "../../AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import mockUsers from "./mockUsers";
+import React from "react";
 
 function Login() {
   const { login } = useAuth();
@@ -10,7 +11,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e: any) => {
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const foundUser = mockUsers.find(
@@ -30,7 +31,7 @@ function Login() {
 
   return (
     <div className="bg-[url('/src/assets/images/27257016.jpg')] bg-no-repeat bg-center bg-cover h-screen flex justify-end items-center">
-            <div className="hidden md:block md:w-2/3"></div>
+      <div className="hidden md:block md:w-2/3"></div>
 
       <div className="bg-white w-full max-w-[500px] h-screen flex justify-center items-center">
         <div className="w-[450px] text-center font-sans">
@@ -63,13 +64,9 @@ function Login() {
               <i className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-base fa-solid fa-lock"></i>
             </div>
             <div className="flex flex-col gap-5">
-            <button
-                className="button1 w-2/3 mx-auto" type="submit"
-              >
+              <button className="button1 w-2/3 mx-auto" type="submit">
                 Đăng nhập
               </button>
-
-              
             </div>
           </form>
         </div>
