@@ -101,20 +101,20 @@
 
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
+// Định nghĩa cấu trúc User dựa trên API response
 interface User {
+  id: number;
   username: string;
-  firstname: string;
-  lastname: string;
   email: string;
-  MSSV: string; 
   isUser: boolean;
   isAdmin: boolean;
   isActive: boolean;
 }
 
+// Định nghĩa cấu trúc của AuthContext
 interface AuthContextType {
   user: User | null;
-  login: (userData: User) => void;
+  login: (userData: User, token: string) => void;
   logout: () => void;
 }
 
@@ -124,6 +124,7 @@ const LOCAL_STORAGE_KEY = 'user';
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
+  // Kiểm tra user trong localStorage khi ứng dụng khởi động
   useEffect(() => {
     const storedUser = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (storedUser) {
@@ -136,11 +137,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const login = (userData: User) => {
+  // Hàm login: Lưu user và token
+  const login = (userData: User, token: string) => {
     setUser(userData);
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(userData));
+    localStorage.setItem('token', token);
+    console.log("Đã lưu token vào localStorage:", token); // Debug
   };
 
+  // Hàm logout: Xóa user và token
   const logout = () => {
     setUser(null);
     localStorage.removeItem(LOCAL_STORAGE_KEY);

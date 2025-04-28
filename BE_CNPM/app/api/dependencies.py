@@ -82,11 +82,29 @@ def check_admin_role(token: str) -> bool:
 isAdmin = Annotated[bool, Depends(check_admin_role)]
 
 # Kiểm tra user active dựa trên CurrentUser
+# def check_active_user(token: str) -> bool:
+#     try:
+#         if not str:
+#             raise HTTPException(status_code=401, detail="Missing token")
+#         #token_str = str.credentials
+#         data = decode_access_token(token)
+#         username = data.get("sub")
+#         if username is None:
+#             raise HTTPException(status_code=401, detail="Invalid token")
+#     except jwt.ExpiredSignatureError:
+#         raise HTTPException(status_code=401, detail="Token has expired")
+#     except jwt.PyJWTError:
+#         raise HTTPException(status_code=401, detail="Invalid token")
+    
+#     return data.get("isactive", False) & data.get("isuser", False) 
+
+# is_activeuser = Annotated[bool, Depends(check_active_user)]
+
+# lỗi cú pháp -> sửa thành "if not token"
 def check_active_user(token: str) -> bool:
     try:
-        if not str:
+        if not token:
             raise HTTPException(status_code=401, detail="Missing token")
-        #token_str = str.credentials
         data = decode_access_token(token)
         username = data.get("sub")
         if username is None:
@@ -96,7 +114,7 @@ def check_active_user(token: str) -> bool:
     except jwt.PyJWTError:
         raise HTTPException(status_code=401, detail="Invalid token")
     
-    return data.get("isactive", False) & data.get("isuser", False) 
+    return data.get("isactive", False) and data.get("isuser", False)
 
 is_activeuser = Annotated[bool, Depends(check_active_user)]
 
