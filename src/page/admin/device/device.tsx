@@ -2,11 +2,11 @@ import Sidebar from "../components/sidebar";
 import Header_admin from "../components/header_admin";
 import { useState } from "react";
 import { devices, statusColor, actColor, } from "./const_device";
-import { FaSort, FaCaretDown } from "react-icons/fa"; // Import icon sắp xếp
+import { FaSort } from "react-icons/fa"; // Import icon sắp xếp
 import Select from "react-select"; // Import Select component
 // import { csOptions, toaOptionsByCs, phongOptionsByCs } from "./Options";
 // import { toaOptionsByCs, deviceOptionsByToa } from "./Options";
-import { csOptions, toaOptionsByCs, phongOptionsByToa,deviceOptionsByToa } from "./Options";
+import { csOptions, toaOptionsByCs, phongOptionsByToa } from "./Options";
 // import { devices } from "./const_device";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -22,7 +22,7 @@ function Device() {
   const [devicesList, setDevicesList] = useState(devices);
   const [currentPage, setCurrentPage] = useState(1);
   const entriesPerPage = 5;
-  const [isToggled, setIsToggled] = useState(false);
+  // const [, setIsToggled] = useState(false);
 
   const handleSort = (key: string) => {
     let direction = "asc";
@@ -44,9 +44,7 @@ function Device() {
   const [selectedToa, setSelectedToa] = useState<string | null>(null);
   const [selectedPhong, setSelectedPhong] = useState<string | null>(null);
 
-  const handleToggle = () => {
-    setIsToggled((prev) => !prev);
-  };
+
   const filterDevices = () => {
     let filteredDevices = devicesList; // <- dùng devicesList thay vì devices
   
@@ -209,7 +207,7 @@ const sortedDevices = [...filteredDevices].sort((a, b) => {
               {/* --- Table Column --- */}
               <div className="flex-grow flex flex-col  ">
                 {/* Header của bảng */}
-                <div className="grid grid-cols-7  gap-4 p-4 h-16 text-sm font-semibold bg-[#F8FAFC] rounded-t-lg border border-gray-300 text-gray-600 items-center">
+                <div className="grid grid-cols-8  gap-4 p-4 h-16 text-sm font-semibold bg-[#F8FAFC] rounded-t-lg border border-gray-300 text-gray-600 items-center">
                   <div className="text-center">Tên ID</div>
                   <div
                     onClick={() => handleSort("roomNumber")}
@@ -219,7 +217,7 @@ const sortedDevices = [...filteredDevices].sort((a, b) => {
                   </div>
                   <div
                     onClick={() => handleSort("devices")}
-                    className="cursor-pointer flex items-center justify-center"
+                    className="cursor-pointer flex items-center justify-center col-span-2"
                   >
                     Thiết bị <FaSort className="ml-2" />
                   </div>
@@ -255,11 +253,11 @@ const sortedDevices = [...filteredDevices].sort((a, b) => {
                   {paginatedDevices.map((device) => (
                     <div
                       key={device.id}
-                      className="grid grid-cols-7 gap-4 py-4 border-b last:border-b-0 items-center"
+                      className="grid grid-cols-8 gap-4 py-4 border-b last:border-b-0 items-center"
                     >
                       <div className="text-center font-medium">ID {device.id}</div>
                       <div className="text-center">{device.roomNumber}</div>
-                      <div className="text-center">{device.devices}</div>
+                      <div className="text-center col-span-2">{device.devices}</div>
                       <div className="text-center">{device.quantity}</div>
 
                       <div className="text-center">
@@ -281,7 +279,7 @@ const sortedDevices = [...filteredDevices].sort((a, b) => {
                         </button>
                       </div>
 
-                      <div className="flex justify-center items-center gap-2">
+                      <div className="flex justify-center items-center ">
                         <button
                           onClick={() => handleDeleteDevice(device.id)}
                           className="button3 "
