@@ -96,6 +96,7 @@ const sortedDevices = [...filteredDevices].sort((a, b) => {
     }),
   };
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  
   const [newDeviceName, setNewDeviceName] = useState("");
     // const toaOptions = selectedCs ? toaOptionsByCs[selectedCs] : [];
   return (
