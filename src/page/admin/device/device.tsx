@@ -2,11 +2,11 @@ import Sidebar from "../components/sidebar";
 import Header_admin from "../components/header_admin";
 import { useState } from "react";
 import { devices, statusColor, actColor, } from "./const_device";
-import { FaSort, FaCaretDown } from "react-icons/fa"; // Import icon sắp xếp
+import { FaSort } from "react-icons/fa"; // Import icon sắp xếp
 import Select from "react-select"; // Import Select component
 // import { csOptions, toaOptionsByCs, phongOptionsByCs } from "./Options";
 // import { toaOptionsByCs, deviceOptionsByToa } from "./Options";
-import { csOptions, toaOptionsByCs, phongOptionsByToa,deviceOptionsByToa } from "./Options";
+import { csOptions, toaOptionsByCs, phongOptionsByToa } from "./Options";
 // import { devices } from "./const_device";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -22,7 +22,7 @@ function Device() {
   const [devicesList, setDevicesList] = useState(devices);
   const [currentPage, setCurrentPage] = useState(1);
   const entriesPerPage = 5;
-  const [isToggled, setIsToggled] = useState(false);
+  // const [, setIsToggled] = useState(false);
 
   const handleSort = (key: string) => {
     let direction = "asc";
@@ -44,9 +44,7 @@ function Device() {
   const [selectedToa, setSelectedToa] = useState<string | null>(null);
   const [selectedPhong, setSelectedPhong] = useState<string | null>(null);
 
-  const handleToggle = () => {
-    setIsToggled((prev) => !prev);
-  };
+
   const filterDevices = () => {
     let filteredDevices = devicesList; // <- dùng devicesList thay vì devices
   
