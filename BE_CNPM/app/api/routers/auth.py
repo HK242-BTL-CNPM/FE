@@ -141,16 +141,16 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/api/v1/auth",
-    tags=["auth"]
+    # prefix="/api/v1/auth",
+    # tags=["auth"]
 )
 
-@router.get("/me", response_model=UserOut_json)
-def read_users_me(current_user: CurrentUser):
-    return {
-        "msg": "Get user successfully",
-        "data": current_user
-    }
+# @router.get("/me", response_model=UserOut_json)
+# def read_users_me(current_user: CurrentUser):
+#     return {
+#         "msg": "Get user successfully",
+#         "data": current_user
+#     }
 
 @router.post("/login", response_model=Token_json)
 def login(data: UserIn, session: SessionDep):

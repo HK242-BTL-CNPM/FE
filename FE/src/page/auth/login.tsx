@@ -298,37 +298,33 @@ function Login() {
     setError("");
 
     try {
-      // Gửi yêu cầu đăng nhập
-      const response = await api.post("/auth/login", {
+      const response = await api.post("/api/v1/auth/login", {
         username: username,
         password: password,
       });
 
-      // In response chi tiết
       console.log("API response:", JSON.stringify(response.data, null, 2));
 
-      // Kiểm tra access_token và data
       if (response.data.access_token && response.data.data) {
         const userData = response.data.data;
         const token = response.data.access_token;
 
-        // Debug: In userData và token
         console.log("userData:", userData);
         console.log("token:", token);
 
-        // Gọi hàm login để lưu user và token
         login(userData, token);
 
-        // Kiểm tra localStorage ngay sau khi lưu
         console.log("Token in localStorage:", localStorage.getItem("token"));
         console.log("User in localStorage:", localStorage.getItem("user"));
 
-        // Điều hướng theo vai trò
-        if (userData.isAdmin) {
-          navigate("/dashboard");
-        } else {
-          navigate("/");
-        }
+        // Thêm delay nhỏ để đảm bảo token được lưu
+        setTimeout(() => {
+          if (userData.isAdmin) {
+            navigate("/dashboard");
+          } else {
+            navigate("/");
+          }
+        }, 100); // Delay 100ms
       } else {
         setError("Response thiếu access_token hoặc data");
       }
