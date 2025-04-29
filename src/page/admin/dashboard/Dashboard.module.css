@@ -7,7 +7,7 @@
 }
 
 .sidebarContainer {
-  background-color: #1e293b;
+  background-color: #23272c;
   color: #cbd5e1;
   transition: width 0.3s ease-in-out;
   overflow: hidden;
@@ -85,8 +85,6 @@
 }
 /* Dashboard.module.css */
 
-/* ... (Các style khác giữ nguyên) ... */
-
 .chartSection .flex {
   /* Target thẻ div chứa title và dropdown */
   position: relative; /* Để định vị icon */
@@ -144,4 +142,17 @@
     /* Hoặc giá trị cao hơn nếu muốn, ví dụ: */
     /* height: 32rem; */ /* 512px */
   }
+}
+.react-datepicker-popper {
+  left: auto !important;
+  right: 0 !important;
+  transform: none !important;
+  z-index: 9999;
+}
+
+/* Nếu muốn popper luôn sát input bên phải */
+.roomStatusTableDatePicker {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
 }

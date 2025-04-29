@@ -122,8 +122,41 @@
 }
 
 .notificationListContainer {
-  background-color: white;
-  border-radius: 0.5rem; /* rounded-lg */
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); /* shadow */
-  overflow: hidden; /* Để border-radius hoạt động đúng */
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px 0 rgba(31, 41, 55, 0.06);
+  padding: 0;
+  margin-top: 1.5rem;
+  /* Thêm chiều cao cố định và scroll */
+  max-height: 480px; /* hoặc giá trị bạn muốn, ví dụ 60vh */
+  overflow-y: auto;
+}
+
+/* PHẦN CHO FILTER */
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  justify-content: flex-end;
+}
+
+.filterSelect {
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  border: 3px solid #e5e7eb;
+  border-radius: 2.75rem;
+  background: #f3f4f6;
+  font-size: 1rem;
+  color: #111827;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  appearance: none;
+  min-width: 120px;
+  cursor: pointer;
+  position: relative;
+}
+
+.filterSelect:focus,
+.filterSelect:hover {
+  border-color: #2563eb;
+  background: #e0e7ff;
 }

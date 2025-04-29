@@ -73,17 +73,18 @@ function RoomStatusTable() {
         <h2 className="text-lg font-semibold text-gray-800">
           Thống kê tình trạng phòng
         </h2>
-        {/* --- Date Picker Component --- */}
-        <DatePicker
-          selected={startDate}
-          onChange={handleDateChange}
-          startDate={startDate}
-          endDate={endDate}
-          selectsRange // Cho phép chọn khoảng
-          customInput={<CustomDateInput />}
-          dateFormat="MMM d" // Định dạng cơ bản, sẽ được override bởi customInput display
-          popperPlacement="bottom-end" // Vị trí lịch hiện ra
-        />
+        <div className="roomStatusTableDatePicker">
+          <DatePicker
+            selected={startDate}
+            onChange={handleDateChange}
+            startDate={startDate}
+            endDate={endDate}
+            selectsRange
+            customInput={<CustomDateInput />}
+            dateFormat="MMM d"
+            popperPlacement="bottom-end"
+          />
+        </div>
       </div>
       {/* --- Table (giữ nguyên) --- */}
       <table className="w-full text-left table-auto">

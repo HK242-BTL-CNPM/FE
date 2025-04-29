@@ -3,30 +3,38 @@ import React from "react";
 import { FaBell } from "react-icons/fa";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import {
+  mockNotifications,
+  NotificationRowProps,
+} from "../notification/mockNotifications";
 
 // --- NotificationItem ---
 function NotificationItem({
   icon,
-  title,
-  description,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-}) {
+  location,
+  message,
+  isNew,
+  timestamp,
+  onClick, // Thêm onClick
+}: NotificationRowProps & { icon: React.ReactNode; onClick?: () => void }) {
   return (
-    <div className="flex items-start space-x-4 p-2 hover:bg-gray-50 rounded-md cursor-pointer">
-      <div className="bg-orange-100 text-orange-500 p-2 rounded-full mt-1 flex-shrink-0">
+    <div
+      className={`flex items-center gap-3 p-2 rounded-md cursor-pointer ${
+        isNew ? "bg-blue-100" : "hover:bg-gray-50"
+      }`} // Đổi màu nền thành bg-blue-100
+      onClick={onClick} // Gọi hàm onClick khi bấm
+    >
+      <div className="flex items-center justify-center bg-blue-200 text-blue-600 p-3 rounded-full flex-shrink-0">
         {icon}
       </div>
-      <div>
-        <p className="text-sm font-semibold text-gray-800">{title}</p>
-        <p className="text-xs text-gray-500">{description}</p>
+      <div className="flex flex-col justify-center">
+        <p className="text-sm font-semibold text-gray-800">{message}</p>
+        <p className="text-xs text-gray-500">{location}</p>
+        <p className="text-xs text-gray-400">{timestamp}</p>
       </div>
     </div>
   );
 }
-
 // --- Styled Components ---
 const PopupContainer = styled.div`
   position: absolute;
@@ -104,46 +112,34 @@ const NotificationsPopup: React.FC<NotificationsPopupProps> = ({
   forwardedRef,
 }) => {
   const navigate = useNavigate();
-  const notifications = [
-    {
-      id: 1,
-      icon: <FaBell size={16} />,
-      title: "Quạt không hoạt động",
-      description: "Phòng 12 tầng 4",
-    },
-    {
-      id: 2,
-      icon: <FaBell size={16} />,
-      title: "Đèn sắp hết hạn",
-      description: "Phòng 10 tầng 3",
-    },
-    {
-      id: 3,
-      icon: <FaBell size={16} />,
-      title: "Nhiệt độ cao bất thường",
-      description: "Phòng Server",
-    },
-    {
-      id: 4,
-      icon: <FaBell size={16} />,
-      title: "Quạt không hoạt động",
-      description: "Phòng 15 tầng 5",
-    },
-  ];
+  const [notifications, setNotifications] = React.useState(mockNotifications); // Thêm state để quản lý thông báo
+
+  // Lấy danh sách thông báo từ mockNotifications
+  const handleNotificationClick = (index: number) => {
+    setNotifications((prev) =>
+      prev.map((noti, i) => (i === index ? { ...noti, isNew: false } : noti))
+    );
+  };
+
   const handleSeeMoreClick = () => {
     navigate("/notification");
   };
+
   return (
     <PopupContainer ref={forwardedRef}>
       <PopupTitle>Thông báo</PopupTitle>
       <PopupList>
         {notifications.length > 0 ? (
-          notifications.map((noti) => (
+          notifications.map((noti, index) => (
             <NotificationItem
-              key={noti.id}
-              icon={noti.icon}
-              title={noti.title}
-              description={noti.description}
+              key={index}
+              icon={<FaBell size={16} />}
+              senderName={noti.senderName}
+              location={noti.location}
+              message={noti.message}
+              isNew={noti.isNew}
+              timestamp={noti.timestamp}
+              onClick={() => handleNotificationClick(index)} // Truyền hàm onClick
             />
           ))
         ) : (
@@ -151,7 +147,6 @@ const NotificationsPopup: React.FC<NotificationsPopupProps> = ({
         )}
       </PopupList>
       {notifications.length > 0 && (
-        // Thêm onClick handler cho nút
         <SeeMoreButton onClick={handleSeeMoreClick}>Xem thêm</SeeMoreButton>
       )}
     </PopupContainer>
