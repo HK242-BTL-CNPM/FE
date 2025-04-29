@@ -7,7 +7,7 @@ import { useCalendarApp, ScheduleXCalendar } from "@schedule-x/react";
 import {
   createViewDay,
   createViewMonthAgenda,
-  createViewMonthGrid,
+  createViewMonthGrid,  
   createViewWeek,
 } from "@schedule-x/calendar";
 import { createEventsServicePlugin } from "@schedule-x/events-service";
