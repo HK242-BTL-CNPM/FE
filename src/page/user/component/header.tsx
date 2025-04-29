@@ -91,6 +91,8 @@ function Header() {
             },
             { to: user ? "../status" : "../login", label: "Trạng thái phòng" },
             { to: user ? "../report" : "../login", label: "Báo cáo sự cố" },
+            { to: user ? "../checkin" : "../login", label: "Checkin" },
+
           ].map(({ to, label }) => (
             <NavLink
               key={label}
@@ -133,6 +135,8 @@ function Header() {
             },
             { to: user ? "../status" : "../login", label: "Trạng thái phòng" },
             { to: user ? "../report" : "../login", label: "Báo cáo sự cố" },
+            { to: user ? "../checkin" : "../login", label: "Checkin" },
+
           ].map(({ to, label }) => (
             <NavLink
               key={label}

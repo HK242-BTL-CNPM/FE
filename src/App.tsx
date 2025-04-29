@@ -12,6 +12,8 @@ import User from "./page/admin/user/user";
 import Room from "./page/admin/room/room";
 import Device from "./page/admin/device/device";
 import Notification from "./page/admin/notification/notification";
+import Checkin from "./page/user/checkin/checkin";
+
 import "./assets/css/output.css";
 import PrivateRoute from "./page/auth/PrivateRoute";
 
@@ -27,6 +29,7 @@ function App() {
         <Route path="/room" element={<Room />} />
         <Route path="/device" element={<Device />} />
         <Route path="/notification" element={<Notification />} />
+        <Route path="/checkin" element={<Checkin />} />
 
         {/* Các route không cần bảo vệ */}
         {/* Các route cần bảo vệ */}
