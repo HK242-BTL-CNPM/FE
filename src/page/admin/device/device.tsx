@@ -8,6 +8,8 @@ import Select from "react-select"; // Import Select component
 // import { toaOptionsByCs, deviceOptionsByToa } from "./Options";
 import { csOptions, toaOptionsByCs, phongOptionsByToa } from "./Options";
 // import { devices } from "./const_device";
+// import { devices as initialRooms } from "./const_device";
+// const [rooms, setRooms] = useState(initialRooms);
 
 import "react-datepicker/dist/react-datepicker.css";
 function Device() {
@@ -39,12 +41,25 @@ function Device() {
     }
   };
 
-
+  const [popupCs, setPopupCs] = useState<string | null>(null);
+  const [popupToa, setPopupToa] = useState<string | null>(null);
+  const [popupRoom, setPopupRoom] = useState<string | null>(null);
+  
+  const toaOptionsInPopup = popupCs ? toaOptionsByCs[popupCs] : [];
+  const roomOptions = devices
+    .filter((r) => r.cs === popupCs && r.toa === popupToa)
+    .map((r) => ({
+      label: r.roomNumber,
+      value: r.roomNumber,
+    }));
+  
   const [selectedCs, setSelectedCs] = useState<string | null>(null);
   const [selectedToa, setSelectedToa] = useState<string | null>(null);
   const [selectedPhong, setSelectedPhong] = useState<string | null>(null);
 
 
+
+// const [device, setRooms] = useState<Room[]>(initialRooms);
   const filterDevices = () => {
     let filteredDevices = devicesList; // <- dùng devicesList thay vì devices
   
@@ -70,6 +85,38 @@ const sortedDevices = [...filteredDevices].sort((a, b) => {
   const valB = b[key as keyof typeof b];
   return (valA < valB ? -1 : valA > valB ? 1 : 0) * order;
 });
+interface DeviceItem {
+  id: number;
+  devices: string;
+  quantity: number;
+  status: string;
+  activity: string;
+  cs: string;
+  toa: string;
+  roomNumber: string;
+}
+
+interface Roomm {
+  cs: string;
+  toa: string;
+  roomNumber: string;
+  devicess: DeviceItem[];
+}
+const initialRooms: Roomm[] = [
+  {
+    cs: "Cơ sở 1",
+    toa: "Tòa A",
+    roomNumber: "101",
+    devicess: [],
+  },
+  {
+    cs: "Cơ sở 1",
+    toa: "Tòa A",
+    roomNumber: "102",
+    devicess: [],
+  },
+];
+const [rooms, setRooms] = useState<Roomm[]>(initialRooms);
 
 
   const totalPages = Math.ceil(sortedDevices.length / entriesPerPage);
@@ -94,6 +141,7 @@ const sortedDevices = [...filteredDevices].sort((a, b) => {
     }),
   };
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  // const [rooms, setRooms] = useState([]); // Add this state for rooms
   
   const [newDeviceName, setNewDeviceName] = useState("");
     // const toaOptions = selectedCs ? toaOptionsByCs[selectedCs] : [];
@@ -182,14 +230,15 @@ const sortedDevices = [...filteredDevices].sort((a, b) => {
                     maxWidth: "120px", // Chiều rộng tự động theo nội dung
                   }}
                   onClick={() => {
-                    if (selectedPhong) {
-                      console.log(`Thêm thiết bị vào phòng: ${selectedPhong}`);
+                    // if (selectedPhong) {
+                    //   console.log(`Thêm thiết bị vào phòng: ${selectedPhong}`);
                       setIsPopupOpen(true);
                       // Thực hiện các hành động khác nếu cần
-                    } else {
-                      console.log("Vui lòng chọn phòng trước khi thêm thiết bị.");
-                    }
-                  }}
+                    // } else {
+                    //   console.log("Vui lòng chọn phòng trước khi thêm thiết bị.");
+                    // }
+                   }
+                }
                 >
                   Thêm thiết bị
                 </button>
@@ -347,7 +396,47 @@ const sortedDevices = [...filteredDevices].sort((a, b) => {
       </div >
       {isPopupOpen && (
   <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-    <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+    <div className="bg-white p-6 rounded-lg shadow-lg ">
+    <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+  <Select
+    className="w-full"
+    styles={customStyles}
+    placeholder="Chọn cơ sở"
+    options={csOptions}
+    value={csOptions.find((c) => c.value === popupCs) || null}
+    onChange={(option) => {
+      setPopupCs(option?.value || null);
+      setPopupToa(null);
+      setPopupRoom(null);
+    }}
+  />
+  <Select
+    className="w-full"
+    styles={customStyles}
+    placeholder="Chọn tòa"
+    options={toaOptionsInPopup}
+    value={toaOptionsInPopup.find((t) => t.value === popupToa) || null}
+    isDisabled={!popupCs}
+    onChange={(option) => {
+      setPopupToa(option?.value || null);
+      setPopupRoom(null);
+    }}
+  />
+  <Select
+    className="w-full"
+    styles={customStyles}
+    placeholder="Chọn phòng"
+    options={roomOptions}
+    value={roomOptions.find((r) => r.value === popupRoom) || null}
+    isDisabled={!popupToa}
+    onChange={(option) => {
+      setPopupRoom(option?.value || null);
+      setSelectedPhong(option?.value || null); // Cập nhật phòng được chọn
+
+    }}
+  />
+</div>
+
       <h2 className="text-xl font-bold mb-4">Thêm thiết bị</h2>
       <input
         type="text"
@@ -366,29 +455,34 @@ const sortedDevices = [...filteredDevices].sort((a, b) => {
         <button
   className="px-4 py-2 bg-blue-500 text-white rounded-md"
   onClick={() => {
-    if (newDeviceName.trim()) {
-      // Tạo thiết bị mới
+    if (newDeviceName.trim() && popupCs && popupToa && popupRoom) {
       const newDevice = {
-        id: devicesList.length + 1, // Tạo ID mới
+        id: devicesList.length + 1,
         devices: newDeviceName,
-        quantity: 1, // Số lượng mặc định là 1
-        status: "Bình thường", // Trạng thái mặc định
-        activity: "Tắt", // Hoạt động mặc định
-        cs: selectedCs || "", // Đảm bảo `cs` không phải null
-        toa: selectedToa || "", // Đảm bảo `toa` không phải null
-        roomNumber: selectedPhong || "", // Đảm bảo `roomNumber` không phải null
+        quantity: 1,
+        status: "Bình thường",
+        activity: "Tắt",
+        cs: popupCs,
+        toa: popupToa,
+        roomNumber: popupRoom,
       };
-
+  
       // Cập nhật danh sách thiết bị
-      setDevicesList((prevDevices) => [...prevDevices, newDevice]);
-
-      console.log(`Thêm thiết bị: ${newDeviceName} vào phòng ${selectedPhong}`);
-      setNewDeviceName(""); // Reset tên thiết bị
-      setIsPopupOpen(false); // Đóng popup
+      setDevicesList((prev) => [...prev, newDevice]);
+  
+      console.log(`Đã thêm thiết bị '${newDeviceName}' vào phòng ${popupRoom}`);
+  
+      // Reset form
+      setNewDeviceName("");
+      setPopupCs(null);
+      setPopupToa(null);
+      setPopupRoom(null);
+      setIsPopupOpen(false);
     } else {
-      console.log("Vui lòng nhập tên thiết bị.");
+      alert("Vui lòng nhập tên thiết bị và chọn đầy đủ thông tin.");
     }
   }}
+  
 >
   Add
 </button>
