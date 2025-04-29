@@ -20,6 +20,7 @@ from app.crud.crud_order import checkin_library, checkout_library,get_cancel_roo
 
 
 from app.crud.crud_report_noti import create_report, get_report, get_reports, update_report, delete_report
+from typing import List
 
 
 router = APIRouter()
@@ -453,6 +454,25 @@ def get_all_order_of_user(current_user: CurrentUser, session: SessionDep):
         "msg": "Get all order successfully",
         "data": orders
     }
+#------------------------sau khi bổ sung sort theo week, day, month
+# def get_all_order_rooms(session: Session, userid: int) -> List[OrderRoom]:
+#     """
+#     Retrieve all OrderRoom entries.
+    
+#     Args:
+#         session (Session): The database session.
+    
+#     Returns:
+#         List[OrderRoom]: A list of all OrderRoom objects.
+    
+#     Raises:
+#         HTTPException: If no OrderRooms are found.
+#     """
+
+#     order_rooms = session.exec(select(OrderRoom).where(OrderRoom.user_id == userid)).all()
+#     if not order_rooms:
+#         raise HTTPException(status_code=404, detail="No OrderRooms found")
+#     return order_rooms
 
 @router.get("/getorder/{order_id}", response_model=responseorder)
 def get_order(session: SessionDep, order_id: int):

@@ -100,6 +100,7 @@
 // };
 
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import api from './api/axiosConfig'; 
 
 // Định nghĩa cấu trúc User dựa trên API response
 interface User {
@@ -135,6 +136,37 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         localStorage.removeItem(LOCAL_STORAGE_KEY);
       }
     }
+  }, []);
+
+  // Lấy thông tin người dùng từ API khi ứng dụng khởi động
+  useEffect(() => {
+
+    const fetchUser = async () => {
+
+      const token = localStorage.getItem("token");
+
+      if (token) {
+
+        try {
+
+          const response = await api.get("/api/v1/user/me");
+
+          setUser(response.data.data);
+
+        } catch (error) {
+
+          console.error("Error fetching user data:", error);
+
+          localStorage.removeItem("token");
+
+        }
+
+      }
+
+    };
+
+    fetchUser();
+
   }, []);
 
   // Hàm login: Lưu user và token

@@ -24,7 +24,7 @@ Before running the project, make sure you have installed:
    ```
 3. Run the backend server:
    ```bash
-   uvicorn app.main:app --reload
+  uvicorn app.main:app --reload 
    ```
 
 The backend server will start at:  
