@@ -140,10 +140,7 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-router = APIRouter(
-    # prefix="/api/v1/auth",
-    # tags=["auth"]
-)
+router = APIRouter()
 
 # @router.get("/me", response_model=UserOut_json)
 # def read_users_me(current_user: CurrentUser):

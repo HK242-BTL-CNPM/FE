@@ -268,6 +268,7 @@ async def jwt_middleware(request: Request, call_next):
             if not isadmin:
                 print("👉 Không có quyền admin")
                 return JSONResponse(status_code=403, content={"detail": "Admin role required"})
+                pass
         elif request.url.path.startswith(f"{API_V1_STR}/user"):
             isuser = check_user_role(token)
             if not isuser:

@@ -106,6 +106,10 @@ import api from './api/axiosConfig';
 interface User {
   id: number;
   username: string;
+  password: string;
+  MSSV: number;
+  lastname: string;
+  firstname: string;
   email: string;
   isUser: boolean;
   isAdmin: boolean;
