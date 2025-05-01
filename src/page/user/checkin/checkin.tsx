@@ -1,11 +1,10 @@
 import Header from "../component/header";
 import Footer from "../component/footer";
 import { useState } from "react";
-import { roomStatusColor, rooms, bookingStatusColor } from "./const_checkin";
-import { FaSort } from "react-icons/fa";
-import Select from "react-select";
+import { rooms } from "./const_checkin";
 import "react-datepicker/dist/react-datepicker.css";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const customStyles = {
   placeholder: (provided: any) => ({
@@ -24,7 +23,7 @@ const customStyles = {
   }),
 };
 
-type Room = typeof rooms[number];
+type Room = (typeof rooms)[number];
 type RoomKey = keyof Room;
 
 function Checkin() {
@@ -33,7 +32,10 @@ function Checkin() {
     setIsSidebarOpen((prev) => !prev);
   };
 
-  const [sortConfig, setSortConfig] = useState<{ key: RoomKey; direction: 'asc' | 'desc' } | null>(null);
+  const [sortConfig, setSortConfig] = useState<{
+    key: RoomKey;
+    direction: "asc" | "desc";
+  } | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [entriesPerPage, setEntriesPerPage] = useState(3);
 
@@ -42,10 +44,16 @@ function Checkin() {
   const [qrRoom, setQrRoom] = useState<Room | null>(null);
   const [showMessageDel, setShowMessageDel] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleSort = (key: RoomKey) => {
-    let direction: 'asc' | 'desc' = 'asc';
-    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
-      direction = 'desc';
+    let direction: "asc" | "desc" = "asc";
+    if (
+      sortConfig &&
+      sortConfig.key === key &&
+      sortConfig.direction === "asc"
+    ) {
+      direction = "desc";
     }
     setSortConfig({ key, direction });
   };
@@ -56,7 +64,9 @@ function Checkin() {
   const filterRooms = () => {
     let filteredRooms = roomList;
     if (selectedToa) {
-      filteredRooms = filteredRooms.filter((room) => room.roomNumber.startsWith(selectedToa));
+      filteredRooms = filteredRooms.filter((room) =>
+        room.roomNumber.startsWith(selectedToa)
+      );
     }
     return filteredRooms;
   };
@@ -96,17 +106,28 @@ function Checkin() {
 
   const TableHeader = () => (
     <div className="hidden md:grid grid-cols-7 gap-4 p-4 h-16 text-sm font-semibold bg-[#F8FAFC] rounded-t-lg border border-gray-300 text-gray-600 items-center">
-      {["Loại phòng", "Cơ sở", "Tòa", "Số phòng", "Thời gian đặt", "Ngày đặt", "Thao tác"].map(
-        (title, i) => (
-          <div key={i} className="flex items-center justify-center">
-            {title}
-          </div>
-        )
-      )}
+      {[
+        "Loại phòng",
+        "Cơ sở",
+        "Tòa",
+        "Số phòng",
+        "Thời gian đặt",
+        "Ngày đặt",
+        "Thao tác",
+      ].map((title, i) => (
+        <div key={i} className="flex items-center justify-center">
+          {title}
+        </div>
+      ))}
     </div>
   );
 
-  const TableRow = ({ room, onCheckin, onDelete, isCheckout = false }: {
+  const TableRow = ({
+    room,
+    onCheckin,
+    onDelete,
+    isCheckout = false,
+  }: {
     room: Room;
     onCheckin?: (id: number) => void;
     onDelete: (id: number) => void;
@@ -124,7 +145,13 @@ function Checkin() {
           <button
             onClick={() => onCheckin(room.id)}
             className="button3"
-            style={{ padding: "8px 16px", height: "40px", width: "80px", backgroundColor: "rgb(37, 99, 235)", color: "white" }}
+            style={{
+              padding: "8px 16px",
+              height: "40px",
+              width: "80px",
+              backgroundColor: "rgb(37, 99, 235)",
+              color: "white",
+            }}
           >
             Checkin
           </button>
@@ -132,7 +159,13 @@ function Checkin() {
         <button
           onClick={() => onDelete(room.id)}
           className="button3"
-          style={{ padding: "8px 16px", height: "40px", width: "80px", backgroundColor: "#DC2626", color: "white" }}
+          style={{
+            padding: "8px 16px",
+            height: "40px",
+            width: "80px",
+            backgroundColor: "#DC2626",
+            color: "white",
+          }}
         >
           {isCheckout ? "Checkout" : "Xóa"}
         </button>
@@ -160,19 +193,35 @@ function Checkin() {
                     />
                   ))
                 ) : (
-                  <div className="text-center py-4 text-gray-500">Không có dữ liệu</div>
+                  <div className="text-center py-4 text-gray-500">
+                    Không có dữ liệu
+                  </div>
                 )}
               </div>
             </div>
             <div className="flex justify-between items-center mt-5 px-2 text-sm text-gray-600">
               <div>
-                Show {Math.min((currentPage - 1) * entriesPerPage + 1, sortedRooms.length)} to {Math.min(currentPage * entriesPerPage, sortedRooms.length)} of {sortedRooms.length} entries
+                Show{" "}
+                {Math.min(
+                  (currentPage - 1) * entriesPerPage + 1,
+                  sortedRooms.length
+                )}{" "}
+                to {Math.min(currentPage * entriesPerPage, sortedRooms.length)}{" "}
+                of {sortedRooms.length} entries
               </div>
               <div style={{ display: "flex", gap: "5px" }}>
                 <button
-                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(prev - 1, 1))
+                  }
                   disabled={currentPage === 1}
-                  style={{ padding: "5px 10px", border: "1px solid #ccc", borderRadius: "4px", backgroundColor: currentPage === 1 ? "#f1f1f1" : "#fff", cursor: currentPage === 1 ? "not-allowed" : "pointer" }}
+                  style={{
+                    padding: "5px 10px",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    backgroundColor: currentPage === 1 ? "#f1f1f1" : "#fff",
+                    cursor: currentPage === 1 ? "not-allowed" : "pointer",
+                  }}
                 >
                   &lt;
                 </button>
@@ -180,15 +229,33 @@ function Checkin() {
                   <button
                     key={index}
                     onClick={() => setCurrentPage(index + 1)}
-                    style={{ padding: "5px 10px", border: "1px solid #ccc", borderRadius: "4px", backgroundColor: currentPage === index + 1 ? "#2563EB" : "#fff", color: currentPage === index + 1 ? "#fff" : "#000", cursor: "pointer" }}
+                    style={{
+                      padding: "5px 10px",
+                      border: "1px solid #ccc",
+                      borderRadius: "4px",
+                      backgroundColor:
+                        currentPage === index + 1 ? "#2563EB" : "#fff",
+                      color: currentPage === index + 1 ? "#fff" : "#000",
+                      cursor: "pointer",
+                    }}
                   >
                     {index + 1}
                   </button>
                 ))}
                 <button
-                  onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                  }
                   disabled={currentPage === totalPages}
-                  style={{ padding: "5px 10px", border: "1px solid #ccc", borderRadius: "4px", backgroundColor: currentPage === totalPages ? "#f1f1f1" : "#fff", cursor: currentPage === totalPages ? "not-allowed" : "pointer" }}
+                  style={{
+                    padding: "5px 10px",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    backgroundColor:
+                      currentPage === totalPages ? "#f1f1f1" : "#fff",
+                    cursor:
+                      currentPage === totalPages ? "not-allowed" : "pointer",
+                  }}
                 >
                   &gt;
                 </button>
@@ -223,11 +290,18 @@ function Checkin() {
                       key={room.id}
                       room={room}
                       isCheckout
-                      onDelete={(id) => setCheckoutList(checkoutList.filter((r) => r.id !== id))}
+                      onDelete={(id) => {
+                        setCheckoutList(
+                          checkoutList.filter((r) => r.id !== id)
+                        );
+                        navigate("/report"); // <-- thay bằng route đúng nếu khác
+                      }}
                     />
                   ))
                 ) : (
-                  <div className="text-center py-4 text-gray-500">Chưa có phòng nào được checkin</div>
+                  <div className="text-center py-4 text-gray-500">
+                    Chưa có phòng nào được checkin
+                  </div>
                 )}
               </div>
             </div>
