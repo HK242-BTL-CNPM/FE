@@ -4,7 +4,6 @@ import { useState } from "react";
 import { roomStatusColor, rooms, bookingStatusColor } from "./const_checkin";
 import { FaSort } from "react-icons/fa";
 import Select from "react-select";
-import { QRCodeSVG } from "qrcode.react";
 import "react-datepicker/dist/react-datepicker.css";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -36,12 +35,11 @@ function Checkin() {
 
   const [sortConfig, setSortConfig] = useState<{ key: RoomKey; direction: 'asc' | 'desc' } | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const entriesPerPage = 3;
+  const [entriesPerPage, setEntriesPerPage] = useState(3);
 
   const [roomList, setRoomList] = useState(rooms);
   const [checkoutList, setCheckoutList] = useState<Room[]>([]);
   const [qrRoom, setQrRoom] = useState<Room | null>(null);
-  const [showMessage, setShowMessage] = useState(false);
   const [showMessageDel, setShowMessageDel] = useState(false);
 
   const handleSort = (key: RoomKey) => {
@@ -65,7 +63,7 @@ function Checkin() {
 
   const filteredRooms = filterRooms();
 
-  const sortedDevices = [...filteredRooms].sort((a, b) => {
+  const sortedRooms = [...filteredRooms].sort((a, b) => {
     if (!sortConfig) return 0;
     const { key, direction } = sortConfig;
     const valA = a[key];
@@ -74,8 +72,8 @@ function Checkin() {
     return (valA < valB ? -1 : valA > valB ? 1 : 0) * order;
   });
 
-  const totalPages = Math.ceil(sortedDevices.length / entriesPerPage);
-  const paginatedDevices = sortedDevices.slice(
+  const totalPages = Math.ceil(sortedRooms.length / entriesPerPage);
+  const paginatedRooms = sortedRooms.slice(
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
   );
@@ -93,8 +91,6 @@ function Checkin() {
       setCheckoutList([...checkoutList, roomToCheckin]);
       setRoomList(roomList.filter((room) => room.id !== roomId));
       setQrRoom(roomToCheckin);
-      setShowMessage(true);
-      setTimeout(() => setShowMessage(false), 2000);
     }
   };
 
@@ -128,13 +124,7 @@ function Checkin() {
           <button
             onClick={() => onCheckin(room.id)}
             className="button3"
-            style={{
-              padding: "8px 16px",
-              height: "40px",
-              width: "80px",
-              backgroundColor: "rgb(37, 99, 235)",
-              color: "white",
-            }}
+            style={{ padding: "8px 16px", height: "40px", width: "80px", backgroundColor: "rgb(37, 99, 235)", color: "white" }}
           >
             Checkin
           </button>
@@ -142,13 +132,7 @@ function Checkin() {
         <button
           onClick={() => onDelete(room.id)}
           className="button3"
-          style={{
-            padding: "8px 16px",
-            height: "40px",
-            width: "80px",
-            backgroundColor: "#DC2626",
-            color: "white",
-          }}
+          style={{ padding: "8px 16px", height: "40px", width: "80px", backgroundColor: "#DC2626", color: "white" }}
         >
           {isCheckout ? "Checkout" : "Xóa"}
         </button>
@@ -166,8 +150,8 @@ function Checkin() {
             <div className="bg-white shadow rounded-lg overflow-hidden">
               <TableHeader />
               <div className="px-4 md:px-0">
-                {paginatedDevices.length ? (
-                  paginatedDevices.map((room) => (
+                {paginatedRooms.length ? (
+                  paginatedRooms.map((room) => (
                     <TableRow
                       key={room.id}
                       room={room}
@@ -178,6 +162,52 @@ function Checkin() {
                 ) : (
                   <div className="text-center py-4 text-gray-500">Không có dữ liệu</div>
                 )}
+              </div>
+            </div>
+            <div className="flex justify-between items-center mt-5 px-2 text-sm text-gray-600">
+              <div>
+                Show {Math.min((currentPage - 1) * entriesPerPage + 1, sortedRooms.length)} to {Math.min(currentPage * entriesPerPage, sortedRooms.length)} of {sortedRooms.length} entries
+              </div>
+              <div style={{ display: "flex", gap: "5px" }}>
+                <button
+                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                  style={{ padding: "5px 10px", border: "1px solid #ccc", borderRadius: "4px", backgroundColor: currentPage === 1 ? "#f1f1f1" : "#fff", cursor: currentPage === 1 ? "not-allowed" : "pointer" }}
+                >
+                  &lt;
+                </button>
+                {Array.from({ length: totalPages }, (_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentPage(index + 1)}
+                    style={{ padding: "5px 10px", border: "1px solid #ccc", borderRadius: "4px", backgroundColor: currentPage === index + 1 ? "#2563EB" : "#fff", color: currentPage === index + 1 ? "#fff" : "#000", cursor: "pointer" }}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
+                <button
+                  onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                  style={{ padding: "5px 10px", border: "1px solid #ccc", borderRadius: "4px", backgroundColor: currentPage === totalPages ? "#f1f1f1" : "#fff", cursor: currentPage === totalPages ? "not-allowed" : "pointer" }}
+                >
+                  &gt;
+                </button>
+              </div>
+              <div>
+                Show
+                <select
+                  value={entriesPerPage}
+                  onChange={(e) => {
+                    setEntriesPerPage(Number(e.target.value));
+                    setCurrentPage(1);
+                  }}
+                  className="px-1 py-0.5 mx-1 border border-gray-300 rounded-md"
+                >
+                  <option value={3}>3</option>
+                  <option value={5}>5</option>
+                  <option value={10}>10</option>
+                </select>
+                entries
               </div>
             </div>
           </section>
@@ -197,9 +227,7 @@ function Checkin() {
                     />
                   ))
                 ) : (
-                  <div className="text-center py-4 text-gray-500">
-                    Chưa có phòng nào được checkin
-                  </div>
+                  <div className="text-center py-4 text-gray-500">Chưa có phòng nào được checkin</div>
                 )}
               </div>
             </div>
@@ -207,46 +235,7 @@ function Checkin() {
         </main>
       </div>
 
-      {qrRoom && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 shadow-md w-11/12 sm:w-96 text-center">
-            <h2 className="text-lg font-semibold mb-4">
-              QR Code cho phòng {qrRoom.roomNumber}
-            </h2>
-            <QRCodeSVG
-              className="m-auto"
-              value={JSON.stringify({
-                id: qrRoom.id,
-                roomType: qrRoom.roomType,
-                roomNumber: qrRoom.roomNumber,
-                date: qrRoom.date,
-                time: qrRoom.time,
-              })}
-              size={200}
-            />
-            <button
-              onClick={() => setQrRoom(null)}
-              className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-            >
-              Đóng
-            </button>
-          </div>
-        </div>
-      )}
-
       <AnimatePresence>
-        {showMessage && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5 }}
-            className="fixed top-5 right-5 bg-green-600 text-white px-4 py-2 rounded shadow z-50"
-          >
-            Đã gửi mã QR code về mail
-          </motion.div>
-        )}
-
         {showMessageDel && (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
