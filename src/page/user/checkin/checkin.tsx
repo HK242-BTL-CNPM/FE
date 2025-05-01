@@ -6,81 +6,19 @@ import "react-datepicker/dist/react-datepicker.css";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-const customStyles = {
-  placeholder: (provided: any) => ({
-    ...provided,
-    color: "#1D4ED8",
-    fontWeight: 500,
-  }),
-  menu: (provided: any) => ({
-    ...provided,
-    zIndex: 9999,
-  }),
-  control: (provided: any) => ({
-    ...provided,
-    borderRadius: 8,
-    padding: "2px 4px",
-  }),
-};
-
 type Room = (typeof rooms)[number];
-type RoomKey = keyof Room;
 
 function Checkin() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const handleToggleSidebar = () => {
-    setIsSidebarOpen((prev) => !prev);
-  };
-
-  const [sortConfig, setSortConfig] = useState<{
-    key: RoomKey;
-    direction: "asc" | "desc";
-  } | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [entriesPerPage, setEntriesPerPage] = useState(3);
 
   const [roomList, setRoomList] = useState(rooms);
   const [checkoutList, setCheckoutList] = useState<Room[]>([]);
-  const [qrRoom, setQrRoom] = useState<Room | null>(null);
   const [showMessageDel, setShowMessageDel] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleSort = (key: RoomKey) => {
-    let direction: "asc" | "desc" = "asc";
-    if (
-      sortConfig &&
-      sortConfig.key === key &&
-      sortConfig.direction === "asc"
-    ) {
-      direction = "desc";
-    }
-    setSortConfig({ key, direction });
-  };
-
-  const [selectedCs, setSelectedCs] = useState<string | null>(null);
-  const [selectedToa, setSelectedToa] = useState<string | null>(null);
-
-  const filterRooms = () => {
-    let filteredRooms = roomList;
-    if (selectedToa) {
-      filteredRooms = filteredRooms.filter((room) =>
-        room.roomNumber.startsWith(selectedToa)
-      );
-    }
-    return filteredRooms;
-  };
-
-  const filteredRooms = filterRooms();
-
-  const sortedRooms = [...filteredRooms].sort((a, b) => {
-    if (!sortConfig) return 0;
-    const { key, direction } = sortConfig;
-    const valA = a[key];
-    const valB = b[key];
-    const order = direction === "asc" ? 1 : -1;
-    return (valA < valB ? -1 : valA > valB ? 1 : 0) * order;
-  });
+  const sortedRooms = roomList;
 
   const totalPages = Math.ceil(sortedRooms.length / entriesPerPage);
   const paginatedRooms = sortedRooms.slice(
@@ -100,7 +38,6 @@ function Checkin() {
     if (roomToCheckin) {
       setCheckoutList([...checkoutList, roomToCheckin]);
       setRoomList(roomList.filter((room) => room.id !== roomId));
-      setQrRoom(roomToCheckin);
     }
   };
 

@@ -1,4 +1,4 @@
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import StudySpaceLogo from "../../../assets/images/StudySpace_logo.png";
 import { useAuth } from "../../../AuthContext";
@@ -11,12 +11,6 @@ function Header() {
   const [isSticky, setIsSticky] = useState(false);
   const [lastScroll, setLastScroll] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [menuOpenSubmenu, setMenuOpenSubmenu] = useState(false);
-  const [mobileSubmenuOpen, setMobileSubmenuOpen] = useState(false);
-
-  const location = useLocation();
-  const isCalendar = location.pathname.startsWith("/history");
-  const isCheckinout = location.pathname.startsWith("/checkinout");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,18 +19,9 @@ function Header() {
       setLastScroll(currentScroll);
     };
 
-    const handleClickOutside = (e: any) => {
-      if (!e.target.closest(".submenu-wrapper")) {
-        setMenuOpenSubmenu(false);
-      }
-    };
-
     window.addEventListener("scroll", handleScroll);
-    document.addEventListener("click", handleClickOutside);
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      document.removeEventListener("click", handleClickOutside);
     };
   }, [lastScroll]);
 
@@ -57,8 +42,6 @@ function Header() {
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const closeMenu = () => {
     setMenuOpen(false);
-    setMenuOpenSubmenu(false);
-    setMobileSubmenuOpen(false);
   };
 
   return (
@@ -125,44 +108,17 @@ function Header() {
           </NavLink>
 
           {/* Submenu (desktop) */}
-          {user ? (
-            <div className="relative submenu-wrapper">
-              <button
-                onClick={() => setMenuOpenSubmenu((prev) => !prev)}
-                className={`hover:text-blue-600 transition-colors duration-200 ${
-                  (isCalendar||isCheckinout) ? "text-black " : "text-gray-400"
-                } font-bold text-sm md:text-base xl:text-xl`}
-              >
-                Lịch sử đặt phòng
-              </button>
-              {menuOpenSubmenu && (
-                <div className="absolute left-0 top-full mt-2 bg-white shadow-lg rounded-md border px-4 py-2 z-50 w-max">
-                  <NavLink
-                    to="/history"
-                    onClick={closeMenu}
-                    className="block px-3 py-2 hover:text-blue-600 text-gray-700 whitespace-nowrap"
-                  >
-                    Lịch
-                  </NavLink>
-                  <NavLink
-                    to="/checkin"
-                    onClick={closeMenu}
-                    className="block px-3 py-2 hover:text-blue-600 text-gray-700 whitespace-nowrap"
-                  >
-                    Checkin/Checkout
-                  </NavLink>
-                </div>
-              )}
-            </div>
-          ) : (
-            <NavLink
-              to="../login"
-              onClick={closeMenu}
-              className="hover:text-blue-600 font-bold transition-colors duration-200 text-gray-400 text-sm md:text-base xl:text-xl"
-            >
-              Lịch sử đặt phòng
-            </NavLink>
-          )}
+          <NavLink
+            to={user ? "../history" : "../login"}
+            onClick={closeMenu}
+            className={({ isActive }) =>
+              `hover:text-blue-600 font-bold transition-colors duration-200 ${
+                isActive ? "text-black" : "text-gray-400"
+              } text-sm md:text-base xl:text-xl`
+            }
+          >
+            Lịch sử đặt phòng
+          </NavLink>
 
           <NavLink
             to={user ? "../status" : "../login"}
@@ -177,7 +133,7 @@ function Header() {
           </NavLink>
 
           <NavLink
-            to={user ? "../report" : "../login"}
+            to={user ? "../checkin" : "../login"}
             onClick={closeMenu}
             className={({ isActive }) =>
               `hover:text-blue-600 font-bold transition-colors duration-200 ${
@@ -185,7 +141,7 @@ function Header() {
               } text-sm md:text-base xl:text-xl`
             }
           >
-            Báo cáo sự cố
+            Checkin/Checkout
           </NavLink>
         </div>
 
@@ -224,43 +180,17 @@ function Header() {
           </NavLink>
 
           {/* Mobile submenu toggle */}
-          {user ? (
-            <>
-              <button
-                onClick={() => setMobileSubmenuOpen(!mobileSubmenuOpen)}
-                className="text-[19px] font-bold text-gray-400 hover:text-blue-600 mr-[60px]"
-              >
-                Lịch sử đặt phòng
-              </button>
-
-              {mobileSubmenuOpen && (
-                <>
-                  <NavLink
-                    to="/history"
-                    onClick={closeMenu}
-                    className="text-[15px] font-bold text-gray-400 hover:text-blue-600 mr-[60px]"
-                  >
-                    └ Lịch
-                  </NavLink>
-                  <NavLink
-                    to="/checkin"
-                    onClick={closeMenu}
-                    className="text-[15px] font-bold text-gray-400 hover:text-blue-600 mr-[60px]"
-                  >
-                    └ Checkin/Checkout
-                  </NavLink>
-                </>
-              )}
-            </>
-          ) : (
-            <NavLink
-              to="../login"
-              onClick={closeMenu}
-              className="text-sm font-bold text-gray-400 hover:text-blue-600"
-            >
-              Lịch sử đặt phòng
-            </NavLink>
-          )}
+          <NavLink
+            to={user ? "../history" : "../login"}
+            onClick={closeMenu}
+            className={({ isActive }) =>
+              `hover:text-blue-600 font-bold transition-colors duration-200 ${
+                isActive ? "text-black" : "text-gray-400"
+              } text-sm md:text-base xl:text-xl`
+            }
+          >
+            Lịch sử đặt phòng
+          </NavLink>
 
           <NavLink
             to={user ? "../status" : "../login"}
@@ -271,12 +201,15 @@ function Header() {
             Trạng thái phòng
           </NavLink>
           <NavLink
-            to={user ? "../report" : "../login"}
+            to={user ? "../checkin" : "../login"}
             onClick={closeMenu}
-            className="hover:text-blue-600 text-sm font-medium"
-            style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+            className={({ isActive }) =>
+              `hover:text-blue-600 font-bold transition-colors duration-200 ${
+                isActive ? "text-black" : "text-gray-400"
+              } text-sm md:text-base xl:text-xl`
+            }
           >
-            Báo cáo sự cố
+            Checkin/Checkout
           </NavLink>
           <NavLink
             to={user ? "../checkin" : "../login"}
