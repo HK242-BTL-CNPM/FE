@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import StudySpaceLogo from "../../../assets/images/StudySpace_logo.png";
 import { useAuth } from "../../../AuthContext";
@@ -11,20 +11,33 @@ function Header() {
   const [isSticky, setIsSticky] = useState(false);
   const [lastScroll, setLastScroll] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpenSubmenu, setMenuOpenSubmenu] = useState(false);
+  const [mobileSubmenuOpen, setMobileSubmenuOpen] = useState(false);
+
+  const location = useLocation();
+  const isCalendar = location.pathname.startsWith("/history");
+  const isCheckinout = location.pathname.startsWith("/checkinout");
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScroll = window.scrollY;
-      if (currentScroll > lastScroll) {
-        setIsSticky(false);
-      } else {
-        setIsSticky(true);
-      }
+      setIsSticky(currentScroll < lastScroll);
       setLastScroll(currentScroll);
     };
 
+    const handleClickOutside = (e: any) => {
+      if (!e.target.closest(".submenu-wrapper")) {
+        setMenuOpenSubmenu(false);
+      }
+    };
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("click", handleClickOutside);
+    };
   }, [lastScroll]);
 
   const activeStyle = {
@@ -33,6 +46,7 @@ function Header() {
     fontWeight: "bold",
     marginRight: "60px",
   };
+
   const unactiveStyle = {
     fontSize: "19px",
     color: "#969DA6",
@@ -41,7 +55,11 @@ function Header() {
   };
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
-  const closeMenu = () => setMenuOpen(false);
+  const closeMenu = () => {
+    setMenuOpen(false);
+    setMenuOpenSubmenu(false);
+    setMobileSubmenuOpen(false);
+  };
 
   return (
     <nav
@@ -52,8 +70,8 @@ function Header() {
       } border-b border-gray-300`}
     >
       <div className="flex items-center justify-between px-4 py-3 lg:px-8">
-        {/* Logo + Title */}
-        <div className="flex items-center ">
+        {/* Logo */}
+        <div className="flex items-center">
           <Link to="../" className="flex-shrink-0 mr-3">
             <img
               src={StudySpaceLogo}
@@ -80,42 +98,104 @@ function Header() {
           </button>
         </div>
 
-        {/* Nav menu - Desktop */}
+        {/* Desktop menu */}
         <div className="hidden lg:flex flex-wrap items-center justify-center lg:gap-x-10 gap-x-2 gap-y-2 w-[70%] mx-auto">
-          {[
-            { to: "..", label: "Trang chủ" },
-            { to: user ? "../book" : "../login", label: "Đặt phòng" },
-            {
-              to: user ? "../history" : "../login",
-              label: "Lịch sử đặt phòng",
-            },
-            { to: user ? "../status" : "../login", label: "Trạng thái phòng" },
-            { to: user ? "../report" : "../login", label: "Báo cáo sự cố" },
-            { to: user ? "../checkin" : "../login", label: "Checkin" },
+          <NavLink
+            to=".."
+            onClick={closeMenu}
+            className={({ isActive }) =>
+              `hover:text-blue-600 font-bold transition-colors duration-200 ${
+                isActive ? "text-black" : "text-gray-400"
+              } text-sm md:text-base xl:text-xl`
+            }
+          >
+            Trang chủ
+          </NavLink>
 
-          ].map(({ to, label }) => (
+          <NavLink
+            to={user ? "../book" : "../login"}
+            onClick={closeMenu}
+            className={({ isActive }) =>
+              `hover:text-blue-600 font-bold transition-colors duration-200 ${
+                isActive ? "text-black" : "text-gray-400"
+              } text-sm md:text-base xl:text-xl`
+            }
+          >
+            Đặt phòng
+          </NavLink>
+
+          {/* Submenu (desktop) */}
+          {user ? (
+            <div className="relative submenu-wrapper">
+              <button
+                onClick={() => setMenuOpenSubmenu((prev) => !prev)}
+                className={`hover:text-blue-600 transition-colors duration-200 ${
+                  (isCalendar||isCheckinout) ? "text-black " : "text-gray-400"
+                } font-bold text-sm md:text-base xl:text-xl`}
+              >
+                Lịch sử đặt phòng
+              </button>
+              {menuOpenSubmenu && (
+                <div className="absolute left-0 top-full mt-2 bg-white shadow-lg rounded-md border px-4 py-2 z-50 w-max">
+                  <NavLink
+                    to="/history"
+                    onClick={closeMenu}
+                    className="block px-3 py-2 hover:text-blue-600 text-gray-700 whitespace-nowrap"
+                  >
+                    Lịch
+                  </NavLink>
+                  <NavLink
+                    to="/checkin"
+                    onClick={closeMenu}
+                    className="block px-3 py-2 hover:text-blue-600 text-gray-700 whitespace-nowrap"
+                  >
+                    Checkin/Checkout
+                  </NavLink>
+                </div>
+              )}
+            </div>
+          ) : (
             <NavLink
-              key={label}
-              to={to}
+              to="../login"
               onClick={closeMenu}
-              className={({ isActive }) =>
-                `hover:text-blue-600 font-bold transition-colors duration-200 ${
-                  isActive ? "text-black" : "text-gray-400"
-                } text-sm md:text-sm lg:text-base xl:text-xl`
-              }
+              className="hover:text-blue-600 font-bold transition-colors duration-200 text-gray-400 text-sm md:text-base xl:text-xl"
             >
-              {label}
+              Lịch sử đặt phòng
             </NavLink>
-          ))}
+          )}
+
+          <NavLink
+            to={user ? "../status" : "../login"}
+            onClick={closeMenu}
+            className={({ isActive }) =>
+              `hover:text-blue-600 font-bold transition-colors duration-200 ${
+                isActive ? "text-black" : "text-gray-400"
+              } text-sm md:text-base xl:text-xl`
+            }
+          >
+            Trạng thái phòng
+          </NavLink>
+
+          <NavLink
+            to={user ? "../report" : "../login"}
+            onClick={closeMenu}
+            className={({ isActive }) =>
+              `hover:text-blue-600 font-bold transition-colors duration-200 ${
+                isActive ? "text-black" : "text-gray-400"
+              } text-sm md:text-base xl:text-xl`
+            }
+          >
+            Báo cáo sự cố
+          </NavLink>
         </div>
 
-        {/* User button - Desktop */}
-        <div className="hidden lg:block ">
+        {/* User button */}
+        <div className="hidden lg:block">
           {user ? (
             <UserMenu />
           ) : (
             <Link to="/login">
-              <button className="button4 text-xs sm:text-sm md:text-sm lg:text-sm xl:text-base">
+              <button className="button4 text-sm xl:text-base">
                 Đăng Nhập
               </button>
             </Link>
@@ -123,37 +203,96 @@ function Header() {
         </div>
       </div>
 
-      {/* Nav menu - Mobile */}
+      {/* Mobile menu */}
       {menuOpen && (
         <div className="lg:hidden px-4 pb-4 flex flex-col gap-3 items-center">
-          {[
-            { to: "..", label: "Trang chủ" },
-            { to: user ? "../book" : "../login", label: "Đặt phòng" },
-            {
-              to: user ? "../history" : "../login",
-              label: "Lịch sử đặt phòng",
-            },
-            { to: user ? "../status" : "../login", label: "Trạng thái phòng" },
-            { to: user ? "../report" : "../login", label: "Báo cáo sự cố" },
-            { to: user ? "../checkin" : "../login", label: "Checkin" },
+          <NavLink
+            to=".."
+            onClick={closeMenu}
+            className="hover:text-blue-600 text-sm font-medium"
+            style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+          >
+            Trang chủ
+          </NavLink>
+          <NavLink
+            to={user ? "../book" : "../login"}
+            onClick={closeMenu}
+            className="hover:text-blue-600 text-sm font-medium"
+            style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+          >
+            Đặt phòng
+          </NavLink>
 
-          ].map(({ to, label }) => (
+          {/* Mobile submenu toggle */}
+          {user ? (
+            <>
+              <button
+                onClick={() => setMobileSubmenuOpen(!mobileSubmenuOpen)}
+                className="text-[19px] font-bold text-gray-400 hover:text-blue-600 mr-[60px]"
+              >
+                Lịch sử đặt phòng
+              </button>
+
+              {mobileSubmenuOpen && (
+                <>
+                  <NavLink
+                    to="/history"
+                    onClick={closeMenu}
+                    className="text-[15px] font-bold text-gray-400 hover:text-blue-600 mr-[60px]"
+                  >
+                    └ Lịch
+                  </NavLink>
+                  <NavLink
+                    to="/checkin"
+                    onClick={closeMenu}
+                    className="text-[15px] font-bold text-gray-400 hover:text-blue-600 mr-[60px]"
+                  >
+                    └ Checkin/Checkout
+                  </NavLink>
+                </>
+              )}
+            </>
+          ) : (
             <NavLink
-              key={label}
-              to={to}
+              to="../login"
               onClick={closeMenu}
-              className="hover:text-blue-600 text-sm font-medium"
-              style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+              className="text-sm font-bold text-gray-400 hover:text-blue-600"
             >
-              {label}
+              Lịch sử đặt phòng
             </NavLink>
-          ))}
+          )}
+
+          <NavLink
+            to={user ? "../status" : "../login"}
+            onClick={closeMenu}
+            className="hover:text-blue-600 text-sm font-medium"
+            style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+          >
+            Trạng thái phòng
+          </NavLink>
+          <NavLink
+            to={user ? "../report" : "../login"}
+            onClick={closeMenu}
+            className="hover:text-blue-600 text-sm font-medium"
+            style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+          >
+            Báo cáo sự cố
+          </NavLink>
+          <NavLink
+            to={user ? "../checkin" : "../login"}
+            onClick={closeMenu}
+            className="hover:text-blue-600 text-sm font-medium"
+            style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+          >
+            Checkin
+          </NavLink>
+
           <div className="mt-2">
             {user ? (
               <UserMenu />
             ) : (
               <Link to="/login" onClick={closeMenu}>
-                <button className="button4 ">Đăng Nhập</button>
+                <button className="button4">Đăng Nhập</button>
               </Link>
             )}
           </div>
