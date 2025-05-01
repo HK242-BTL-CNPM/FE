@@ -2,16 +2,8 @@ import { useState, useEffect } from "react";
 import Sidebar from "../components/sidebar"; // Điều chỉnh đường dẫn nếu cần
 import Header_admin from "../components/header_admin"; // Điều chỉnh đường dẫn nếu cần
 import styles from "./notification.module.css"; // Tạo file CSS Module riêng cho trang này
-
-// --- Component cho một dòng thông báo chi tiết ---
-interface NotificationRowProps {
-  avatarUrl?: string; // Avatar người gửi (tùy chọn)
-  senderName: string;
-  location: string;
-  message: string;
-  timestamp: string; // Ví dụ: "21/02/2025"
-  isNew?: boolean; // Đánh dấu thông báo mới (tùy chọn)
-}
+import { mockNotifications, NotificationRowProps } from "./mockNotifications";
+import Select from "react-select";
 
 function NotificationRow({
   avatarUrl,
@@ -20,9 +12,14 @@ function NotificationRow({
   message,
   timestamp,
   isNew,
-}: NotificationRowProps) {
+  onClick,
+}: NotificationRowProps & { onClick?: () => void }) {
   return (
-    <div className={`${styles.notificationRow} ${isNew ? styles.new : ""}`}>
+    <div
+      className={`${styles.notificationRow} ${isNew ? styles.new : ""}`}
+      onClick={onClick}
+      style={{ cursor: "pointer" }}
+    >
       <div className={styles.senderInfo}>
         {avatarUrl ? (
           <img src={avatarUrl} alt={senderName} className={styles.avatar} />
@@ -53,65 +50,43 @@ function NotificationPage() {
   ); // State chứa danh sách thông báo
   const [isLoading, setIsLoading] = useState(false); // State loading
 
+  const [filter, setFilter] = useState<"all" | "unread">("all");
+  const [sortOrder, setSortOrder] = useState<"desc" | "asc">("desc"); // desc: mới nhất
+
+  const filteredNotifications =
+    filter === "all" ? notifications : notifications.filter((n) => n.isNew);
+
+  const parseDate = (timestamp: string) => {
+    const [day, month, year] = timestamp.split("/").map(Number);
+    return new Date(year, month - 1, day);
+  };
+
   const handleToggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
+  const handleRead = (index: number) => {
+    setNotifications((prev) =>
+      prev.map((n, i) => (i === index ? { ...n, isNew: false } : n))
+    );
+  };
+  const sortedNotifications = [...filteredNotifications].sort((a, b) => {
+    const dateA = parseDate(a.timestamp);
+    const dateB = parseDate(b.timestamp);
+    return sortOrder === "desc"
+      ? dateB.getTime() - dateA.getTime()
+      : dateA.getTime() - dateB.getTime();
+  });
 
   // --- Fetch dữ liệu thông báo ---
   useEffect(() => {
     const fetchNotifications = async () => {
       setIsLoading(true);
-      // --- TODO: Thay thế bằng logic gọi API thực tế ---
-      // Ví dụ gọi API để lấy tất cả thông báo (cũ và mới)
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Giả lập độ trễ mạng
-      const fetchedNotifications: NotificationRowProps[] = [
-        // Dữ liệu mẫu chi tiết hơn
-        {
-          senderName: "Trịnh Thị Mỹ Lệ",
-          location: "Phòng 12 tầng 4",
-          message: "Quạt không hoạt động",
-          timestamp: "21/02/2025",
-          isNew: true,
-        },
-        {
-          senderName: "Hệ thống",
-          location: "Phòng 10 tầng 3",
-          message: "Đèn sắp hết hạn",
-          timestamp: "20/02/2025",
-        },
-        {
-          senderName: "Cảm biến",
-          location: "Phòng Server",
-          message: "Nhiệt độ cao bất thường",
-          timestamp: "20/02/2025",
-        },
-        {
-          senderName: "Trịnh Thị Mỹ Lệ",
-          location: "Phòng 15 tầng 5",
-          message: "Quạt không hoạt động",
-          timestamp: "19/02/2025",
-        },
-        {
-          senderName: "Trịnh Thị Mỹ Lệ",
-          location: "Phòng 12 tầng 4",
-          message: "Quạt không hoạt động",
-          timestamp: "18/02/2025",
-        },
-        {
-          senderName: "Trịnh Thị Mỹ Lệ",
-          location: "Phòng 12 tầng 4",
-          message: "Quạt không hoạt động",
-          timestamp: "17/02/2025",
-        },
-        // ... thêm nhiều thông báo cũ hơn
-      ];
-      setNotifications(fetchedNotifications);
-      // --- Kết thúc phần TODO ---
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      setNotifications(mockNotifications);
       setIsLoading(false);
     };
-
     fetchNotifications();
-  }, []); // Chạy 1 lần khi component mount
+  }, []);
 
   return (
     <div className={styles.notificationPageLayout}>
@@ -133,22 +108,88 @@ function NotificationPage() {
           <h1 className={styles.pageTitle}>Notifications</h1>
 
           {/* Phần Lọc/Sắp xếp (Tùy chọn) */}
-          {/* <div className={styles.filters}>
-            <button>Tất cả</button>
-            <button>Chưa đọc</button>
-            <select>
-              <option>Mới nhất</option>
-              <option>Cũ nhất</option>
-            </select>
-          </div> */}
+          <div className={styles.filters}>
+            <Select
+              classNamePrefix="selectCustom"
+              styles={{
+                container: (base) => ({ ...base, width: 144 }),
+                option: (base, state) => ({
+                  ...base,
+                  backgroundColor: state.isSelected
+                    ? "#4780f9"
+                    : state.isFocused
+                    ? "#fff"
+                    : "#fff",
+                  color: state.isSelected ? "#fff" : "#111827",
+                  fontWeight: state.isSelected ? 600 : 400,
+                  cursor: "pointer",
+                }),
+                menu: (base) => ({
+                  ...base,
+                  zIndex: 9999,
+                }),
+              }}
+              value={{
+                value: filter,
+                label: filter === "all" ? "Tất cả" : "Chưa đọc",
+              }}
+              onChange={(option) =>
+                setFilter(option?.value as "all" | "unread")
+              }
+              options={[
+                { value: "all", label: "Tất cả" },
+                { value: "unread", label: "Chưa đọc" },
+              ]}
+              isSearchable={false}
+              placeholder="Tất cả"
+            />
+            <Select
+              classNamePrefix="selectCustom"
+              styles={{
+                container: (base) => ({ ...base, width: 144 }),
+                option: (base, state) => ({
+                  ...base,
+                  backgroundColor: state.isSelected
+                    ? "#4780f9"
+                    : state.isFocused
+                    ? "#fff"
+                    : "#fff",
+                  color: state.isSelected ? "#fff" : "#111827",
+                  fontWeight: state.isSelected ? 600 : 400,
+                  cursor: "pointer",
+                }),
+                menu: (base) => ({
+                  ...base,
+                  zIndex: 9999,
+                }),
+              }}
+              value={{
+                value: sortOrder,
+                label: sortOrder === "desc" ? "Mới nhất" : "Cũ nhất",
+              }}
+              onChange={(option) =>
+                setSortOrder(option?.value as "desc" | "asc")
+              }
+              options={[
+                { value: "desc", label: "Mới nhất" },
+                { value: "asc", label: "Cũ nhất" },
+              ]}
+              isSearchable={false}
+              placeholder="Mới nhất"
+            />
+          </div>
 
           {/* Danh sách thông báo */}
           <div className={styles.notificationListContainer}>
             {isLoading ? (
               <p>Loading notifications...</p>
-            ) : notifications.length > 0 ? (
-              notifications.map((noti, index) => (
-                <NotificationRow key={index} {...noti} /> // Truyền props vào NotificationRow
+            ) : sortedNotifications.length > 0 ? (
+              sortedNotifications.map((noti, index) => (
+                <NotificationRow
+                  key={index}
+                  {...noti}
+                  onClick={() => handleRead(notifications.indexOf(noti))}
+                />
               ))
             ) : (
               <p>Không có thông báo nào.</p>

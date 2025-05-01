@@ -27,7 +27,7 @@ const customStyles = {
     padding: "2px 4px",
   }),
 };
-function User() {
+function Room() {
   // sidebar
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
@@ -399,4 +399,4 @@ function User() {
   );
 }
 
-export default User;
+export default Room;
