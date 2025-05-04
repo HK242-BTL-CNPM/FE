@@ -5,11 +5,14 @@ function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
 
   if (!user) {
-    // Nếu chưa đăng nhập, chuyển hướng đến trang login
     return <Navigate to="/login" replace />;
   }
 
-  // Nếu đã đăng nhập, hiển thị nội dung
+  // Nếu là Admin mà truy cập route dành cho User
+  if (user.role !== "User") {
+    return <Navigate to="/dashboard" replace />;
+  }
+
   return children;
 }
 

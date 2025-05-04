@@ -1,38 +1,113 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+
+import Login from "./page/auth/login";
+import PrivateRoute from "./page/auth/PrivateRoute";
+import AdminRoute from "./page/auth/AdminRoute";
+import { useAuth } from "./AuthContext";
+
+// --- Import các trang User---
 import Book from "./page/user/book/book";
 import History from "./page/user/history/history";
 import Home from "./page/user/home/home";
-import Login from "./page/auth/login";
 import StatusRoom from "./page/user/status/status";
 import ReportIssue from "./page/user/report/report";
 import Profile from "./page/user/profile/profile";
+import Checkin from "./page/user/checkin/checkin";
+
+// --- Import các trang Admin---
 import Dashboard from "./page/admin/dashboard/Dashboard";
 import Booking from "./page/admin/booking/booking";
 import User from "./page/admin/user/user";
 import Room from "./page/admin/room/room";
 import Device from "./page/admin/device/device";
 import Notification from "./page/admin/notification/notification";
-import Checkin from "./page/user/checkin/checkin";
+import { NotificationProvider } from "./page/admin/notification/NotificationContext";
 
 import "./assets/css/output.css";
-import PrivateRoute from "./page/auth/PrivateRoute";
 
 function App() {
+  const { user } = useAuth();
+
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/booking" element={<Booking />} />
-        <Route path="/user" element={<User />} />
-        <Route path="/room" element={<Room />} />
-        <Route path="/device" element={<Device />} />
-        <Route path="/notification" element={<Notification />} />
-        <Route path="/checkin" element={<Checkin />} />
-
         {/* Các route không cần bảo vệ */}
-        {/* Các route cần bảo vệ */}
+        <Route
+          path="/"
+          element={
+            user?.role === "Admin" ? (
+              <Navigate to="/dashboard" replace />
+            ) : (
+              <Home />
+            )
+          }
+        />
+        <Route path="/login" element={<Login />} />
+
+        {/* Các route cần bảo vệ dành cho Admin */}
+        <Route
+          path="/dashboard"
+          element={
+            <AdminRoute>
+              <NotificationProvider>
+                <Dashboard />
+              </NotificationProvider>
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/booking"
+          element={
+            <AdminRoute>
+              <NotificationProvider>
+                <Booking />
+              </NotificationProvider>
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/user"
+          element={
+            <AdminRoute>
+              <NotificationProvider>
+                <User />
+              </NotificationProvider>
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/room"
+          element={
+            <AdminRoute>
+              <NotificationProvider>
+                <Room />
+              </NotificationProvider>
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/device"
+          element={
+            <AdminRoute>
+              <NotificationProvider>
+                <Device />
+              </NotificationProvider>
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/notification"
+          element={
+            <AdminRoute>
+              <NotificationProvider>
+                <Notification />
+              </NotificationProvider>
+            </AdminRoute>
+          }
+        />
+
+        {/* Các route cần bảo vệ dành cho User */}
         <Route
           path="/book"
           element={
@@ -58,6 +133,14 @@ function App() {
           }
         />
         <Route
+          path="/checkin"
+          element={
+            <PrivateRoute>
+              <Checkin />
+            </PrivateRoute>
+          }
+        />
+        <Route
           path="/report"
           element={
             <PrivateRoute>
@@ -68,9 +151,9 @@ function App() {
         <Route
           path="/profile"
           element={
-            
+            <PrivateRoute>
               <Profile />
-           
+            </PrivateRoute>
           }
         />
       </Routes>
