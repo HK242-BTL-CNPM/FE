@@ -20,8 +20,8 @@ function History() {
 
   const calendar = useCalendarApp({
     views: [
-      createViewDay(),
-      createViewWeek(),
+      // createViewDay(),
+      // createViewWeek(),
       createViewMonthGrid(),
       createViewMonthAgenda(),
     ],
